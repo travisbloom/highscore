@@ -18,6 +18,10 @@
                 <ion-option-button class="button-info" ng-click="edit(item)">
                     <i class="icon ion-gear-b"></i>
                 </ion-option-button>
+                <!--reset score-->
+                <ion-option-button ng-if="item.incrementValue" class="button-info" ng-click="item.newScore(0)">
+                    Reset
+                </ion-option-button>
                 <!--plus/minus sign for custom scores that increment by a set amount-->
                 <ion-option-button ng-if="item.incrementValue" class="button-info" ng-click="item.increment('down')">
                     <i class="icon ion-minus-round"></i>
