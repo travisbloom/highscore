@@ -32,21 +32,18 @@ angular.module('starter')
         };
     })
 
-    .controller('HighScoresCtrl', function($scope, highScoreFactory) {
-        var mockData = [
+    .controller('HighScoresCtrl', function($scope, highScoreFactory, $auth) {
+        highScoreFactory.savedItems = highScoreFactory.getItems()  || [
             {
                 id: 'mint',
                 highScore: 223,
                 currentScore: 2,
-                config: {
-                    token: 'test'
-                }
+                token: 'test'
             },
             {
                 id: '0',
-                name: 'custom thing',
                 config: {
-                    custom: true,
+                    name: 'custom thing',
                     icon: 'ion-ios7-redo',
                     color: '#26335b',
                     type: 'num'
@@ -56,10 +53,9 @@ angular.module('starter')
                 incrementValue: 1
             },
             {
-                name: 'custom thing 2',
                 id: '1',
                 config: {
-                    custom: true,
+                    name: 'custom thing 2',
                     icon: 'ion-ios7-pulse',
                     color: '#16975b',
                     type: 'num'
@@ -68,12 +64,25 @@ angular.module('starter')
                 currentScore: 2
             }
         ];
-
-        $scope.highScores = mockData.map(function(item){
-            return highScoreFactory(item)
-        });
+        console.log(highScoreFactory.savedItems);
+        $scope.highScores = [];
+        $scope.authenticate = function(provider) {
+            $auth.authenticate('facebook').then(function(response) {
+                console.log(response)
+            });
+        };
+//        $scope.authenticate();
+        for (var i = 0; i < highScoreFactory.savedItems.length; i++) {
+            highScoreFactory.savedItems[i].index = i;
+            $scope.highScores.push(highScoreFactory.newItem(highScoreFactory.savedItems[i]));
+        }
+        console.log($scope.highScores);
+//        $scope.highScores = mockData.map(function(item) {
+//            return highScoreFactory(item)
+//        });
+        console.log($scope.highScores);
         $scope.reorderItem = function(item, $fromIndex, $toIndex) {
-            $scope.highScores.splice($toIndex, 0, $scope.highScores.splice($fromIndex, 1)[0])
+            $scope.highScores.splice($toIndex, 0, $scope.highScores.splice($fromIndex, 1)[0]);
         }
     })
 
