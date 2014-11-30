@@ -3,6 +3,7 @@
 
 node_modules/
 www/lib/
+www/css/
 platforms/
 plugins/
 www/js/config.js
