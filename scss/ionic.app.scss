@@ -21,10 +21,20 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+//form input for list options
 .button {
   .item-input {
     margin-top: 5px;
     margin-bottom: 5px;
     padding-top: 0;
   }
+}
+
+//header
+.options-header {
+  text-align: center;
+}
+
+.graph {
+  height: 300px;
 }

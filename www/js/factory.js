@@ -9,45 +9,106 @@ angular.module('starter')
                 type: 'currency'
             }
         };
+        //save users set of items to local storage
         function saveItems() {
             $window.localStorage[localStorageKey] = JSON.stringify(highScores.savedItems);
             console.log(highScores.savedItems);
         }
+        function getItems() {
+            console.log($window.localStorage[localStorageKey]);
+            try {
+                return JSON.parse($window.localStorage[localStorageKey]);
+            } catch (e) {
+                return null;
+            }
+        }
+        var time = new Date();
         var highScores = {
-            savedItems: null,
-            getItems: function () {
-                console.log($window.localStorage[localStorageKey]);
-                try {
-                    return JSON.parse($window.localStorage[localStorageKey]);
-                } catch (e) {
-                    return null;
+            //array of items to be saved to
+            savedItems:  getItems()  || [
+                {
+                    id: 'mint',
+                    highScore: 223,
+                    currentScore: 2,
+                    service: {
+                        token: 'test'
+                    },
+                    history: [{
+                        date: time.getTime(),
+                        score: 2
+                    }]
+                },
+                {
+                    id: '0',
+                    config: {
+                        name: 'custom thing',
+                        icon: 'ion-ios7-redo',
+                        color: '#26335b',
+                        type: 'num'
+                    },
+                    highScore: 4,
+                    currentScore: 2,
+                    incrementValue: 1,
+                    history: [{
+                        date: time.getTime(),
+                        score: 2
+                    }]
+                },
+                {
+                    id: '1',
+                    config: {
+                        name: 'custom thing 2',
+                        icon: 'ion-ios7-pulse',
+                        color: '#16975b',
+                        type: 'num'
+                    },
+                    highScore: 223,
+                    currentScore: 2,
+                    history: [{
+                        date: time.getTime(),
+                        score: 2
+                    }]
                 }
-            },
+            ],
             //takes a stored obj from the backend and constructs a new highScore factory from it
             newItem: function (refObj) {
-                //add a new current score, update the obj high score if the new score is higher
-                console.log(refObj.config);
+                //convert milliseconds to time Obj
+                var history = refObj.history.map(function(datapoint){
+                    return {
+                        score: datapoint.score,
+                        date: new Date(datapoint.date)
+                    }
+                });
                 return {
+                    id: refObj.id,
                     highScore: refObj.highScore,
                     currentScore: refObj.currentScore,
                     //adds config for set objects
                     config: refObj.config || setTypes[refObj.id],
                     incrementValue: refObj.incrementValue,
+                    history: history,
                     saveObj: function (params) {
                         var obj = this;
                         Object.keys(params).forEach(function(key) {
                             obj[key] = params[key];
                             highScores.savedItems[refObj.index][key] = params[key];
                         });
-                        console.log(this);
                         saveItems();
                     },
-
                     newScore: function (score) {
-                        var params = {
-                            currentScore: score
+                        var currentTime = new Date(), params;
+                        currentTime = currentTime.getTime();
+                        //if a new history record is being inserted and the previous record was less than 10 seconds old, override the oldest data point
+                        if (currentTime - this.history[this.history.length - 1].date < 10000)
+                            this.history.pop();
+                        params = {
+                            currentScore: score,
+                            history: this.history.concat([{
+                                date: currentTime,
+                                score: score
+                        }])
                         };
-                        if (score > refObj.highScore)
+                        if (score > this.highScore)
                             params.highScore = score;
                         this.saveObj(params);
                     },

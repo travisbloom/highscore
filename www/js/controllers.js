@@ -32,46 +32,17 @@ angular.module('starter')
         };
     })
 
-    .controller('HighScoresCtrl', function($scope, highScoreFactory, $auth) {
-        highScoreFactory.savedItems = highScoreFactory.getItems()  || [
-            {
-                id: 'mint',
-                highScore: 223,
-                currentScore: 2,
-                token: 'test'
-            },
-            {
-                id: '0',
-                config: {
-                    name: 'custom thing',
-                    icon: 'ion-ios7-redo',
-                    color: '#26335b',
-                    type: 'num'
-                },
-                highScore: 4,
-                currentScore: 2,
-                incrementValue: 1
-            },
-            {
-                id: '1',
-                config: {
-                    name: 'custom thing 2',
-                    icon: 'ion-ios7-pulse',
-                    color: '#16975b',
-                    type: 'num'
-                },
-                highScore: 223,
-                currentScore: 2
-            }
-        ];
-        console.log(highScoreFactory.savedItems);
+    .controller('HighScoresCtrl', function($scope, highScoreFactory, $auth, $location) {
         $scope.highScores = [];
         $scope.authenticate = function(provider) {
             $auth.authenticate('facebook').then(function(response) {
                 console.log(response)
             });
         };
-//        $scope.authenticate();
+        //        $scope.authenticate();
+        $scope.settings = function (index) {
+            $location.path('/app/highscores/' + index);
+        };
         for (var i = 0; i < highScoreFactory.savedItems.length; i++) {
             highScoreFactory.savedItems[i].index = i;
             $scope.highScores.push(highScoreFactory.newItem(highScoreFactory.savedItems[i]));
@@ -86,5 +57,27 @@ angular.module('starter')
         }
     })
 
-    .controller('HighScoreCtrl', function($scope, $stateParams) {
+    .controller('HighScoreCtrl', function($scope, $stateParams, highScoreFactory) {
+        var dates = [];
+        $scope.item = highScoreFactory.newItem(highScoreFactory.savedItems[$stateParams.highscoreindex]);
+        console.log($scope.item);
+        $scope.options = {
+            axes: {
+                x: {
+                    key: 'date',
+                    type: 'date',
+                    labelFunction: function(date) {
+                        var relTime = moment(date).fromNow();
+                        return relTime;
+                    }
+                }
+            },
+            series: [{
+                y: 'score'
+            }],
+            tooltip: {mode: 'scrubber', formatter: function(x, y, series) {
+                return y;
+            }},
+            drawLegend: false
+        };
     });

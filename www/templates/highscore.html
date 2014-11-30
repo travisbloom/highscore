@@ -1,5 +1,8 @@
-<ion-view title="Playlist">
+<ion-view title="">
   <ion-content class="has-header">
-    <h1>Playlist</h1>
+    <h1 class="options-header">{{item.config.name}}</h1>
+      <div class="graph">
+          <linechart data="item.history" options="options"></linechart>
+      </div>
   </ion-content>
 </ion-view>

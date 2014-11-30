@@ -7819,3 +7819,9 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   margin-top: 5px;
   margin-bottom: 5px;
   padding-top: 0; }
+
+.options-header {
+  text-align: center; }
+
+.graph {
+  height: 300px; }
