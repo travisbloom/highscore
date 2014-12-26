@@ -28,7 +28,7 @@ angular.module('starter')
           },
           highScore: 4,
           currentScore: 2,
-          incrementValue: 1,
+            incrementValue: 1,
           history: [
             {
               date: time,

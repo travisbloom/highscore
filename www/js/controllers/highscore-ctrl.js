@@ -4,7 +4,7 @@ angular.module('starter')
       configItem: true
     };
     $scope.item = highScoreFactory.getScores()[$stateParams.highscoreindex];
-    console.log($scope.item);
+    $scope.newScore = $scope.item.currentScore;
     $scope.options = {
       axes: {
         x: {

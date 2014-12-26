@@ -68,6 +68,8 @@ angular.module('starter')
      ***/
     HighScoreObj.prototype.newScore = function (score) {
       var currentTime = new Date(), params;
+      if (isNaN(score))
+        throw 'scores must be numbers';
       //if a new history record is being inserted and the previous record was less than 10 seconds old, override the oldest data point
       if (currentTime - this.history[this.history.length - 1].date < 10000)
         this.history.pop();

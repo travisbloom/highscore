@@ -1,24 +1,46 @@
 <ion-view title="">
-  <ion-content class="has-header">
-    <h1 class="options-header">{{item.config.name}}</h1>
-      <div class="graph">
-          <linechart data="item.history" options="options"></linechart>
-      </div>
-      <button ng-if="!item.config.builtIn" class="button button-full button-positive" ng-click="configureSettings()">
-          <span ng-show="collapsed.configItem">Configure {{item.config.name}}</span>
-          <span ng-show="!collapsed.configItem">Save Changes</span>
-      </button>
-      <div class="collapse" ng-show="!collapsed.configItem">
-          <div class="list">
-              <label class="item item-input">
-                  <span class="input-label">Username</span>
-                  <input type="text" ng-model="item.config.name">
-              </label>
-              <label class="item item-input">
-                  <span class="input-label">Password</span>
-                  <input type="password">
-              </label>
-          </div>
-      </div>
-  </ion-content>
+    <ion-content class="has-header">
+        <h1 class="options-header">{{item.config.name}}</h1>
+        <div class="graph">
+            <linechart data="item.history" options="options"></linechart>
+        </div>
+        <!--exposed increment options when relevant-->
+        <div class="row" ng-if="item.incrementValue">
+            <div class="col"><button ng-click="item.increment('down')" class="button icon button-full ion-minus-round"></button></div>
+            <div class="col"><button ng-click="item.increment('up')" class="button icon button-full ion-plus-round"></button></div>
+        </div>
+        <!--new value input-->
+        <div class="row new-score">
+            <div class="col" ng-class="{'col-60' : newScore !== item.currentScore}">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Current Value</span>
+                        <input type="number" ng-model="newScore">
+                    </label>
+                </div>
+            </div>
+            <div class="col col-20" ng-show="newScore !== item.currentScore">
+                <button class="button button-block icon ion-checkmark-round" ng-click="item.newScore(newScore)"></button>
+            </div>
+            <div class="col col-20" ng-show="newScore !== item.currentScore">
+                <button class="button button-block icon ion-close-round" ng-click="newScore = item.currentScore"></button>
+            </div>
+        </div>
+
+        <button ng-if="!item.config.builtIn && newScore === item.currentScore" class="button button-full button-positive" ng-click="configureSettings()">
+            Configure {{item.config.name}}
+        </button>
+        <div class="collapse" ng-show="!collapsed.configItem">
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Username</span>
+                    <input type="text" ng-model="item.config.name">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Password</span>
+                    <input type="password">
+                </label>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
