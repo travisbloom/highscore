@@ -30,12 +30,12 @@
                     <i class="icon ion-plus-round"></i>
                 </ion-option-button>
                 <!--input for custom number-->
-                <ion-option-button ng-if="!item.service && !item.incrementValue" class="button-info">
+                <ion-option-button ng-if="!item.config.builtIn && !item.incrementValue" class="button-info">
                     <label class="item item-input">
                         <input type="number" placeholder="new score..." ng-model="item.newCurrent">
                     </label>
                 </ion-option-button>
-                <ion-option-button ng-if="!item.service && !item.incrementValue" class="button-info" ng-click="item.newScore(item.newCurrent)">
+                <ion-option-button ng-if="!item.config.builtIn && !item.incrementValue" class="button-info" ng-click="item.newScore(item.newCurrent)">
                     <i class="icon ion-checkmark-round"></i>
                 </ion-option-button>
                 <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)"></ion-reorder-button>

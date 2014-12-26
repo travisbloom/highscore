@@ -4,5 +4,21 @@
       <div class="graph">
           <linechart data="item.history" options="options"></linechart>
       </div>
+      <button ng-if="!item.config.builtIn" class="button button-full button-positive" ng-click="configureSettings()">
+          <span ng-show="collapsed.configItem">Configure {{item.config.name}}</span>
+          <span ng-show="!collapsed.configItem">Save Changes</span>
+      </button>
+      <div class="collapse" ng-show="!collapsed.configItem">
+          <div class="list">
+              <label class="item item-input">
+                  <span class="input-label">Username</span>
+                  <input type="text" ng-model="item.config.name">
+              </label>
+              <label class="item item-input">
+                  <span class="input-label">Password</span>
+                  <input type="password">
+              </label>
+          </div>
+      </div>
   </ion-content>
 </ion-view>
