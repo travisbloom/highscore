@@ -7,12 +7,14 @@
     </ion-nav-buttons>
     <ion-content class="has-header">
         <ion-list show-reorder="showReorder">
-            <ion-item  style="background-color: {{item.config.color}}" ng-repeat="item in highScores" class="item-icon-left">
-                <i class="icon {{item.config.icon}}"></i>
-                {{item.config.name}}
-                <span class="item-note">
-                  {{item.highScore}}
-                  {{item.currentScore}}
+            <ion-item style="background-color: {{item.config.color}}" ng-repeat="item in highScores" class="item-icon-left">
+                <span ng-click="settings($index)">
+                    <i class="icon {{item.config.icon}}"></i>
+                    {{item.config.name}}
+                    <span class="item-note">
+                      {{item.highScore}}
+                      {{item.currentScore}}
+                    </span>
                 </span>
                 <!--settings for item-->
                 <ion-option-button class="button-info" ng-click="settings($index)">

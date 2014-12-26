@@ -36,10 +36,12 @@ angular.module('starter')
       var self = this;
       Object.keys(refObj).forEach(function (key) {
         //if the key is the history array, convert the time stamps
-        if (key === 'history')
-          return self.history = convertHistory(refObj.history);
-        //add the json properties to the new obj
-        self[key] = refObj[key];
+        if (key === 'history') {
+          self.history = convertHistory(refObj.history);
+        } else {
+          //add the json properties to the new obj
+          self[key] = refObj[key];
+        }
       });
       //if the object had no config, add the pre-set one
       this.config = this.config || setTypes[refObj.id];
@@ -94,7 +96,9 @@ angular.module('starter')
       //default to adding the increment value
       return this.newScore(this.incrementValue + this.currentScore);
     };
-    //returned functions
+    /***
+     * Factory Returned Functions
+     ***/
     return {
       newScore: function (scoreInfo) {
 
