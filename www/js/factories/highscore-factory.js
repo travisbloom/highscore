@@ -18,12 +18,14 @@ angular.module('starter')
     function saveItems() {
       $window.localStorage[localStorageKey] = JSON.stringify(savedData);
     }
-    //converts the json date info to javascript date obj on history property
+    /**
+     * Converts time stamps back and forth from JSON time and Date() time
+     ***/
     function convertHistory(history) {
       return history.map(function (datapoint) {
         return {
           score: datapoint.score,
-          date: new Date(+datapoint.date)
+          date: typeof datapoint.date === 'string' ? new Date(datapoint.date) : datapoint.date.toJSON()
         }
       });
     }
@@ -46,12 +48,15 @@ angular.module('starter')
      * save the updated object attributes
      ***/
     HighScoreObj.prototype.saveObj = function (params) {
-      var self = this,
-        index = savedData.map(function(score) {
-          return score.id;
-          }).indexOf(this.id);
+      var self = this, index;
+      index = savedData.map(function(score) {
+        return score.id;
+      }).indexOf(this.id);
       Object.keys(params).forEach(function(key) {
         self[key] = params[key];
+        //if a new history is being saved, convert the js Date() to JSON first
+        if (key === 'history')
+          return savedData[index].history = convertHistory(params.history);
         savedData[index][key] = params[key];
       });
       saveItems();
@@ -61,7 +66,6 @@ angular.module('starter')
      ***/
     HighScoreObj.prototype.newScore = function (score) {
       var currentTime = new Date(), params;
-      currentTime = currentTime.getTime().toString();
       //if a new history record is being inserted and the previous record was less than 10 seconds old, override the oldest data point
       if (currentTime - this.history[this.history.length - 1].date < 10000)
         this.history.pop();
@@ -119,6 +123,12 @@ angular.module('starter')
             $window.localStorage.removeItem(localStorageKey);
             throw 'There was an issue with your saved Highscors and the application had to reset your data.';
           }
+          return highScoreArray = savedData.map(function(savedScore) {
+            return new HighScoreObj(savedScore);
+          });
+          //todo remove mocked rows
+        } else {
+          savedData = mockData();
           return highScoreArray = savedData.map(function(savedScore) {
             return new HighScoreObj(savedScore);
           });

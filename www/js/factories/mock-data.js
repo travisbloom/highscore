@@ -1,7 +1,7 @@
 angular.module('starter')
   .factory('mockData', function() {
     var time = new Date();
-    time = time.getTime().toString();
+    time = time.toJSON();
     return function () {
       return [
         {
