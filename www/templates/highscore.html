@@ -1,4 +1,4 @@
-<ion-view title="">
+<ion-view title="" class="individual-score">
     <ion-content class="has-header">
         <h1 class="options-header">{{item.config.name}}</h1>
         <div class="graph">
@@ -6,8 +6,8 @@
         </div>
         <!--exposed increment options when relevant-->
         <div class="row" ng-if="item.incrementValue">
-            <div class="col"><button ng-click="item.increment('down')" class="button icon button-full ion-minus-round"></button></div>
-            <div class="col"><button ng-click="item.increment('up')" class="button icon button-full ion-plus-round"></button></div>
+            <div class="col"><button ng-click="increment('down')" class="button icon button-full ion-minus-round"></button></div>
+            <div class="col"><button ng-click="increment('up')" class="button icon button-full ion-plus-round"></button></div>
         </div>
         <!--new value input-->
         <div class="row new-score">
@@ -26,19 +26,24 @@
                 <button class="button button-block icon ion-close-round" ng-click="newScore = item.currentScore"></button>
             </div>
         </div>
-
-        <button ng-if="!item.config.builtIn && newScore === item.currentScore" class="button button-full button-positive" ng-click="configureSettings()">
-            Configure {{item.config.name}}
+        <button class="button button-full button-positive" ng-click="configureSettings()">
+            <span ng-show="config.collapsed">Configure {{item.config.name}}</span>
+            <span ng-show="!config.collapsed">Save Configuration</span>
         </button>
-        <div class="collapse" ng-show="!collapsed.configItem">
-            <div class="list">
+        <!--Configuration for items that have config options-->
+        <div class="collapse" ng-show="!config.collapsed" ng-if="!item.config.builtIn">
+            <div class="list list-inset">
                 <label class="item item-input">
-                    <span class="input-label">Username</span>
+                    <span class="input-label">Name</span>
                     <input type="text" ng-model="item.config.name">
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Password</span>
-                    <input type="password">
+                    <span class="input-label">Type</span>
+                    <select ng-options="type for type in config.options.type" ng-model="item.config.type"></select>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Icon: <i class="icon {{item.config.icon}}"></i></span>
+                    <button class="button" ng-click="modal.show()">Select New Icon</button>
                 </label>
             </div>
         </div>

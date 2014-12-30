@@ -45,3 +45,35 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     margin-bottom: 0;
   }
 }
+
+.individual-score {
+  .collapse {
+    input, select {
+      font-size: 16px;
+    }
+    i {
+      font-size: 18px;
+      margin-left: 10px;
+    }
+    select {
+      width: 50%;
+      border: none;
+    }
+    button {
+      margin-left: 20px;
+    }
+  }
+}
+
+.modal-icon {
+  ion-content {
+    margin: 30px 10px;
+    li {
+      display: inline;
+      font-size: 24px;
+      .icon:before {
+        padding: 30px 30px;
+      }
+    }
+  }
+}

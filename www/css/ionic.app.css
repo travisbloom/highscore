@@ -7829,3 +7829,22 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
 .new-score .button-block {
   margin-top: 0;
   margin-bottom: 0; }
+
+.individual-score .collapse input, .individual-score .collapse select {
+  font-size: 16px; }
+.individual-score .collapse i {
+  font-size: 18px;
+  margin-left: 10px; }
+.individual-score .collapse select {
+  width: 50%;
+  border: none; }
+.individual-score .collapse button {
+  margin-left: 20px; }
+
+.modal-icon ion-content {
+  margin: 30px 10px; }
+  .modal-icon ion-content li {
+    display: inline;
+    font-size: 24px; }
+    .modal-icon ion-content li .icon:before {
+      padding: 30px 30px; }
