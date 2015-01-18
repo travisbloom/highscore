@@ -1,0 +1,21 @@
+.scores {
+  //form input for list options
+  .button {
+    .item-input {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding-top: 0;
+      input {
+        width: 100px;
+      }
+    }
+  }
+  .list-right-editing {
+    .item-content {
+      padding: 16px 30px 16px 16px;
+    }
+  }
+  .item-content {
+    padding: 16px 16px 16px 16px;
+  }
+}

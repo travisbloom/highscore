@@ -1,10 +1,13 @@
 <ion-modal-view class="modal-icon">
     <ion-header-bar>
         <h1 class="title">Highscor Icons </h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeIconModal()">Close</button>
+        </div>
     </ion-header-bar>
     <ion-content>
         <ul>
-            <li ng-repeat="icon in icons track by $index">
+            <li ng-repeat="icon in icons track by $index" ng-click="newIcon(icon)">
                 <i class="icon {{icon}}"></i>
             </li>
         </ul>

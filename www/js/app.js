@@ -39,11 +39,12 @@ angular.module('starter', ['ionic', 'satellizer', 'n3-line-chart'])
       }
     })
 
-    .state('app.browse', {
-      url: "/browse",
+    .state('app.new', {
+      url: "/new",
       views: {
         'menuContent' :{
-          templateUrl: "templates/browse.html"
+          templateUrl: "templates/new-score.html",
+          controller: 'NewScoreCtrl'
         }
       }
     })

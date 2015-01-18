@@ -43,6 +43,14 @@ angular.module('starter')
       $scope.modal = modal;
     });
     $scope.icons = dataModelFactory.config.icon;
+
+    $scope.newIcon = function (icon) {
+      $scope.item.config.icon = icon;
+      $scope.modal.hide();
+    };
+    $scope.closeIconModal = function () {
+      $scope.modal.hide();
+    };
     //increment the item then refresh newScore
     $scope.increment = function (direction) {
       $scope.item.increment(direction);

@@ -1,6 +1,5 @@
-<ion-view title="" class="individual-score">
+<ion-view title="{{item.config.name}}" class="individual-score">
     <ion-content class="has-header">
-        <h1 class="options-header">{{item.config.name}}</h1>
         <div class="graph">
             <linechart data="item.history" options="options"></linechart>
         </div>
@@ -10,7 +9,7 @@
             <div class="col"><button ng-click="increment('up')" class="button icon button-full ion-plus-round"></button></div>
         </div>
         <!--new value input-->
-        <div class="row new-score">
+        <div class="row update-score">
             <div class="col" ng-class="{'col-60' : newScore !== item.currentScore}">
                 <div class="list">
                     <label class="item item-input">

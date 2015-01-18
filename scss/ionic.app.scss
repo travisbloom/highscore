@@ -17,16 +17,41 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-
+// colors
+$highscore-primary: #4a87ee;
+$highscore-accent: #145fd7;
+$highscore-text: white;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
-//form input for list options
-.button {
-  .item-input {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 0;
+//override color styles
+@import "overrides";
+@import "new-score";
+@import "score-list";
+
+//input areas
+.list-inset {
+  select {
+    height: 36px;
+    border-color: #b2b2b2;
+    background-color: #f8f8f8;
+    min-width: 80px;
+  }
+  input, select {
+    font-size: 16px;
+  }
+  i {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+}
+
+//nav header buttons
+.bar.bar-stable {
+  .button {
+    &:before {
+      font-size: 16px;
+    }
   }
 }
 
@@ -35,43 +60,30 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   text-align: center;
 }
 
-.graph {
-  height: 300px;
-}
-
-.new-score {
-  .button-block {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
 .individual-score {
-  .collapse {
-    input, select {
-      font-size: 16px;
+  .graph {
+    margin: 0px 10px;
+    height: 300px;
+    g {
+      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     }
-    i {
-      font-size: 18px;
-      margin-left: 10px;
-    }
-    select {
-      width: 50%;
-      border: none;
-    }
-    button {
-      margin-left: 20px;
+  }
+  .update-score {
+    .button-block {
+      margin-top: 0;
+      margin-bottom: 0;
     }
   }
 }
 
 .modal-icon {
   ion-content {
-    margin: 30px 10px;
+    margin: 0 10px;
     li {
       display: inline;
       font-size: 24px;
       .icon:before {
+        width: 20px;
         padding: 30px 30px;
       }
     }

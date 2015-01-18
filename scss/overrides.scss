@@ -1,0 +1,26 @@
+
+.bar.bar-stable.highscore-colors {
+  .title {
+    color: $highscore-text;
+  }
+  .button {
+    color: $highscore-text;
+  }
+  color: $highscore-text;
+  border-color: $highscore-accent;
+  background-color: $highscore-primary;
+  background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+}
+//individual reorder icons
+.item-reorder .button.icon {
+  color: $highscore-text;
+}
+.item-options .button {
+  color: $highscore-text;
+  border-color: $highscore-accent;
+  background-color: $highscore-primary;
+}
+.item-icon-left {
+  background-color: $highscore-primary;
+  border-style: none;
+}

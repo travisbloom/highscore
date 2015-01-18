@@ -7815,36 +7815,76 @@ $ios-transition-box-shadow-end: -200px 0px 200px rgba(0,0,0,0.15), -5px 0px 5px 
   -webkit-transition: none !important;
   transition: none !important; }
 
-.button .item-input {
+.bar.bar-stable.highscore-colors {
+  color: white;
+  border-color: #145fd7;
+  background-color: #4a87ee;
+  background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%); }
+  .bar.bar-stable.highscore-colors .title {
+    color: white; }
+  .bar.bar-stable.highscore-colors .button {
+    color: white; }
+
+.item-reorder .button.icon {
+  color: white; }
+
+.item-options .button {
+  color: white;
+  border-color: #145fd7;
+  background-color: #4a87ee; }
+
+.item-icon-left {
+  background-color: #4a87ee;
+  border-style: none; }
+
+.new-score .list-inset {
+  margin: 0 10px; }
+.new-score h4 {
+  text-align: center;
+  margin: 10px 0 0 0; }
+
+.scores .button .item-input {
   margin-top: 5px;
   margin-bottom: 5px;
   padding-top: 0; }
+  .scores .button .item-input input {
+    width: 100px; }
+.scores .list-right-editing .item-content {
+  padding: 16px 30px 16px 16px; }
+.scores .item-content {
+  padding: 16px 16px 16px 16px; }
+
+.list-inset select {
+  height: 36px;
+  border-color: #b2b2b2;
+  background-color: #f8f8f8;
+  min-width: 80px; }
+.list-inset input, .list-inset select {
+  font-size: 16px; }
+.list-inset i {
+  font-size: 18px;
+  margin-left: 10px; }
+
+.bar.bar-stable .button:before {
+  font-size: 16px; }
 
 .options-header {
   text-align: center; }
 
-.graph {
+.individual-score .graph {
+  margin: 0px 10px;
   height: 300px; }
-
-.new-score .button-block {
+  .individual-score .graph g {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
+.individual-score .update-score .button-block {
   margin-top: 0;
   margin-bottom: 0; }
 
-.individual-score .collapse input, .individual-score .collapse select {
-  font-size: 16px; }
-.individual-score .collapse i {
-  font-size: 18px;
-  margin-left: 10px; }
-.individual-score .collapse select {
-  width: 50%;
-  border: none; }
-.individual-score .collapse button {
-  margin-left: 20px; }
-
 .modal-icon ion-content {
-  margin: 30px 10px; }
+  margin: 0 10px; }
   .modal-icon ion-content li {
     display: inline;
     font-size: 24px; }
     .modal-icon ion-content li .icon:before {
+      width: 20px;
       padding: 30px 30px; }
