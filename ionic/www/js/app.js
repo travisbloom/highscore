@@ -70,8 +70,9 @@ angular.module('starter', ['ionic', 'satellizer', 'n3-line-chart'])
 })
 
 .config(function($authProvider) {
-        $authProvider.facebook({
+    $authProvider.tokenName = 'access_token';
+    $authProvider.facebook({
             clientId: config.facebook.clientId,
-            url: 'https://graph.facebook.com/oauth/access_token'
+            url: config.envs[config.env].authEndpoint + '/fb'
         });
 });

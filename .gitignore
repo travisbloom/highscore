@@ -7,3 +7,6 @@ ionic/www/css/
 ionic/platforms/
 ionic/plugins/
 ionic/www/js/config.js
+
+apiserver/node_modules/
+apiserver/config.js
