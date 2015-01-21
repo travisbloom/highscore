@@ -45,15 +45,13 @@ angular.module('starter')
      ***/
     HighScoreObj.prototype.saveObj = function (params) {
       var self = this, index, savedScores = localFactory.getData().scores;
-      index = savedScores.map(function(score) {
-        return score.id;
-      }).indexOf(this.id);
+      //index of object
+      index = savedScores.map(function(score) { return score.id; }).indexOf(this.id);
       Object.keys(params).forEach(function(key) {
-        self[key] = params[key];
         //if a new history is being saved, convert the js Date() to JSON first
-        if (key === 'history')
-          return savedScores[index].history = convertHistory(params.history);
-        savedScores[index][key] = params[key];
+        var newVal = key === 'history' ? convertHistory(params.history) : params[key];
+        self[key] = newVal;
+        savedScores[index][key] = newVal;
       });
       //save new story data
       localFactory.setData('scores', savedScores);
@@ -85,9 +83,6 @@ angular.module('starter')
      * increment an object based on it's incrementValue, return an error if the object should not be incremented
      ***/
     HighScoreObj.prototype.increment = function (amount) {
-      //if there is no default incrementValue and a number is not passed
-      if (!this.incrementValue)
-        throw 'uncaught increment amount';
       if (amount === 'down')
         return this.newScore(-this.incrementValue + this.currentScore);
       //default to adding the increment value
@@ -124,14 +119,12 @@ angular.module('starter')
         } else {
           throw 'must have either apiInfo or config';
         }
-        //if the application hasn't gotten its scores yet, pull those in to the factory
-        if (!highScoreArray) this.getScores();
+        //if the application has already generated the highScores array
+        if (highScoreArray) highScoreArray.push(new HighScoreObj(score));
         //add and save the new score to savedScores
         newScores = localFactory.getData().scores;
         newScores.push(score);
         localFactory.setData('scores', newScores);
-        //generate a new HighScoreObj
-        highScoreArray.push(new HighScoreObj(score));
       },
       reorderScores: function (fromIndex, toIndex) {
         var newScores = localFactory.getData().scores;

@@ -17,7 +17,6 @@ angular.module('starter')
     }
     return {
       setData: function(property, newData) {
-        console.log(appData)
         appData[property] = newData;
         $window.localStorage[localStorageKey] = JSON.stringify(appData);
       },
