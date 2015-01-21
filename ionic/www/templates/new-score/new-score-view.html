@@ -1,0 +1,28 @@
+<ion-view title="New Score" class="new-score">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <!--Score Tabs-->
+    <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+        <div class="tabs">
+            <a class="tab-item" ng-click="customView = false" ng-class="{active: !customView}">
+                3rd Party Scores
+            </a>
+            <a class="tab-item" ng-click="customView = true" ng-class="{active: customView}">
+                Custom Score
+            </a>
+        </div>
+    </div>
+    <ion-content class="has-header">
+        <!--3rd Part View-->
+        <div ng-show="!customView">
+            <div class="list list-inset">
+                <div class="item" data-ng-click="auth('facebook')">
+                    facebook auth
+                </div>
+            </div>
+        </div>
+        <!--Custom View-->
+        <new-custom-score ng-show="customView"></new-custom-score>
+    </ion-content>
+</ion-view>

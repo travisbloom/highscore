@@ -1,5 +1,5 @@
 angular.module('starter')
-  .controller('NewScoreCtrl', function($scope, highScoreFactory, dataModelFactory, authFactory, $location, $ionicModal) {
+  .controller('NewScoreCtrl', function($scope, highScoreFactory, dataModelFactory, authFactory, $ionicModal) {
     $scope.auth = function(provider) {
       authFactory.checkAuth(provider).then(function(res) {
         console.log(res);
@@ -13,9 +13,7 @@ angular.module('starter')
     };
     $scope.item = {
       score: 0,
-      config: {
-
-      }
+      config: {}
     };
     //icon modal configuration/injection
     $ionicModal.fromTemplateUrl('templates/modal-icons.html', {
@@ -33,4 +31,12 @@ angular.module('starter')
     $scope.closeIconModal = function () {
       $scope.modal.hide();
     };
+    $scope.newScore = function () {
+      try {
+        highScoreFactory.newScore($scope.item);
+      //todo expose error?
+      } catch (e) {
+        console.log(e);
+      }
+    }
   });

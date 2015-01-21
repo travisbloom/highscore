@@ -5,7 +5,6 @@ angular.module('starter')
         console.log(response)
       });
     };
-    //        $scope.authenticate();
     $scope.settings = function (index) {
       $location.path('/app/highscores/' + index);
     };

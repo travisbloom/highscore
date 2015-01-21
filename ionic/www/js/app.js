@@ -41,7 +41,7 @@ angular.module('starter', ['ionic', 'satellizer', 'n3-line-chart'])
       url: "/new",
       views: {
         'menuContent' :{
-          templateUrl: "templates/new-score.html",
+          templateUrl: "templates/new-score/new-score-view.html",
           controller: 'NewScoreCtrl'
         }
       }

@@ -1,5 +1,5 @@
 angular.module('starter')
-  .factory('highScoreFactory', function(authFactory, localStorageFactory) {
+  .factory('highScoreFactory', function(authFactory, localFactory) {
     var setTypes = {
         mint: {
           name: 'Mint',
@@ -9,10 +9,9 @@ angular.module('starter')
           builtIn: true
         }
       },
-    //saves reference to JSON data returned about objects
-      savedData,
     //captures all the constructed HighScoreObj's
       highScoreArray;
+
     /**
      * Converts time stamps back and forth from JSON time and Date() time
      ***/
@@ -45,19 +44,19 @@ angular.module('starter')
      * save the updated object attributes
      ***/
     HighScoreObj.prototype.saveObj = function (params) {
-      var self = this, index;
-      index = savedData.map(function(score) {
+      var self = this, index, savedScores = localFactory.getData().scores;
+      index = savedScores.map(function(score) {
         return score.id;
       }).indexOf(this.id);
       Object.keys(params).forEach(function(key) {
         self[key] = params[key];
         //if a new history is being saved, convert the js Date() to JSON first
         if (key === 'history')
-          return savedData[index].history = convertHistory(params.history);
-        savedData[index][key] = params[key];
+          return savedScores[index].history = convertHistory(params.history);
+        savedScores[index][key] = params[key];
       });
       //save new story data
-      localStorageFactory.setAppData('scores', savedData);
+      localFactory.setData('scores', savedScores);
     };
     /***
      * updates the current score, adds the new score to the history array, and updates high score if applicable
@@ -95,16 +94,50 @@ angular.module('starter')
       return this.newScore(this.incrementValue + this.currentScore);
     };
     /***
+    * generate unique Ids for new custom scores
+    ***/
+    function uniqueId() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+      });
+    }
+    /***
      * Factory Returned Functions
      ***/
     return {
       newScore: function (scoreInfo) {
-
+        //define defaults
+        var newScores, score = {
+          id: uniqueId(),
+          currentScore: scoreInfo.currentScore || 0,
+          highScore: scoreInfo.currentScore || this.currentScore,
+          history: []
+        };
+        //determine whether the score is custom or api driven, return appropriate errors
+        if (scoreInfo.apiInfo) {
+          if (scoreInfo.config)
+            throw 'Score can not have config settings and apiInfo';
+          score.apiInfo = scoreInfo.apiInfo
+        } else if (scoreInfo.config) {
+          score.config = scoreInfo.config
+        } else {
+          throw 'must have either apiInfo or config';
+        }
+        //if the application hasn't gotten its scores yet, pull those in to the factory
+        if (!highScoreArray) this.getScores();
+        //add and save the new score to savedScores
+        newScores = localFactory.getData().scores;
+        newScores.push(score);
+        localFactory.setData('scores', newScores);
+        //generate a new HighScoreObj
+        highScoreArray.push(new HighScoreObj(score));
       },
       reorderScores: function (fromIndex, toIndex) {
-        savedData.splice(toIndex, 0, savedData.splice(fromIndex, 1)[0]);
+        var newScores = localFactory.getData().scores;
+        newScores.splice(toIndex, 0, newScores.splice(fromIndex, 1)[0]);
         //save new story data
-        localStorageFactory.setAppData('scores', savedData);
+        localFactory.setData('scores', newScores);
         highScoreArray.splice(toIndex, 0, highScoreArray.splice(fromIndex, 1)[0]);
         return highScoreArray;
       },
@@ -114,9 +147,7 @@ angular.module('starter')
       getScores: function() {
         if (highScoreArray) return highScoreArray;
         //get saved stories
-        savedData = localStorageFactory.getAppData().scores;
-        console.log(savedData)
-        return highScoreArray = savedData.map(function(savedScore) {
+        return highScoreArray = localFactory.getData().scores.map(function(savedScore) {
           return new HighScoreObj(savedScore);
         });
       }

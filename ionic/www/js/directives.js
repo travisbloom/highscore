@@ -1,12 +1,7 @@
-//angular.module('starter')
-//    .directive('numberOnlyInput', function () {
-//        return {
-//            restrict: 'E',
-//            template: '<input name="{{inputName}}" ng-model="inputValue" />',
-//            scope: {
-//                inputValue: '='
-//            },
-//            link: function (scope) {
-//            }
-//        };
-//    });
+angular.module('starter')
+    .directive('newCustomScore', function () {
+        return {
+            restrict: 'E',
+            templateUrl: '../templates/new-score/custom-score.html'
+        };
+    });

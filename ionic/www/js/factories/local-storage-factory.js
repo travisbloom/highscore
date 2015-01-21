@@ -2,12 +2,12 @@
 * Factory used to validate locally stored information, return default application schema if it doesn't exist/is invalid
 ***/
 angular.module('starter')
-  .factory('localStorageFactory', function($window, mockData) {
+  .factory('localFactory', function($window, mockData) {
     var appData, localStorageKey = 'highScoreData';
     //default appData
     function newAppData() {
       //todo remove mockData override
-      return mockData();
+      return appData = mockData();
       return appData = {
         userData: {
           providers: {}
@@ -16,15 +16,16 @@ angular.module('starter')
       }
     }
     return {
-      setAppData: function (property, newData) {
+      setData: function(property, newData) {
+        console.log(appData)
         appData[property] = newData;
         $window.localStorage[localStorageKey] = JSON.stringify(appData);
       },
-      getAppData: function () {
+      getData: function() {
         var storedAppData;
+        console.log('yo', appData);
         //if appData has already been populated
-        if (appData)
-          return appData;
+        if (appData) return appData;
         //otherwise, query localStorage for saved application data
         storedAppData = $window.localStorage[localStorageKey];
         //if no local object exists, return the new json obj
@@ -42,7 +43,7 @@ angular.module('starter')
           }
           //if the parsed Obj has the correct top level properties
           if (storedAppData.userData && storedAppData.scores)
-            return storedAppData;
+            return appData = storedAppData;
           throw {
             userMessage: 'There was an issue with your saved Highscors, the app data has been reset',
             newUserData: newAppData()
