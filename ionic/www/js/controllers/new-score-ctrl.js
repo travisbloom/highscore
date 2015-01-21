@@ -1,7 +1,7 @@
 angular.module('starter')
-  .controller('NewScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $auth, $location, $ionicModal) {
+  .controller('NewScoreCtrl', function($scope, highScoreFactory, dataModelFactory, authFactory, $location, $ionicModal) {
     $scope.auth = function(provider) {
-      $auth.authenticate(provider).then(function(res){
+      authFactory.checkAuth(provider).then(function(res) {
         console.log(res);
       })
     };

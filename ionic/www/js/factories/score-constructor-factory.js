@@ -1,7 +1,6 @@
 angular.module('starter')
-  .factory('highScoreFactory', function($window, mockData) {
-    var localStorageKey = 'highScoreData',
-      setTypes = {
+  .factory('highScoreFactory', function(authFactory, localStorageFactory) {
+    var setTypes = {
         mint: {
           name: 'Mint',
           icon: 'ion-social-usd',
@@ -14,10 +13,6 @@ angular.module('starter')
       savedData,
     //captures all the constructed HighScoreObj's
       highScoreArray;
-    //save users set of items to local storage
-    function saveItems() {
-      $window.localStorage[localStorageKey] = JSON.stringify(savedData);
-    }
     /**
      * Converts time stamps back and forth from JSON time and Date() time
      ***/
@@ -61,7 +56,8 @@ angular.module('starter')
           return savedData[index].history = convertHistory(params.history);
         savedData[index][key] = params[key];
       });
-      saveItems();
+      //save new story data
+      localStorageFactory.setAppData('scores', savedData);
     };
     /***
      * updates the current score, adds the new score to the history array, and updates high score if applicable
@@ -107,7 +103,8 @@ angular.module('starter')
       },
       reorderScores: function (fromIndex, toIndex) {
         savedData.splice(toIndex, 0, savedData.splice(fromIndex, 1)[0]);
-        saveItems();
+        //save new story data
+        localStorageFactory.setAppData('scores', savedData);
         highScoreArray.splice(toIndex, 0, highScoreArray.splice(fromIndex, 1)[0]);
         return highScoreArray;
       },
@@ -115,30 +112,13 @@ angular.module('starter')
        * returns the constructed HighScore Objects if they already exist or query for saved data and then construct the array
        ***/
       getScores: function() {
-        //if the highScore array has already been populated
-        if (highScoreArray)
-          return highScoreArray;
-        //otherwise, query localStorage for saved application data
-        savedData = $window.localStorage[localStorageKey];
-        //if it exists, parse the JSON string
-        if (savedData) {
-          try {
-            savedData = JSON.parse(savedData);
-          } catch (e) {
-            //delete any corrupted data
-            $window.localStorage.removeItem(localStorageKey);
-            throw 'There was an issue with your saved Highscors and the application had to reset your data.';
-          }
-          return highScoreArray = savedData.map(function(savedScore) {
-            return new HighScoreObj(savedScore);
-          });
-          //todo remove mocked rows
-        } else {
-          savedData = mockData();
-          return highScoreArray = savedData.map(function(savedScore) {
-            return new HighScoreObj(savedScore);
-          });
-        }
+        if (highScoreArray) return highScoreArray;
+        //get saved stories
+        savedData = localStorageFactory.getAppData().scores;
+        console.log(savedData)
+        return highScoreArray = savedData.map(function(savedScore) {
+          return new HighScoreObj(savedScore);
+        });
       }
     };
   });

@@ -3,14 +3,18 @@ var querystring = require('querystring');
 var express = require('express');
 var request = require('request');
 var config = require('../config');
+var response = require('./standardResponse');
 var router = express.Router();
 var fbAuth = 'https://graph.facebook.com/oauth/access_token';
 /* GET home page. */
-router.post('/fb', function(req, res, next) {
+router.post('/auth', function(req, res, next) {
   var authUrl;
   //add client secret to the request
   if (!req.body || !req.body.code || !req.body.clientId || !req.body.redirectUri)
-    res.status(400).json({userMessage: 'error sent to the API server'});
+    return response.error(res, {
+      internalMessage: 'fb auth fields not passed',
+      data: {passedBody: req.body}
+    });
   //add the req json body and clientSecret as query params
   authUrl = url.parse(fbAuth);
   authUrl.query = {
@@ -23,10 +27,24 @@ router.post('/fb', function(req, res, next) {
   console.log(authUrl);
   //submit GET to facebook
   request(authUrl, function(error, response, body) {
-    if (error) return res.status(500).json({userMessage: 'error returned from facebook'});
+    if (error) {
+      console.log('facebook error', error);
+      return response.error(res, {
+        internalMessage: 'facebook rejected request'
+      });
+    }
     //convert returned query params to json
     res.json(querystring.parse(body));
   });
 });
 
+router.all(function(req, res, next) {
+  if (!req.query || !req.query.access_token)
+   return response.error({internalMessage: 'fb auth token not passed'});
+  next();
+});
+
+router.get('/recent/likes/photos', function(req, res, next) {
+
+});
 module.exports = router;
