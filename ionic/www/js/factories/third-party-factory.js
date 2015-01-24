@@ -1,41 +1,37 @@
 angular.module('starter')
-  .factory('thirdPartyFactory', function($auth, $q) {
-    var paths =  {
-      time: ['recent'],
-      providers: [
-        {
-          name: 'facebook',
-          id: 'facebook',
-          config: {
-            icon: 'ion-social-usd',
-            color: '#26975b'
-          },
-          timeSpan: true,
-          categories: [
-            {
-              name: 'Pictures',
-              id: 'pictures',
-              options: [
-                {
-                  name: 'Likes',
-                  id: 'likes',
-                  description: 'Most likes on a photo',
-                  scoreData: {
-                    config: {
-                      name: 'Facebook Picture Likes',
-                      type: 'number'
-                    }
+  .factory('thirdPartyFactory', function($auth, $q, $http, authFactory) {
+    var providerOptions =  [
+      {
+        name: 'facebook',
+        id: 'facebook',
+        config: {
+          icon: 'ion-social-usd',
+          color: '#26975b'
+        },
+        timeSpan: true,
+        categories: [
+          {
+            name: 'Pictures',
+            id: 'pictures',
+            options: [
+              {
+                name: 'Likes',
+                id: 'likes',
+                description: 'Most likes on a photo',
+                scoreData: {
+                  config: {
+                    name: 'Facebook Picture Likes',
+                    type: 'number'
                   }
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    };
-    //build apiConfig
-    return (function () {
-      paths.providers.forEach(function(provider) {
+              }
+            ]
+          }
+        ]
+      }
+    ];
+    (function () {
+      providerOptions.forEach(function(provider) {
         provider.categories.forEach(function(category) {
           category.options.forEach(function(option) {
             //add provider configs to option
@@ -49,6 +45,18 @@ angular.module('starter')
           });
         })
       });
-      return paths;
     })();
+    //build apiConfig
+    return {
+      time: ['recent'],
+      options: providerOptions,
+      tokenReq: function (provider, path) {
+        return authFactory.getAuth(provider)
+          .then(function(token) {
+            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + token);
+          }).then(function(res) {
+            return res;
+          });
+      }
+    };
   });

@@ -9,7 +9,9 @@ var fbUri = 'https://graph.facebook.com';
 
 function generateUrl(path, token) {
   var newUrl =  url.parse(fbUri + path);
+  if (!newUrl.query) newUrl.query = {};
   newUrl.query.access_token = token;
+  console.log(url.format(newUrl))
   return url.format(newUrl);
 }
 /* GET home page. */
@@ -49,12 +51,11 @@ router.all(function(req, res, next) {
   next();
 });
 
-router.get('/recent/photos', function(req, res) {
+router.get('/pictures/likes', function(req, res) {
   request(generateUrl('/me', req.query.access_token))
     .then(function(response) {
-      console.log(response.body);
       //convert returned query params to json
-      res.json(querystring.parse(response.body));
+      res.json(JSON.parse(response));
     })
     .catch(function(err) {
       response.error(res, {

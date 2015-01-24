@@ -10,13 +10,13 @@ angular.module('starter')
       getAuth: function (provider) {
         var deferred = $q.defer();
         //if the provider doesn't exist, authenticate the user
-        if (!providers[provider]) {
+        if (!providers[provider] || !providers[provider].access_token) {
           return $auth.authenticate(provider).then(function (response) {
-            providers[provider] = response.data;
-            return response.data;
+            providers[provider] = response.data.access_token;
+            return response.data.access_token;
           });
         }
-        deferred.resolve(providers[provider]);
+        deferred.resolve(providers[provider].access_token);
         return deferred.promise;
       },
       addAuth: function (provider) {
