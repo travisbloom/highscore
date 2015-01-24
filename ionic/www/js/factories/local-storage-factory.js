@@ -1,7 +1,7 @@
 /***
  * Factory used to validate locally stored information, return default application schema if it doesn't exist/is invalid
  ***/
-angular.module('starter')
+angular.module('highScoreApp')
   .factory('localFactory', function($window) {
     var appData, localStorageKey = 'highScoreData';
     //default appData

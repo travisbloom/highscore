@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
   .factory('dataModelFactory', function() {
     return {
         id: 'string',

@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
   .factory('authFactory', function($auth, $q, localFactory) {
     var  providers = localFactory.appData.userData.providers;
     return {

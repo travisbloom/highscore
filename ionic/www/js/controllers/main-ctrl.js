@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
     .controller('AppCtrl', function($scope, $ionicModal, $timeout, localFactory) {
         // Form data for the login modal
         $scope.loginData = {};

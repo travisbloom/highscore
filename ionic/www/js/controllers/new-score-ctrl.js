@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
   .controller('NewScoreCtrl', function($scope, $http, highScoreFactory, dataModelFactory, authFactory, $ionicModal, thirdPartyFactory) {
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;

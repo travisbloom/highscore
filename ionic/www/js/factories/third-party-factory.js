@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
   .factory('thirdPartyFactory', function($auth, $q, $http, authFactory) {
     var providerOptions =  [
       {

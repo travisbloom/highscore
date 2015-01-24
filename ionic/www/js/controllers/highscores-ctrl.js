@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
   .controller('HighScoresCtrl', function($scope, highScoreFactory, $auth, $location) {
     $scope.authenticate = function(provider) {
       $auth.authenticate('facebook').then(function(response) {

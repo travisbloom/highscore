@@ -1,5 +1,5 @@
-angular.module('starter')
-  .factory('highScoreFactory', function(authFactory, localFactory, thirdPartyFactory) {
+angular.module('highScoreApp')
+  .factory('highScoreFactory', function(authFactory, localFactory) {
     //captures all the constructed HighScoreObj's
     var highScoreArray;
     /**

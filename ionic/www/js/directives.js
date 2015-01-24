@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
     .directive('newCustomScore', function () {
         return {
             restrict: 'E',

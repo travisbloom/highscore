@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('highScoreApp')
   .controller('HighScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal) {
     //default config for collapsible elements
     $scope.config = {
