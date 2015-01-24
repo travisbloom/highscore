@@ -14,8 +14,7 @@ angular.module('starter')
             highScore: 223,
             currentScore: 2,
             apiInfo: {
-              provider: 'mint',
-              token: 'test'
+              provider: 'mint'
             },
             history: [
               {

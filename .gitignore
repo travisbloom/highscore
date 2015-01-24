@@ -10,3 +10,4 @@ ionic/www/js/config.js
 
 apiserver/node_modules/
 apiserver/config.js
+api/

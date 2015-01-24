@@ -1,9 +1,20 @@
 angular.module('starter')
-  .controller('NewScoreCtrl', function($scope, highScoreFactory, dataModelFactory, authFactory, $ionicModal) {
-    $scope.auth = function(provider) {
-      authFactory.checkAuth(provider).then(function(res) {
-        console.log(res);
-      })
+  .controller('NewScoreCtrl', function($scope, highScoreFactory, dataModelFactory, authFactory, $ionicModal, thirdPartyFactory) {
+    //pull in third party options
+    $scope.thirdPartyOptions = thirdPartyFactory.providers;
+    //add a new third party score
+    $scope.addThirdPartyScore = function(option) {
+      authFactory.getAuth(option.provider).then(function(){
+        highScoreFactory.newScore({
+            apiInfo: {
+              provider: option.provider,
+              path: option.path
+            }
+          })
+      }).catch(function() {
+        //todo expose error
+        console.log('There was an error authenticating and your new provider could not be added')
+      });
     };
     $scope.customView = false;
     $scope.config = {

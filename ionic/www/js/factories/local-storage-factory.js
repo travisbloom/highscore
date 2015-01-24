@@ -1,6 +1,6 @@
 /***
-* Factory used to validate locally stored information, return default application schema if it doesn't exist/is invalid
-***/
+ * Factory used to validate locally stored information, return default application schema if it doesn't exist/is invalid
+ ***/
 angular.module('starter')
   .factory('localFactory', function($window, mockData) {
     var appData, localStorageKey = 'highScoreData';
@@ -16,11 +16,11 @@ angular.module('starter')
       }
     }
     return {
-      setData: function(property, newData) {
-        appData[property] = newData;
+      set appData(newData) {
+        appData = newData;
         $window.localStorage[localStorageKey] = JSON.stringify(appData);
       },
-      getData: function() {
+      get appData() {
         var storedAppData;
         console.log('yo', appData);
         //if appData has already been populated
@@ -31,22 +31,23 @@ angular.module('starter')
         if (!storedAppData) return newAppData();
         //if something was returned from localStorage
         try {
-            storedAppData = JSON.parse(storedAppData);
-          } catch (e) {
-            //delete any corrupted data
-            $window.localStorage.removeItem(localStorageKey);
-            throw {
-              userMessage: 'There was an issue with your saved Highscors, the app data has been reset',
-              newUserData: newAppData()
-            }
-          }
-          //if the parsed Obj has the correct top level properties
-          if (storedAppData.userData && storedAppData.scores)
-            return appData = storedAppData;
+          storedAppData = JSON.parse(storedAppData);
+        } catch (e) {
+          //delete any corrupted data
+          $window.localStorage.removeItem(localStorageKey);
           throw {
             userMessage: 'There was an issue with your saved Highscors, the app data has been reset',
             newUserData: newAppData()
           }
         }
+        //if the parsed Obj has the correct top level properties
+        if (storedAppData.userData && storedAppData.scores)
+          return appData = storedAppData;
+        $window.localStorage.removeItem(localStorageKey);
+        throw {
+          userMessage: 'There was an issue with your saved Highscors, the app data has been reset',
+          newUserData: newAppData()
+        }
       }
+    }
   });

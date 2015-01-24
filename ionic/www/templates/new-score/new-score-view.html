@@ -16,9 +16,19 @@
     <ion-content class="has-header">
         <!--3rd Part View-->
         <div ng-show="!customView">
-            <div class="list list-inset">
-                <div class="item" data-ng-click="auth('facebook')">
-                    facebook auth
+
+            <div class="card" data-ng-repeat="provider in thirdPartyOptions">
+                <div class="item item-divider">
+                    {{provider.name}}
+                </div>
+                <div class="item item-text-wrap" data-ng-repeat="category in provider.categories">
+                    {{category.name}}
+                    <div class="list list-inset">
+                        <div class="item" data-ng-repeat="option in category.options">
+                            {{option.name}}
+                            <button data-ng-click="addThirdPartyScore(option.path)">check dis shit out</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 angular.module('starter')
-    .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+    .controller('AppCtrl', function($scope, $ionicModal, $timeout, localFactory) {
         // Form data for the login modal
         $scope.loginData = {};
 
