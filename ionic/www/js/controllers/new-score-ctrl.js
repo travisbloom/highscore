@@ -3,14 +3,9 @@ angular.module('starter')
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.providers;
     //add a new third party score
-    $scope.addThirdPartyScore = function(option) {
-      authFactory.getAuth(option.provider).then(function(){
-        highScoreFactory.newScore({
-            apiInfo: {
-              provider: option.provider,
-              path: option.path
-            }
-          })
+    $scope.addThirdPartyScore = function(newScore) {
+      authFactory.getAuth(newScore.apiInfo.provider).then(function(){
+        highScoreFactory.newScore(newScore);
       }).catch(function() {
         //todo expose error
         console.log('There was an error authenticating and your new provider could not be added')
@@ -24,7 +19,9 @@ angular.module('starter')
     };
     $scope.item = {
       score: 0,
-      config: {}
+      config: {
+        type: 'number'
+      }
     };
     //icon modal configuration/injection
     $ionicModal.fromTemplateUrl('templates/modal-icons.html', {

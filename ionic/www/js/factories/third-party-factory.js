@@ -6,6 +6,10 @@ angular.module('starter')
         {
           name: 'facebook',
           id: 'facebook',
+          config: {
+            icon: 'ion-social-usd',
+            color: '#26975b'
+          },
           timeSpan: true,
           categories: [
             {
@@ -15,7 +19,13 @@ angular.module('starter')
                 {
                   name: 'Likes',
                   id: 'likes',
-                  description: 'The number of recent likes you\'ve gotten on photos'
+                  description: 'Most likes on a photo',
+                  scoreData: {
+                    config: {
+                      name: 'Facebook Picture Likes',
+                      type: 'number'
+                    }
+                  }
                 }
               ]
             }
@@ -23,14 +33,19 @@ angular.module('starter')
         }
       ]
     };
-    //build routes
+    //build apiConfig
     return (function () {
       paths.providers.forEach(function(provider) {
         provider.categories.forEach(function(category) {
-          category.options.forEach(function(option){
-            option.path = '/' + provider.path + '/' + category.path + '/' + option.path;
-            //removes the '/' before the providers name
-            option.provider = provider.id;
+          category.options.forEach(function(option) {
+            //add provider configs to option
+            angular.extend(option.scoreData.config, provider.config);
+            option.scoreData.apiInfo = {
+              path: '/' + provider.id + '/' + category.id + '/' + option.id,
+              category: category.id,
+              option: option.id,
+              provider: provider.id
+            };
           });
         })
       });

@@ -8,8 +8,8 @@ angular.module('starter')
     $scope.settings = function (index) {
       $location.path('/app/highscores/' + index);
     };
+    $scope.highScores = highScoreFactory.getScores();
     try {
-      $scope.highScores = highScoreFactory.getScores();
       //returns an error if localStorage data is corrupted
     } catch(e) {
       //todo create error solution

@@ -2,12 +2,11 @@
  * Factory used to validate locally stored information, return default application schema if it doesn't exist/is invalid
  ***/
 angular.module('starter')
-  .factory('localFactory', function($window, mockData) {
+  .factory('localFactory', function($window) {
     var appData, localStorageKey = 'highScoreData';
     //default appData
     function newAppData() {
       //todo remove mockData override
-      return appData = mockData();
       return appData = {
         userData: {
           providers: {}

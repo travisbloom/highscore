@@ -1,20 +1,6 @@
 angular.module('starter')
   .factory('dataModelFactory', function() {
     return {
-      preSetConfigs: {
-        mint: {
-          name: 'Mint',
-          icon: 'ion-social-usd',
-          color: '#26975b',
-          type: 'currency'
-        },
-        facebook: {
-          icon: 'ion-social-usd',
-          color: '#26975b',
-          type: 'currency'
-        }
-      },
-      scoreTypes: {
         id: 'string',
         config: {
           name: 'string',
@@ -70,5 +56,4 @@ angular.module('starter')
           }
         ]
       }
-    }
   });

@@ -8,7 +8,7 @@ angular.module('starter')
         authIndexes[scoreObj.id] = scoreObj.apiInfo
       },
       getAuth: function (provider) {
-        var deferred = q.defer();
+        var deferred = $q.defer();
         //if the provider doesn't exist, authenticate the user
         if (!providers[provider]) {
           return $auth.authenticate(provider).then(function (response) {

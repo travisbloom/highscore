@@ -1,6 +1,6 @@
 angular.module('starter')
   .controller('HighScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal) {
-    //default config for collapsable elemnts
+    //default config for collapsible elements
     $scope.config = {
       collapsed: true,
       options: {

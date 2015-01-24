@@ -1,5 +1,5 @@
 angular.module('starter')
-  .factory('highScoreFactory', function(authFactory, localFactory) {
+  .factory('highScoreFactory', function(authFactory, localFactory, thirdPartyFactory) {
     //captures all the constructed HighScoreObj's
     var highScoreArray;
     /**
@@ -27,8 +27,6 @@ angular.module('starter')
           self[key] = refObj[key];
         }
       });
-      //if the object has a predefined config to override existing configs
-      this.config = refObj.apiInfo ? setTypes[refObj.apiInfo.provider] : this.config;
     }
     /**
      * save the updated object attributes
@@ -92,17 +90,21 @@ angular.module('starter')
      ***/
     return {
       newScore: function (scoreInfo) {
+        scoreInfo.currentScore = scoreInfo.currentScore || 0;
         //define defaults
         var appData, score = {
           //id is passed for 3rd party options
           id: scoreInfo.id || uniqueId(),
-          currentScore: scoreInfo.currentScore || 0,
-          highScore: scoreInfo.currentScore || this.currentScore,
-          history: []
+          currentScore: scoreInfo.currentScore,
+          highScore: scoreInfo.currentScore,
+          config: scoreInfo.config,
+          history: [{
+            date: new Date().toJSON(),
+            score: scoreInfo.currentScore
+          }]
         };
+        console.log(score);
         if (scoreInfo.apiInfo) score.apiInfo = scoreInfo.apiInfo;
-        if (scoreInfo.config) score.config = scoreInfo.config;
-        if (!scoreInfo.config && !scoreInfo.apiInfo) throw 'custom scores must have a config';
         //if the application has already generated the highScores array
         if (highScoreArray) highScoreArray.push(new HighScoreObj(score));
         //add and save the new score to savedScores

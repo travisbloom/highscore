@@ -28,5 +28,6 @@
     </label>
 </div>
 <div class="padding">
-    <button class="button button-block button-positive" ng-click="newScore()">Create</button>
+    <button class="button button-block button-positive" ng-click="newScore()"
+            ng-disabled="!item.config.name || !item.config.icon" >Create</button>
 </div>
