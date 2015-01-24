@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .factory('highScoreFactory', function(authFactory, localFactory) {
+  .factory('highScoreFactory', function(localFactory, thirdPartyFactory) {
     //captures all the constructed HighScoreObj's
     var highScoreArray;
     /**
@@ -68,6 +68,16 @@ angular.module('highScoreApp')
       this.saveObj(params);
     };
     /***
+     * gets additional score information from API, sets new score
+     ***/
+    HighScoreObj.prototype.pullScore = function () {
+      var score = this, metaData = this.metaData && this.metaData.queryParam ? this.metaData.queryParam : undefined;
+      return thirdPartyFactory.scoreRequest(this.apiInfo.provider, this.apiInfo.path, metaData).then(function(res) {
+        score.saveObj({metaData: res.data.metaData});
+        score.newScore(res.data.score);
+      });
+    };
+    /***
      * increment an object based on it's incrementValue, return an error if the object should not be incremented
      ***/
     HighScoreObj.prototype.increment = function (amount) {
@@ -90,6 +100,7 @@ angular.module('highScoreApp')
      ***/
     return {
       newScore: function (scoreInfo) {
+        console.log(scoreInfo)
         scoreInfo.currentScore = scoreInfo.currentScore || 0;
         //define defaults
         var appData, score = {
@@ -103,8 +114,8 @@ angular.module('highScoreApp')
             score: scoreInfo.currentScore
           }]
         };
-        console.log(score);
         if (scoreInfo.apiInfo) score.apiInfo = scoreInfo.apiInfo;
+        if (scoreInfo.metaData) score.metaData = scoreInfo.metaData;
         //if the application has already generated the highScores array
         if (highScoreArray) highScoreArray.push(new HighScoreObj(score));
         //add and save the new score to savedScores

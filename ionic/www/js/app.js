@@ -73,6 +73,7 @@ angular.module('highScoreApp', ['ionic', 'satellizer', 'n3-line-chart'])
     $authProvider.tokenName = 'access_token';
     $authProvider.facebook({
             clientId: config.facebook.clientId,
-            url: config.envs[config.env].apiUri + '/facebook/auth'
+            url: config.envs[config.env].apiUri + '/facebook/auth',
+            scope: ['user_photos', 'user_friends']
         });
 });

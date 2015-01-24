@@ -15,8 +15,12 @@ angular.module('highScoreApp')
       //todo create error solution
       console.log(e);
     }
-    console.log($scope.highScores);
-//        $scope.highScores = mockData.map(function(item) {
+    $scope.refreshScore = function(scoreObj) {
+      scoreObj.pullScore().catch(function(err){
+        console.log(err)
+      });
+    };
+    //        $scope.highScores = mockData.map(function(item) {
 //            return highScoreFactory(item)
 //        });
     console.log($scope.highScores);

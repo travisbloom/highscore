@@ -5,13 +5,11 @@ var request = require('request-promise');
 var config = require('../config');
 var response = require('./standardResponse');
 var router = express.Router();
-var fbUri = 'https://graph.facebook.com';
+var fbUri = 'https://graph.facebook.com/v2.2';
 
-function generateUrl(path, token) {
+function generateUrl(path, queryParams) {
   var newUrl =  url.parse(fbUri + path);
-  if (!newUrl.query) newUrl.query = {};
   newUrl.query.access_token = token;
-  console.log(url.format(newUrl))
   return url.format(newUrl);
 }
 /* GET home page. */
@@ -53,14 +51,45 @@ router.use(function(req, res, next) {
 });
 
 router.get('/pictures/likes', function(req, res) {
-  request(generateUrl('/me', req.query.access_token))
+  var fbReq = url.parse(fbUri + '/me/photos/uploaded');
+  fbReq.query = {
+    access_token: req.query.access_token,
+    limit: 3000,
+    fields: 'likes.limit(1).summary(true)'
+  };
+  if (req.query.before) fbReq.query.before = req.query.before;
+  fbReq = url.format(fbReq);
+  console.log(fbReq);
+  request(fbReq)
+    //todo pipe compute to lambda
     .then(function(response) {
+      var maxLikes = 0, maxPhoto = null;
+      response = JSON.parse(response);
+      //iterate over all the returned photos
+      response.data.forEach(function(photo) {
+        if (!photo.likes || !photo.likes.summary) return;
+        var likesCount = photo.likes.summary.total_count;
+        //if totalLikes exceeds the previous max
+        if (likesCount > maxLikes) {
+          maxLikes = likesCount;
+          maxPhoto = photo.id;
+        }
+      });
       //convert returned query params to json
-      res.json(JSON.parse(response));
+      res.json({
+        score: maxLikes,
+        metaData: {
+          photoId: maxPhoto,
+          queryParams: {
+            before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : null
+          }
+        }
+      });
     })
     .catch(function(err) {
       response.error(res, {
-        internalMessage: 'facebook rejected request'
+        internalMessage: 'facebook rejected request',
+        details: err
       });
     });
 });

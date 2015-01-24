@@ -50,10 +50,17 @@ angular.module('highScoreApp')
     return {
       time: ['recent'],
       options: providerOptions,
-      tokenReq: function (provider, path) {
+      scoreRequest: function (provider, path, queryObj) {
+        var urlParams = '';
+        //if additional URL params are passed to the api server, add them here
+        if (queryObj) {
+          Object.keys(queryObj).forEach(function(key) {
+            urlParams += '&' + key + '=' + queryObj[key]
+          })
+        }
         return authFactory.getAuth(provider)
           .then(function(token) {
-            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + token);
+            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + token + urlParams);
           }).then(function(res) {
             return res;
           });

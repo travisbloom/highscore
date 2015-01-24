@@ -4,8 +4,12 @@ angular.module('highScoreApp')
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     //add a new third party score
     $scope.addThirdPartyScore = function(newScore) {
-      thirdPartyFactory.tokenReq(newScore.apiInfo.provider, newScore.apiInfo.path).then(function(firstScore){
-        console.log(firstScore);
+      //make an initial request to get starting score/needed metadata
+      thirdPartyFactory.scoreRequest(newScore.apiInfo.provider, newScore.apiInfo.path).then(function(res) {
+        //append returned data to newScore then create it
+        newScore.currentScore = res.data.score;
+        newScore.metaData = res.data.metaData;
+        highScoreFactory.newScore(newScore);
       }).catch(function() {
         //todo expose error
         console.log('There was an error authenticating and your new provider could not be added')
