@@ -34,18 +34,19 @@ router.post('/auth', function(req, res, next) {
       client_secret: config.fb.clientSecret
     }
   }).then(function(response) {
-    console.log(response)
-    //convert returned query params to json
-    res.json(querystring.parse(response));
-  })
+      console.log(response)
+      //convert returned query params to json
+      res.json(querystring.parse(response));
+    })
     .catch(function(err) {
       response.error(res, {
+        status: 400,
         internalMessage: 'facebook rejected request'
       });
     });
 });
 
-router.all(function(req, res, next) {
+router.use(function(req, res, next) {
   if (!req.query || !req.query.access_token)
     return response.error({internalMessage: 'fb auth token not passed'});
   next();

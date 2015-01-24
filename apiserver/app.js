@@ -3,7 +3,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-
+var response = require('./routes/standardResponse');
 var facebook = require('./routes/facebook');
 
 var app = express();
@@ -19,9 +19,10 @@ app.use('/facebook', facebook);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  response.error(res, {
+    status: 404,
+    internalMessage: 'The route specified does not exist'
+  })
 });
 
 // error handlers
