@@ -1,5 +1,6 @@
 angular.module('highScoreApp')
   .controller('HighScoresCtrl', function($scope, highScoreFactory, $auth, $location) {
+    $scope.loading = false;
     $scope.authenticate = function(provider) {
       $auth.authenticate('facebook').then(function(response) {
         console.log(response)
@@ -16,9 +17,15 @@ angular.module('highScoreApp')
       console.log(e);
     }
     $scope.refreshScore = function(scoreObj) {
-      scoreObj.pullScore().catch(function(err){
-        console.log(err)
-      });
+      $scope.loading = true;
+      scoreObj.pullScore()
+        .then(function(){
+          $scope.loading = false;
+        })
+        .catch(function(err){
+          $scope.loading = false;
+          console.log(err)
+        });
     };
     //        $scope.highScores = mockData.map(function(item) {
 //            return highScoreFactory(item)

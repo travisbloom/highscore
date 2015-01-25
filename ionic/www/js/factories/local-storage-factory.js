@@ -21,7 +21,6 @@ angular.module('highScoreApp')
       },
       get appData() {
         var storedAppData;
-        console.log('yo', appData);
         //if appData has already been populated
         if (appData) return appData;
         //otherwise, query localStorage for saved application data

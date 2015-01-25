@@ -31,14 +31,15 @@ router.post('/auth', function(req, res, next) {
       code: req.body.code,
       client_secret: config.fb.clientSecret
     }
-  }).then(function(response) {
+  }).then(function(returnedData) {
       //convert returned query params to json
-      res.json(querystring.parse(response));
+      res.json(querystring.parse(returnedData));
     })
-    .catch(function(err) {
+    .catch(function(returnedData) {
       response.error(res, {
         status: 400,
-        internalMessage: 'facebook rejected request'
+        internalMessage: 'facebook rejected request',
+        details: returnedData.error
       });
     });
 });
@@ -76,17 +77,18 @@ router.get('/pictures/likes', function(req, res) {
       //if previously queried data is still the max
       if (req.query.before && req.query.currentMax > maxLikes) {
         maxLikes = req.query.currentMax;
-        maxPhoto = req.query.maxPhoto;
+        maxPhoto = req.query.currentPhoto;
       }
-      //convert returned query params to json
+        //convert returned query params to json
       res.json({
         score: maxLikes,
         metaData: {
+          reqTimestamp: new Date().toJSON(),
           photoId: maxPhoto,
           queryParams: {
             //tracks the last id queried by facebook, reduces redundant query results from returning
             //e.g. prevents previously calculated photos from being queried
-            before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : null,
+            before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : req.query.before || null,
             //tracks the current max, will override returned max if before is present
             currentMax: maxLikes,
             currentPhoto: maxPhoto
