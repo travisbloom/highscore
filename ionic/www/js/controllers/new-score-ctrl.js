@@ -3,6 +3,7 @@ angular.module('highScoreApp')
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     //add a new third party score
+    console.log( $scope.thirdPartyOptions)
     $scope.addThirdPartyScore = function(newScore) {
       $ionicLoading.show({
         template: '<div>Processing all of your ' + newScore.apiInfo.provider + ' data. This could take a few seconds the first time</div>'

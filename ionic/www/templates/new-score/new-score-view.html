@@ -13,20 +13,20 @@
             </a>
         </div>
     </div>
-    <ion-content class="has-header">
+    <ion-content class="has-tabs-top">
         <!--3rd Part View-->
-        <div ng-show="!customView">
-
-            <div class="card" data-ng-repeat="provider in thirdPartyOptions">
-                <div class="item item-divider">
-                    {{provider.name}}
-                </div>
-                <div class="item item-text-wrap" data-ng-repeat="category in provider.categories">
-                    {{category.name}}
-                    <div class="list list-inset">
-                        <div class="item" data-ng-repeat="option in category.options" ng-disabled="option.used">
-                            {{option.name}}
-                            <button data-ng-click="addThirdPartyScore(option.scoreData)">check dis shit out</button>
+        <div ng-show="!customView" class="third-party-options">
+            <div data-ng-repeat="provider in thirdPartyOptions">
+                <h3>{{provider.name}}</h3>
+                <div class="card list">
+                    <div class="item item-text-wrap" data-ng-repeat="category in provider.categories">
+                        <strong>{{category.name}}</strong>
+                        <div class="item item-icon-left"
+                           ng-click="addThirdPartyScore(option.scoreData)"
+                           data-ng-repeat="option in category.options"
+                           ng-disabled="option.used">
+                            <i class="icon {{option.scoreData.config.icon}}"></i>
+                            {{option.description}}
                         </div>
                     </div>
                 </div>

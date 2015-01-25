@@ -1,16 +1,29 @@
 .new-score {
-  .list-inset {
-    margin: 0 10px;
+  .card {
+    margin-top: 0px;
+    input, select {
+      font-size: 16px;
+    }
+    button, select {
+      border: none;
+      background-color: transparent;
+      font-weight: bold;
+      padding: 0 0;
+    }
+    select {
+      width: 50%;
+    }
+    .placeholder {
+      opacity: .5;
+      font-style: italic;
+    }
   }
-  h4 {
+  h3 {
+    margin-top: 20px;
+    margin-bottom: 5px;
     text-align: center;
-    margin: 10px 0 0 0;
   }
-  .placeholder {
-    opacity: .5;
-    font-style: italic;
-  }
-  .has-header{
-    margin-top: 50px;
-  }
+//  .has-tabs{
+//    margin-top: 50px;
+//  }
 }

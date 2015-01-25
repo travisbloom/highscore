@@ -5,7 +5,7 @@ angular.module('highScoreApp')
         name: 'facebook',
         id: 'facebook',
         config: {
-          icon: 'ion-social-usd',
+          icon: 'ion-social-facebook',
           color: '#26975b'
         },
         timeSpan: true,
@@ -17,7 +17,18 @@ angular.module('highScoreApp')
               {
                 name: 'Likes',
                 id: 'likes',
-                description: 'Most likes on a photo',
+                description: 'Your most liked photo',
+                scoreData: {
+                  config: {
+                    name: 'Facebook Picture Likes',
+                    type: 'number'
+                  }
+                }
+              },
+              {
+                name: 'Likes',
+                id: 'likes',
+                description: 'Your most liked photo',
                 scoreData: {
                   config: {
                     name: 'Facebook Picture Likes',

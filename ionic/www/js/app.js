@@ -74,7 +74,8 @@ angular.module('highScoreApp', ['ionic', 'satellizer', 'n3-line-chart'])
     $authProvider.facebook({
       clientId: config.facebook.clientId,
       url: config.envs[config.env].apiUri + '/facebook/auth',
-      redirectUri: window.location.href + '/',
+      redirectUri: window.location.origin + '/' || window.location.protocol + '//' + window.location.host + '/',
+//      redirectUri: window.location.href + '/',
       scope: ['user_photos', 'user_friends']
     });
   });

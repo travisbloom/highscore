@@ -1,5 +1,5 @@
-<h4>Basics</h4>
-<div class="list list-inset">
+<h3>Basics</h3>
+<div class="list card">
     <label class="item item-input">
         <span class="input-label">Name:</span>
         <input type="text" ng-model="item.config.name" placeholder="new amazing goal......">
@@ -12,19 +12,19 @@
         <button class="button" ng-click="modal.show()">Select New Icon</button>
     </label>
 </div>
-<h4>Scoring Info</h4>
-<div class="list list-inset">
+<h3>Scoring Info</h3>
+<div class="list card">
     <label class="item item-input">
         <span class="input-label">Type:</span>
         <select ng-options="type for type in config.options.type" ng-model="item.config.type"></select>
     </label>
     <label class="item item-input">
-        <span class="input-label">Increment #:</span>
-        <input type="number" ng-model="item.incrementValue" placeholder="doesn't increment">
-    </label>
-    <label class="item item-input">
         <span class="input-label">Starting #:</span>
         <input type="number" ng-model="item.score" placeholder="score does not increment">
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Increment #:</span>
+        <input type="number" ng-model="item.incrementValue" placeholder="doesn't increment">
     </label>
 </div>
 <div class="padding">
