@@ -3,7 +3,7 @@ var querystring = require('querystring');
 var express = require('express');
 var request = require('request-promise');
 var config = require('../config');
-var response = require('./standardResponse');
+var response = require('./standard-response');
 var router = express.Router();
 var fbUri = 'https://graph.facebook.com/v2.2';
 
@@ -32,7 +32,6 @@ router.post('/auth', function(req, res, next) {
       client_secret: config.fb.clientSecret
     }
   }).then(function(response) {
-      console.log(response)
       //convert returned query params to json
       res.json(querystring.parse(response));
     })
@@ -59,7 +58,6 @@ router.get('/pictures/likes', function(req, res) {
   };
   if (req.query.before) fbReq.query.before = req.query.before;
   fbReq = url.format(fbReq);
-  console.log(fbReq);
   request(fbReq)
     //todo pipe compute to lambda
     .then(function(response) {
@@ -75,13 +73,23 @@ router.get('/pictures/likes', function(req, res) {
           maxPhoto = photo.id;
         }
       });
+      //if previously queried data is still the max
+      if (req.query.before && req.query.currentMax > maxLikes) {
+        maxLikes = req.query.currentMax;
+        maxPhoto = req.query.maxPhoto;
+      }
       //convert returned query params to json
       res.json({
         score: maxLikes,
         metaData: {
           photoId: maxPhoto,
           queryParams: {
-            before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : null
+            //tracks the last id queried by facebook, reduces redundant query results from returning
+            //e.g. prevents previously calculated photos from being queried
+            before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : null,
+            //tracks the current max, will override returned max if before is present
+            currentMax: maxLikes,
+            currentPhoto: maxPhoto
           }
         }
       });

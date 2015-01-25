@@ -55,7 +55,8 @@ angular.module('highScoreApp')
         //if additional URL params are passed to the api server, add them here
         if (queryObj) {
           Object.keys(queryObj).forEach(function(key) {
-            urlParams += '&' + key + '=' + queryObj[key]
+            //if the property was not falsey
+            if (queryObj[key]) urlParams += '&' + key + '=' + queryObj[key]
           })
         }
         return authFactory.getAuth(provider)

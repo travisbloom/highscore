@@ -71,7 +71,8 @@ angular.module('highScoreApp')
      * gets additional score information from API, sets new score
      ***/
     HighScoreObj.prototype.pullScore = function () {
-      var score = this, metaData = this.metaData && this.metaData.queryParam ? this.metaData.queryParam : undefined;
+      console.log(this.metaData)
+      var score = this, metaData = this.metaData && this.metaData.queryParams ? this.metaData.queryParams : undefined;
       return thirdPartyFactory.scoreRequest(this.apiInfo.provider, this.apiInfo.path, metaData).then(function(res) {
         score.saveObj({metaData: res.data.metaData});
         score.newScore(res.data.score);
