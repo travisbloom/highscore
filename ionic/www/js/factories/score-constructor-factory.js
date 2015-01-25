@@ -100,6 +100,7 @@ angular.module('highScoreApp')
      ***/
     return {
       newScore: function (scoreInfo) {
+        console.log(scoreInfo);
         scoreInfo.currentScore = scoreInfo.currentScore || 0;
         //define defaults
         var appData, score = {
@@ -113,12 +114,15 @@ angular.module('highScoreApp')
             score: scoreInfo.currentScore
           }]
         };
-        if (scoreInfo.apiInfo) score.apiInfo = scoreInfo.apiInfo;
+        appData = localFactory.appData;
+        if (scoreInfo.apiInfo) {
+          score.apiInfo = scoreInfo.apiInfo;
+          appData.userData.usedScores.push(scoreInfo.apiInfo.path);
+        }
         if (scoreInfo.metaData) score.metaData = scoreInfo.metaData;
         //if the application has already generated the highScores array
         if (highScoreArray) highScoreArray.push(new HighScoreObj(score));
         //add and save the new score to savedScores
-        appData = localFactory.appData;
         appData.scores.push(score);
         localFactory.appData = appData;
       },

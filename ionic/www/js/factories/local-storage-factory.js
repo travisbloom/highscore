@@ -9,6 +9,7 @@ angular.module('highScoreApp')
       //todo remove mockData override
       return appData = {
         userData: {
+          usedScores: [],
           providers: {}
         },
         scores: []

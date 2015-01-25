@@ -24,7 +24,7 @@
                 <div class="item item-text-wrap" data-ng-repeat="category in provider.categories">
                     {{category.name}}
                     <div class="list list-inset">
-                        <div class="item" data-ng-repeat="option in category.options">
+                        <div class="item" data-ng-repeat="option in category.options" ng-disabled="option.used">
                             {{option.name}}
                             <button data-ng-click="addThirdPartyScore(option.scoreData)">check dis shit out</button>
                         </div>
