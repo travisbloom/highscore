@@ -1,29 +1,15 @@
 .new-score {
+  .custom-score {
+  }
   .card {
     margin-top: 0px;
-    input, select {
-      font-size: 16px;
-    }
-    button, select {
-      border: none;
-      background-color: transparent;
-      font-weight: bold;
-      padding: 0 0;
-    }
-    select {
-      width: 50%;
-    }
-    .placeholder {
-      opacity: .5;
-      font-style: italic;
+    .keep-border {
+      border: 1px;
     }
   }
   h3 {
     margin-top: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     text-align: center;
   }
-//  .has-tabs{
-//    margin-top: 50px;
-//  }
 }

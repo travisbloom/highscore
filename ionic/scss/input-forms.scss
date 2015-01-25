@@ -1,0 +1,18 @@
+.score-inputs {
+  input, select {
+    font-size: 16px;
+  }
+  button, select {
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    padding: 0 0;
+  }
+  .placeholder {
+    opacity: .5;
+    font-style: italic;
+  }
+  select {
+    width: 50%;
+  }
+}

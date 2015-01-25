@@ -37,6 +37,34 @@ angular.module('highScoreApp')
                 }
               }
             ]
+          },
+          {
+            name: 'Pictures',
+            id: 'pictures',
+            options: [
+              {
+                name: 'Likes',
+                id: 'likes',
+                description: 'Your most liked photo',
+                scoreData: {
+                  config: {
+                    name: 'Facebook Picture Likes',
+                    type: 'number'
+                  }
+                }
+              },
+              {
+                name: 'Likes',
+                id: 'likes',
+                description: 'Your most liked photo',
+                scoreData: {
+                  config: {
+                    name: 'Facebook Picture Likes',
+                    type: 'number'
+                  }
+                }
+              }
+            ]
           }
         ]
       }

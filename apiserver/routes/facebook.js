@@ -81,7 +81,7 @@ router.get('/pictures/likes', function(req, res) {
       }
         //convert returned query params to json
       res.json({
-        score: maxLikes,
+        score: +maxLikes,
         metaData: {
           reqTimestamp: new Date().toJSON(),
           photoId: maxPhoto,
@@ -90,7 +90,7 @@ router.get('/pictures/likes', function(req, res) {
             //e.g. prevents previously calculated photos from being queried
             before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : req.query.before || null,
             //tracks the current max, will override returned max if before is present
-            currentMax: maxLikes,
+            currentMax: +maxLikes,
             currentPhoto: maxPhoto
           }
         }

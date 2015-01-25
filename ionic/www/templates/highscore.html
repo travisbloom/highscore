@@ -33,17 +33,17 @@
         </div>
         <!--Configuration for items that have config options-->
         <div class="collapse" ng-show="!config.collapsed" ng-if="!item.config.builtIn">
-            <div class="list list-inset">
+            <div class="list card score-inputs">
                 <label class="item item-input">
-                    <span class="input-label">Name</span>
+                    <span class="input-label">Name:</span>
                     <input type="text" ng-model="item.config.name">
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Type</span>
+                    <span class="input-label">Type:</span>
                     <select ng-options="type for type in config.options.type" ng-model="item.config.type"></select>
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Icon: <i class="icon {{item.config.icon}}"></i></span>
+                    <span class="input-label">Icon: <i class="icon {{item.config.icon}} score-icon"></i></span>
                     <button class="button" ng-click="modal.show()">Select New Icon</button>
                 </label>
             </div>

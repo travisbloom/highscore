@@ -19,20 +19,21 @@
             <div data-ng-repeat="provider in thirdPartyOptions">
                 <h3>{{provider.name}}</h3>
                 <div class="card list">
-                    <div class="item item-text-wrap" data-ng-repeat="category in provider.categories">
+                    <div class="item" data-ng-repeat="category in provider.categories">
                         <strong>{{category.name}}</strong>
-                        <div class="item item-icon-left"
-                           ng-click="addThirdPartyScore(option.scoreData)"
-                           data-ng-repeat="option in category.options"
-                           ng-disabled="option.used">
-                            <i class="icon {{option.scoreData.config.icon}}"></i>
-                            {{option.description}}
-                        </div>
+                        <div><button class="button button-block button-positive"
+                                data-ng-repeat="option in category.options"
+                                ng-click="addThirdPartyScore(option.scoreData)"ng-disabled="option.used">
+                            <i class="icon {{provider.config.icon}}"></i>  {{option.description}}
+                        </button></div>
+                        <!--<div class="item item-icon-left keep-border" data-ng-repeat="option in category.options">-->
+                            <!--<i class="icon {{option.scoreData.config.icon}}"></i>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
         </div>
         <!--Custom View-->
-        <new-custom-score ng-show="customView"></new-custom-score>
+        <new-custom-score class="custom-score" ng-show="customView"></new-custom-score>
     </ion-content>
 </ion-view>

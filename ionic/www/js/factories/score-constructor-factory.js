@@ -73,6 +73,7 @@ angular.module('highScoreApp')
     HighScoreObj.prototype.pullScore = function () {
       var score = this, metaData = this.metaData && this.metaData.queryParams ? this.metaData.queryParams : undefined;
       return thirdPartyFactory.scoreRequest(this.apiInfo.provider, this.apiInfo.path, metaData).then(function(res) {
+        console.log(res)
         score.saveObj({metaData: res.data.metaData});
         score.newScore(res.data.score);
       });
@@ -128,7 +129,7 @@ angular.module('highScoreApp')
       },
       reorderScores: function (fromIndex, toIndex) {
         var appData = localFactory.appData;
-        appData.scores.splice(toIndex, 0, newScores.splice(fromIndex, 1)[0]);
+        appData.scores.splice(toIndex, 0, appData.scores.splice(fromIndex, 1)[0]);
         //save new story data
         localFactory.appData = appData;
         highScoreArray.splice(toIndex, 0, highScoreArray.splice(fromIndex, 1)[0]);

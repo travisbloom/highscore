@@ -17,18 +17,20 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-// colors
-$highscore-primary: #4a87ee;
-$highscore-accent: #145fd7;
-$highscore-text: white;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-
+// colors
+$highscore-primary: $positive;
+$highscore-accent: #145fd7;
+$highscore-text: white;
 //override color styles
-@import "overrides";
 @import "new-score";
 @import "score-list";
+@import "input-forms";
 
+.score-icon {
+  font-size: 18px;
+}
 //input areas
 .list-inset {
   select {
