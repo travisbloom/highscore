@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .factory('thirdPartyFactory', function($auth, $q, $http, authFactory, localFactory) {
+  .factory('thirdPartyFactory', function($auth, $q, $http, authFactory, userDataFactory) {
     var providerOptions =  [
       {
         name: 'facebook',
@@ -70,7 +70,7 @@ angular.module('highScoreApp')
       }
     ];
     (function () {
-      var usedOptions = localFactory.appData.userData.usedScores;
+      var usedCustomScores = userDataFactory.data.usedCustomScores;
       providerOptions.forEach(function(provider) {
         provider.categories.forEach(function(category) {
           category.options.forEach(function(option) {
@@ -83,9 +83,8 @@ angular.module('highScoreApp')
               provider: provider.id
             };
             //if the option exists as a usedOption already
-            if (usedOptions.indexOf(option.scoreData.apiInfo.path) !== -1)
+            if (usedCustomScores.indexOf(option.scoreData.apiInfo.path) !== -1)
               option.used = true;
-
           });
         })
       });

@@ -5,17 +5,17 @@
     <!--Score Tabs-->
     <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
         <div class="tabs">
-            <a class="tab-item" ng-click="customView = false" ng-class="{active: !customView}">
+            <a class="tab-item" ng-click="show.customScoreTab = false" ng-class="{active: !show.customScoreTab}">
                 3rd Party Scores
             </a>
-            <a class="tab-item" ng-click="customView = true" ng-class="{active: customView}">
+            <a class="tab-item" ng-click="show.customScoreTab = true" ng-class="{active: show.customScoreTab}">
                 Custom Score
             </a>
         </div>
     </div>
     <ion-content class="has-tabs-top">
         <!--3rd Part View-->
-        <div ng-show="!customView" class="third-party-options">
+        <div ng-show="!show.customScoreTab" class="third-party-options">
             <div data-ng-repeat="provider in thirdPartyOptions">
                 <h3>{{provider.name}}</h3>
                 <div class="card list">
@@ -34,6 +34,6 @@
             </div>
         </div>
         <!--Custom View-->
-        <new-custom-score class="custom-score" ng-show="customView"></new-custom-score>
+        <new-custom-score class="custom-score" ng-show="show.customScoreTab"></new-custom-score>
     </ion-content>
 </ion-view>

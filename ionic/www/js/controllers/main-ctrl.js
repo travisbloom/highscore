@@ -1,4 +1,4 @@
 angular.module('highScoreApp')
-    .controller('AppCtrl', function($scope, $ionicModal, $timeout, localFactory) {
-
+    .controller('mainCtrl', function() {
+      //todo determine if a top level scope is needed
     });

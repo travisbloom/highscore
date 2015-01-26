@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .factory('highScoreFactory', function(localFactory, thirdPartyFactory) {
+  .factory('highScoreFactory', function(userDataFactory, thirdPartyFactory) {
     //captures all the constructed HighScoreObj's
     var highScoreArray;
     /**
@@ -32,17 +32,17 @@ angular.module('highScoreApp')
      * save the updated object attributes
      ***/
     HighScoreObj.prototype.saveObj = function (params) {
-      var self = this, index, appData = localFactory.appData;
+      var self = this, index, userData = userDataFactory.data;
       //index of object
-      index = appData.scores.map(function(score) { return score.id; }).indexOf(this.id);
+      index = userData.scores.map(function(score) { return score.id; }).indexOf(this.id);
       Object.keys(params).forEach(function(key) {
         //if a new history is being saved, convert the js Date() to JSON first
         var newVal = key === 'history' ? convertHistory(params.history) : params[key];
         self[key] = newVal;
-        appData.scores[index][key] = newVal;
+        userData.scores[index][key] = newVal;
       });
       //save new story data
-      localFactory.appData = appData;
+      userDataFactory.data = userData;
     };
     /***
      * updates the current score, adds the new score to the history array, and updates high score if applicable
@@ -101,10 +101,9 @@ angular.module('highScoreApp')
      ***/
     return {
       newScore: function (scoreInfo) {
-        console.log(scoreInfo);
         scoreInfo.currentScore = scoreInfo.currentScore || 0;
         //define defaults
-        var appData, score = {
+        var userData, score = {
           //id is passed for 3rd party options
           id: scoreInfo.id || uniqueId(),
           currentScore: scoreInfo.currentScore,
@@ -115,23 +114,23 @@ angular.module('highScoreApp')
             score: scoreInfo.currentScore
           }]
         };
-        appData = localFactory.appData;
+        userData = userDataFactory.data;
         if (scoreInfo.apiInfo) {
           score.apiInfo = scoreInfo.apiInfo;
-          appData.userData.usedScores.push(scoreInfo.apiInfo.path);
+          userData.usedCustomScores.push(scoreInfo.apiInfo.path);
         }
         if (scoreInfo.metaData) score.metaData = scoreInfo.metaData;
         //if the application has already generated the highScores array
         if (highScoreArray) highScoreArray.push(new HighScoreObj(score));
         //add and save the new score to savedScores
-        appData.scores.push(score);
-        localFactory.appData = appData;
+        userData.scores.push(score);
+        userDataFactory.data = userData;
       },
       reorderScores: function (fromIndex, toIndex) {
-        var appData = localFactory.appData;
-        appData.scores.splice(toIndex, 0, appData.scores.splice(fromIndex, 1)[0]);
+        var userData = userDataFactory.data;
+        userData.scores.splice(toIndex, 0, appData.scores.splice(fromIndex, 1)[0]);
         //save new story data
-        localFactory.appData = appData;
+        userDataFactory.data = userData;
         highScoreArray.splice(toIndex, 0, highScoreArray.splice(fromIndex, 1)[0]);
         return highScoreArray;
       },
@@ -141,7 +140,7 @@ angular.module('highScoreApp')
       getScores: function() {
         if (highScoreArray) return highScoreArray;
         //get saved stories
-        return highScoreArray = localFactory.appData.scores.map(function(savedScore) {
+        return highScoreArray = userDataFactory.data.scores.map(function(savedScore) {
           return new HighScoreObj(savedScore);
         });
       }

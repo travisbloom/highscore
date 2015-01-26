@@ -1,10 +1,32 @@
 angular.module('highScoreApp')
-  .controller('NewScoreCtrl', function($scope, $http, highScoreFactory, dataModelFactory, authFactory, $ionicModal, thirdPartyFactory, $ionicLoading) {
+  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading) {
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
-    //add a new third party score
-    console.log( $scope.thirdPartyOptions)
+    $scope.show = {
+      //governs what tab is being shown
+      customScoreTab: false
+    };
+    /***
+     * options to choose from for newScore
+     ***/
+    $scope.scoreOptions = {
+      type: dataModelFactory.config.type,
+      icons: dataModelFactory.config.icon
+    };
+    /***********************************************
+     ***********************************************
+     * Data Specific to 3rd Party Scores
+     ***********************************************
+     **********************************************/
+    /***
+     * @newScore: submit the newScore object data
+     * add a new third party score the users data
+     * makes an initial api request, gathering any missing auth data for the given provider
+     * set the returned score and metaData, if any, to the newScore obj
+     * generate the new score
+     ***/
     $scope.addThirdPartyScore = function(newScore) {
+      //show loading page, initial loads can take some time
       $ionicLoading.show({
         template: '<div>Processing all of your ' + newScore.apiInfo.provider + ' data. This could take a few seconds the first time</div>'
       });
@@ -14,6 +36,7 @@ angular.module('highScoreApp')
         //append returned data to newScore then create it
         newScore.currentScore = res.data.score;
         newScore.metaData = res.data.metaData;
+        //generate and save the new score
         highScoreFactory.newScore(newScore);
       }).catch(function() {
         $ionicLoading.hide();
@@ -21,39 +44,44 @@ angular.module('highScoreApp')
         console.log('There was an error authenticating and your new provider could not be added')
       });
     };
-    $scope.customView = false;
-    $scope.config = {
-      options: {
-        type: dataModelFactory.config.type
-      }
-    };
-    $scope.item = {
+    /***********************************************
+     ***********************************************
+     * Functions Specific to Custom Scores
+     ***********************************************
+     **********************************************/
+    /***
+     * sets the object structure and defaults for the new Custom Score
+     ***/
+    $scope.score = {
       score: 0,
       config: {
         type: 'number'
       }
     };
-    //icon modal configuration/injection
+    /***
+     * configure icon modal for page, track modal on scope
+     ***/
     $ionicModal.fromTemplateUrl('templates/modal-icons.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.modal = modal;
     });
-    $scope.icons = dataModelFactory.config.icon;
-
+    /***
+     * pass new icon to item config, hide modal
+     ***/
     $scope.newIcon = function (icon) {
-      $scope.item.config.icon = icon;
+      $scope.score.config.icon = icon;
       $scope.modal.hide();
     };
-    $scope.closeIconModal = function () {
-      $scope.modal.hide();
-    };
+    /***
+     * try to generate the new custom score, retuns an error when invalid data is submitted
+     ***/
     $scope.newScore = function () {
       try {
-        highScoreFactory.newScore($scope.item);
-      //todo expose error?
+        highScoreFactory.newScore($scope.score);
       } catch (e) {
+        //todo expose error
         console.log(e);
       }
     }

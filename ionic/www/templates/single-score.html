@@ -1,16 +1,16 @@
-<ion-view title="{{item.config.name}}" class="individual-score">
+<ion-view title="{{score.config.name}}" class="individual-score">
     <ion-content class="has-header">
         <div class="graph">
-            <linechart data="item.history" options="options"></linechart>
+            <linechart data="score.history" options="options"></linechart>
         </div>
         <!--exposed increment options when relevant-->
-        <div class="row" ng-if="item.incrementValue">
+        <div class="row" ng-if="score.incrementValue">
             <div class="col"><button ng-click="increment('down')" class="button icon button-full ion-minus-round"></button></div>
             <div class="col"><button ng-click="increment('up')" class="button icon button-full ion-plus-round"></button></div>
         </div>
         <!--new value input-->
         <div class="row update-score">
-            <div class="col" ng-class="{'col-60' : newScore !== item.currentScore}">
+            <div class="col" ng-class="{'col-60' : newScore !== score.currentScore}">
                 <div class="list">
                     <label class="item item-input">
                         <span class="input-label">Current Value</span>
@@ -18,32 +18,32 @@
                     </label>
                 </div>
             </div>
-            <div class="col col-20" ng-show="newScore !== item.currentScore">
-                <button class="button button-block icon ion-checkmark-round" ng-click="item.newScore(newScore)"></button>
+            <div class="col col-20" ng-show="newScore !== score.currentScore">
+                <button class="button button-block icon ion-checkmark-round" ng-click="score.newScore(newScore)"></button>
             </div>
-            <div class="col col-20" ng-show="newScore !== item.currentScore">
-                <button class="button button-block icon ion-close-round" ng-click="newScore = item.currentScore"></button>
+            <div class="col col-20" ng-show="newScore !== score.currentScore">
+                <button class="button button-block icon ion-close-round" ng-click="newScore = score.currentScore"></button>
             </div>
         </div>
         <div class="padding">
             <button class="button button-block button-positive" ng-click="configureSettings()">
-                <span ng-show="config.collapsed">Configure {{item.config.name}}</span>
-                <span ng-show="!config.collapsed">Save Configuration</span>
+                <span ng-show="!show.config">Configure {{score.config.name}}</span>
+                <span ng-show="show.config">Save Configuration</span>
             </button>
         </div>
         <!--Configuration for items that have config options-->
-        <div class="collapse" ng-show="!config.collapsed" ng-if="!item.config.builtIn">
+        <div class="collapse" ng-show="show.config">
             <div class="list card score-inputs">
                 <label class="item item-input">
                     <span class="input-label">Name:</span>
-                    <input type="text" ng-model="item.config.name">
+                    <input type="text" ng-model="score.config.name">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Type:</span>
-                    <select ng-options="type for type in config.options.type" ng-model="item.config.type"></select>
+                    <select ng-options="type for type in scoreOptions.type" ng-model="score.config.type"></select>
                 </label>
                 <label class="item item-input">
-                    <span class="input-label">Icon: <i class="icon {{item.config.icon}} score-icon"></i></span>
+                    <span class="input-label">Icon: <i class="icon {{score.config.icon}} score-icon"></i></span>
                     <button class="button" ng-click="modal.show()">Select New Icon</button>
                 </label>
             </div>

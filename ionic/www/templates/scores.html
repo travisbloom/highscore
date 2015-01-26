@@ -7,7 +7,7 @@
     </ion-nav-buttons>
     <ion-content class="has-header">
         <ion-list show-reorder="show.showReorder">
-            <ion-item  ng-repeat="item in highScores" ng-click="settings($index)" class="item-icon-left">
+            <ion-item  ng-repeat="item in highScores" ng-click="goToScore($index)" class="item-icon-left">
                     <i class="icon {{item.config.icon}} score-icon" style="color: {{item.config.color}}"></i>
                     <span style="color: {{item.config.color}}">{{item.config.name}}</span>
                     <span class="item-note">
