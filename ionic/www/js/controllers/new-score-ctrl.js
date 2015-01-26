@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading) {
+  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location) {
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     $scope.show = {
@@ -38,6 +38,8 @@ angular.module('highScoreApp')
         newScore.metaData = res.data.metaData;
         //generate and save the new score
         highScoreFactory.newScore(newScore);
+        //send user to highScores page after successful completion. Pass query param to signal successful signup
+        $location.path('/app/highscores?message=newscore');
       }).catch(function() {
         $ionicLoading.hide();
         //todo expose error

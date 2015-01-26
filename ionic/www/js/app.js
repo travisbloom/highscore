@@ -38,7 +38,7 @@ angular.module('highScoreApp', [
         }
       })
       .state('app.highscores', {
-        url: "/highscores",
+        url: "/highscores?message",
         views: {
           'menuContent' :{
             templateUrl: "templates/scores.html",
@@ -61,6 +61,8 @@ angular.module('highScoreApp', [
 
   .config(function($authProvider) {
     $authProvider.tokenName = 'access_token';
+    //prevent default redirects to occur, allow individual controllers to determine flow
+    $authProvider.loginRedirect = null;
     //configure facebook credentials
     $authProvider.facebook({
       clientId: config.facebook.clientId,

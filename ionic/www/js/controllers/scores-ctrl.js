@@ -4,6 +4,10 @@ angular.module('highScoreApp')
       reorder: false,
       loading: false
     };
+    //add success message if something is passed in the route
+    //todo build alerts design
+    if ($location.search().message)
+      console.log($location.search().message);
     /***
      * load high scores from local storage, catch invalid app data
      ***/
