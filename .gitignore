@@ -3,14 +3,9 @@
 *.log
 *.zip
 
-ionic/node_modules/
-ionic/www/lib/
-ionic/www/css/
-ionic/platforms/
-ionic/plugins/
-ionic/www/js/config.js
-
-apiserver/node_modules/
-apiserver/config.js
-es-six-apiserver/node_modules
-es-six-apiserver/config.js
+node_modules/
+www/lib/
+www/css/
+platforms/
+plugins/
+www/js/config.js
