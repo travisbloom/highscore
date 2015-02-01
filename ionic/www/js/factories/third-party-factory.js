@@ -24,42 +24,20 @@ angular.module('highScoreApp')
                     type: 'number'
                   }
                 }
-              },
-              {
-                name: 'Likes',
-                id: 'likes',
-                description: 'Your most liked photo',
-                scoreData: {
-                  config: {
-                    name: 'Facebook Picture Likes',
-                    type: 'number'
-                  }
-                }
               }
             ]
           },
           {
-            name: 'Pictures',
-            id: 'pictures',
+            name: 'Status Updates',
+            id: 'status',
             options: [
               {
                 name: 'Likes',
                 id: 'likes',
-                description: 'Your most liked photo',
+                description: 'Your most liked status updates',
                 scoreData: {
                   config: {
-                    name: 'Facebook Picture Likes',
-                    type: 'number'
-                  }
-                }
-              },
-              {
-                name: 'Likes',
-                id: 'likes',
-                description: 'Your most liked photo',
-                scoreData: {
-                  config: {
-                    name: 'Facebook Picture Likes',
+                    name: 'Facebook Status Likes',
                     type: 'number'
                   }
                 }

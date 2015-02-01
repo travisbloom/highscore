@@ -16,7 +16,7 @@
                     </span>
                 <!--reset score-->
                 <ion-option-button ng-if="item.apiInfo" class="button-info" ng-click="refreshScore($event, item)">
-                    <i class="icon ion-refresh"></i>
+                    <i class="icon ion-refresh" ng-class="{loading: item.loading}"></i>
                 </ion-option-button>
                 <!--plus/minus sign for custom scores that increment by a set amount-->
                 <ion-option-button ng-if="item.incrementValue" class="button-info" ng-click="increment($event, item, 'down')">

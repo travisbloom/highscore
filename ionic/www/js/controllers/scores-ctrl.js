@@ -38,14 +38,14 @@ angular.module('highScoreApp')
     $scope.refreshScore = function(e, scoreObj) {
       //prevent click through to next page
       e.stopPropagation();
-      $scope.show.loading = true;
+      scoreObj.loading = true;
       scoreObj.pullScore()
         .then(function(){
-          $scope.show.loading = false;
+          scoreObj.loading = false;
         })
         //todo propegate error to ui
         .catch(function(err){
-          $scope.show.loading = false;
+          scoreObj.loading = false;
           console.log(err)
         });
     };
@@ -54,13 +54,14 @@ angular.module('highScoreApp')
      * Functions Specific to non-incrementing custom scores
      ***********************************************
      **********************************************/
-     //used by nonincrementing input box
+     //used by non-incrementing input box
     $scope.preventClick = function(e) {
       e.stopPropagation();
     };
     $scope.newScore = function(e, scoreObj) {
       e.stopPropagation();
-      scoreObj.newScore(scoreObj.newCurrent);
+      scoreObj.saveObj({currentScore: scoreObj.newCurrent});
+      scoreObj.newCurrent = undefined;
     };
     /***********************************************
      ***********************************************

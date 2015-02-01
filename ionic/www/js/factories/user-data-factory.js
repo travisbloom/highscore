@@ -63,6 +63,12 @@ angular.module('highScoreApp')
         //if the object doesn't have correct top level properties, throw it
         if (!localUserData.usedCustomScores || !localUserData.providers || !localUserData.scores)
           throw corruptUserData();
+        //convert json dates to date objects
+        localUserData.scores.forEach(function(score) {
+          score.history.forEach(function(prevScore) {
+            prevScore.date = new Date(prevScore.date)
+          });
+        });
         return userData = localUserData;
       }
     }

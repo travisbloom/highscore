@@ -27,6 +27,7 @@ $highscore-text: white;
 @import "new-score";
 @import "score-list";
 @import "input-forms";
+@import "single-score";
 
 .score-icon {
   font-size: 18px;
@@ -49,7 +50,7 @@ $highscore-text: white;
 }
 
 //nav header buttons
-.bar.bar-stable {
+.bar.bar-positive {
   .button {
     &:before {
       font-size: 16px;
@@ -62,21 +63,6 @@ $highscore-text: white;
   text-align: center;
 }
 
-.individual-score {
-  .graph {
-    margin: 0px 10px;
-    height: 300px;
-    g {
-      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    }
-  }
-  .update-score {
-    .button-block {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-}
 
 .modal-icon {
   ion-content {

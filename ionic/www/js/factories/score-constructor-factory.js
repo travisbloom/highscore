@@ -3,69 +3,54 @@ angular.module('highScoreApp')
     //captures all the constructed HighScoreObj's
     var highScoreArray;
     /**
-     * Converts time stamps back and forth from JSON time and Date() time
+     * cleanse data being added/created
+     * adds score specific data (highScore, history)
+     * converts history data to the proper format
      ***/
-    function convertHistory(history) {
-      return history.map(function (datapoint) {
-        return {
-          score: datapoint.score,
-          date: typeof datapoint.date === 'string' ? new Date(datapoint.date) : datapoint.date.toJSON()
+    function prepareScoreProperties(properties) {
+      var currentTime = new Date(),
+        historyDataPoint = {
+        date: currentTime,
+        score: properties.currentScore
+      };
+      //if a new score is being added
+      if (properties.currentScore) {
+        if (this.history) {
+          //if a new history record is being inserted and the previous record was less than 4 seconds old, override the oldest data point
+          if ((currentTime - this.history[this.history.length - 1].date < 4000))
+            this.history.pop();
+          //create the object with the new fields to be sent to saveObj()
+          properties.history = this.history.concat([historyDataPoint]);
+        } else {
+          properties.history = [historyDataPoint]
         }
-      });
+        //update highScore if applicable
+        if (properties.currentScore >= (this.highScore || properties.currentScore))
+          properties.highScore = properties.currentScore;
+      }
+      return properties;
     }
     /**
      * Constructor that accepts JSON data about a highscore, appends any config details, changes date strings to js Date() and returns the HighScoreObj
      ***/
-    function HighScoreObj (refObj) {
-      var self = this;
-      Object.keys(refObj).forEach(function (key) {
-        //if the key is the history array, convert the time stamps
-        if (key === 'history') {
-          self.history = convertHistory(refObj.history);
-        } else {
-          //add the json properties to the new obj
-          self[key] = refObj[key];
-        }
-      });
+    function HighScoreObj (obj) {
+      angular.extend(this, obj);
     }
     /**
      * save the updated object attributes
      ***/
-    HighScoreObj.prototype.saveObj = function (params) {
-      var self = this, index, userData = userDataFactory.data;
+    HighScoreObj.prototype.saveObj = function (obj) {
+      var userData = userDataFactory.data,
       //index of object
       index = userData.scores.map(function(score) { return score.id; }).indexOf(this.id);
-      Object.keys(params).forEach(function(key) {
-        //if a new history is being saved, convert the js Date() to JSON first
-        var newVal = key === 'history' ? convertHistory(params.history) : params[key];
-        self[key] = newVal;
-        userData.scores[index][key] = newVal;
-      });
+      //append/cleanse properties being added
+      obj = prepareScoreProperties.bind(this, obj)();
+      //extend the highScore object with the new properties
+      angular.extend(this, obj);
+      //extend the userData object with the new properties
+      angular.extend(userData.scores[index], obj);
       //save new story data
       userDataFactory.data = userData;
-    };
-    /***
-     * updates the current score, adds the new score to the history array, and updates high score if applicable
-     ***/
-    HighScoreObj.prototype.newScore = function (score) {
-      var currentTime = new Date(), params;
-      if (isNaN(score))
-        throw 'scores must be numbers';
-      //if a new history record is being inserted and the previous record was less than 10 seconds old, override the oldest data point
-      if (currentTime - this.history[this.history.length - 1].date < 10000)
-        this.history.pop();
-      //create the object with the new fields to be sent to saveObj()
-      params = {
-        currentScore: score,
-        history: this.history.concat([{
-          date: currentTime,
-          score: score
-        }])
-      };
-      //update highScore if applicable
-      if (score > this.highScore)
-        params.highScore = score;
-      this.saveObj(params);
     };
     /***
      * gets additional score information from API, sets new score
@@ -73,22 +58,24 @@ angular.module('highScoreApp')
     HighScoreObj.prototype.pullScore = function () {
       var score = this, metaData = this.metaData && this.metaData.queryParams ? this.metaData.queryParams : undefined;
       return thirdPartyFactory.scoreRequest(this.apiInfo.provider, this.apiInfo.path, metaData).then(function(res) {
-        console.log(res)
-        score.saveObj({metaData: res.data.metaData});
-        score.newScore(res.data.score);
+        score.saveObj({
+          currentScore: +res.data.score,
+          metaData: res.data.metaData
+        });
       });
     };
     /***
      * increment an object based on it's incrementValue, return an error if the object should not be incremented
      ***/
     HighScoreObj.prototype.increment = function (amount) {
-      if (amount === 'down')
-        return this.newScore(-this.incrementValue + this.currentScore);
-      //default to adding the increment value
-      return this.newScore(this.incrementValue + this.currentScore);
+      var increment = amount === 'down' ? -this.incrementValue : this.incrementValue;
+      this.saveObj({
+        currentScore: increment + this.currentScore
+      });
     };
     /***
     * generate unique Ids for new custom scores
+    * not sure why i might need ids but its prob a good idea to assign them early on in case....
     ***/
     function uniqueId() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -100,37 +87,25 @@ angular.module('highScoreApp')
      * Factory Returned Functions
      ***/
     return {
-      newScore: function (scoreInfo) {
-        scoreInfo.currentScore = scoreInfo.currentScore || 0;
-        //define defaults
-        var userData, score = {
-          //id is passed for 3rd party options
-          id: scoreInfo.id || uniqueId(),
-          currentScore: scoreInfo.currentScore,
-          highScore: scoreInfo.currentScore,
-          config: scoreInfo.config,
-          history: [{
-            date: new Date().toJSON(),
-            score: scoreInfo.currentScore
-          }]
-        };
-        userData = userDataFactory.data;
-        if (scoreInfo.apiInfo) {
-          score.apiInfo = scoreInfo.apiInfo;
-          userData.usedCustomScores.push(scoreInfo.apiInfo.path);
-        }
-        if (scoreInfo.metaData) score.metaData = scoreInfo.metaData;
+      newScore: function (obj) {
+        var userData = userDataFactory.data;
+        obj.currentScore = +obj.currentScore || 0;
+        obj.id = +obj.id || uniqueId();
+        obj = prepareScoreProperties.bind(obj, obj)();
+        //add the custom score path to the list of used 3rd party scores
+        if (obj.apiInfo) userData.usedCustomScores.push(obj.apiInfo.path);
         //if the application has already generated the highScores array
-        if (highScoreArray) highScoreArray.push(new HighScoreObj(score));
+        if (highScoreArray) highScoreArray.push(new HighScoreObj(obj));
         //add and save the new score to savedScores
-        userData.scores.push(score);
+        userData.scores.push(obj);
         userDataFactory.data = userData;
       },
       reorderScores: function (fromIndex, toIndex) {
-        var userData = userDataFactory.data;
-        userData.scores.splice(toIndex, 0, appData.scores.splice(fromIndex, 1)[0]);
         //save new story data
+        var userData = userDataFactory.data;
+        userData.scores.splice(toIndex, 0, userData.scores.splice(fromIndex, 1)[0]);
         userDataFactory.data = userData;
+        //update highScore Array
         highScoreArray.splice(toIndex, 0, highScoreArray.splice(fromIndex, 1)[0]);
         return highScoreArray;
       },

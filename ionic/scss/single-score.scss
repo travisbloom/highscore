@@ -1,0 +1,30 @@
+.individual-score {
+  .graph {
+    height: 300px;
+    .hide-graph {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      z-index: 99999;
+      opacity: .8;
+      background: #fff;
+      font-size: 20px;
+      text-align: center;
+      padding: 25% 30px;
+    }
+    .chart {
+      margin: 0px 10px;
+      top: 0;
+      position: absolute;
+      g {
+        font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      }
+    }
+  }
+  .update-score {
+    .button-block {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+}

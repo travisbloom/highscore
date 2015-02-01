@@ -49,49 +49,56 @@ router.use(function(req, res, next) {
     return response.error({internalMessage: 'fb auth token not passed'});
   next();
 });
-
-router.get('/pictures/likes', function(req, res) {
-  var fbReq = url.parse(fbUri + '/me/photos/uploaded');
+router.get('/pictures/likes', likesRequest);
+router.get('/status/likes', likesRequest);
+function likesRequest(req, res) {
+  var fbReq;
+  if (req.originalUrl.indexOf('pictures') !== -1) {
+    fbReq = '/me/photos/uploaded';
+  } else {
+    fbReq = '/me/feed';
+  }
+  fbReq = url.parse(fbUri + fbReq);
   fbReq.query = {
     access_token: req.query.access_token,
     limit: 3000,
     fields: 'likes.limit(1).summary(true)'
   };
-  if (req.query.before) fbReq.query.before = req.query.before;
+  if (req.query.since) fbReq.query.since = req.query.since;
   fbReq = url.format(fbReq);
   request(fbReq)
     //todo pipe compute to lambda
     .then(function(response) {
-      var maxLikes = 0, maxPhoto = null;
+      var currentScore = 0, currentItemId = null;
       response = JSON.parse(response);
-      //iterate over all the returned photos
-      response.data.forEach(function(photo) {
-        if (!photo.likes || !photo.likes.summary) return;
-        var likesCount = photo.likes.summary.total_count;
+      //iterate over all the returned items
+      response.data.forEach(function(item) {
+        if (!item.likes || !item.likes.summary) return;
+        var likeScore = +item.likes.summary.total_count;
         //if totalLikes exceeds the previous max
-        if (likesCount > maxLikes) {
-          maxLikes = likesCount;
-          maxPhoto = photo.id;
+        if (likeScore > currentScore) {
+          currentScore = likeScore;
+          currentItemId = item.id;
         }
       });
-      //if previously queried data is still the max
-      if (req.query.before && req.query.currentMax > maxLikes) {
-        maxLikes = req.query.currentMax;
-        maxPhoto = req.query.currentPhoto;
+      //if previously queried data is still the highest
+      if (req.query.since && req.query.currentScore > currentScore) {
+        currentScore = req.query.currentScore;
+        currentItemId = req.query.currentItemId;
       }
-        //convert returned query params to json
+      //convert returned query params to json
       res.json({
-        score: +maxLikes,
+        test: response,
+        score: currentScore,
         metaData: {
           reqTimestamp: new Date().toJSON(),
-          photoId: maxPhoto,
           queryParams: {
             //tracks the last id queried by facebook, reduces redundant query results from returning
             //e.g. prevents previously calculated photos from being queried
-            before: response.paging && response.paging.cursors && response.paging.cursors.before ? response.paging.cursors.before : req.query.before || null,
-            //tracks the current max, will override returned max if before is present
-            currentMax: +maxLikes,
-            currentPhoto: maxPhoto
+            since: Math.round(+new Date()/1000),
+            //tracks the current max, will override returned max if since is present
+            currentScore: currentScore,
+            currentItemId: currentItemId
           }
         }
       });
@@ -102,5 +109,5 @@ router.get('/pictures/likes', function(req, res) {
         details: err
       });
     });
-});
+}
 module.exports = router;

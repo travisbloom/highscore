@@ -1,6 +1,9 @@
 <ion-view title="{{score.config.name}}" class="individual-score">
     <ion-content class="has-header">
         <div class="graph">
+            <div class="hide-graph" ng-show="score.history.length < 4">
+                We need to collect a few more datapoints before this graph is useful. Keep scoring!
+            </div>
             <linechart data="score.history" options="options"></linechart>
         </div>
         <!--exposed increment options when relevant-->
@@ -19,7 +22,7 @@
                 </div>
             </div>
             <div class="col col-20" ng-show="newScore !== score.currentScore">
-                <button class="button button-block icon ion-checkmark-round" ng-click="score.newScore(newScore)"></button>
+                <button class="button button-block icon ion-checkmark-round" ng-click="score.saveObj({currentScore: newScore})"></button>
             </div>
             <div class="col col-20" ng-show="newScore !== score.currentScore">
                 <button class="button button-block icon ion-close-round" ng-click="newScore = score.currentScore"></button>

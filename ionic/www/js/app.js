@@ -59,7 +59,7 @@ angular.module('highScoreApp', [
     $urlRouterProvider.otherwise('/app/highscores');
   })
 
-  .config(function($authProvider) {
+  .config(function($authProvider, $httpProvider) {
     $authProvider.tokenName = 'access_token';
     //prevent default redirects to occur, allow individual controllers to determine flow
     $authProvider.loginRedirect = null;
@@ -68,7 +68,17 @@ angular.module('highScoreApp', [
       clientId: config.facebook.clientId,
       url: config.envs[config.env].apiUri + '/facebook/auth',
       redirectUri: window.location.origin + '/' || window.location.protocol + '//' + window.location.host + '/',
-  //      redirectUri: window.location.href + '/',
-      scope: ['user_photos', 'user_friends']
+      scope: ['user_photos', 'user_friends', 'read_stream ']
+    });
+    //set timeout to 1000 on all http requests coming from the application
+    $httpProvider.interceptors.push(function() {
+      return {
+        'request': function (config) {
+          //http request have 10 seconds before timeout
+          //todo wrap all errors in a factory to determine response
+          config.timeout = 10000;
+          return config;
+        }
+      }
     });
   });

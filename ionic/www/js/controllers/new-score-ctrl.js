@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location) {
+  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, errorFactory) {
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     $scope.show = {
@@ -40,8 +40,9 @@ angular.module('highScoreApp')
         highScoreFactory.newScore(newScore);
         //send user to highScores page after successful completion. Pass query param to signal successful signup
         $location.path('/app/highscores?message=newscore');
-      }).catch(function() {
+      }).catch(function(error) {
         $ionicLoading.hide();
+        errorFactory(error);
         //todo expose error
         console.log('There was an error authenticating and your new provider could not be added')
       });
