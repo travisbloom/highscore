@@ -1,11 +1,13 @@
 angular.module('highScoreApp')
-  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, errorFactory) {
+  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, errorFactory, userDataFactory) {
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     $scope.show = {
       //governs what tab is being shown
       customScoreTab: false
     };
+    //track previously used custom scores
+    $scope.usedCustomScores = userDataFactory.data.usedCustomScores;
     /***
      * options to choose from for newScore
      ***/
@@ -28,7 +30,7 @@ angular.module('highScoreApp')
     $scope.addThirdPartyScore = function(newScore) {
       //show loading page, initial loads can take some time
       $ionicLoading.show({
-        template: '<div>Processing all of your ' + newScore.apiInfo.provider + ' data. This could take a few seconds the first time</div>'
+        template: '<div>Processing your ' + newScore.apiInfo.provider + ' data. This could take a few seconds the first time we get it.</div>'
       });
       //make an initial request to get starting score/needed metadata
       thirdPartyFactory.scoreRequest(newScore.apiInfo.provider, newScore.apiInfo.path).then(function(res) {
@@ -56,7 +58,7 @@ angular.module('highScoreApp')
      * sets the object structure and defaults for the new Custom Score
      ***/
     $scope.score = {
-      score: 0,
+      currentScore: 0,
       config: {
         type: 'number'
       }
@@ -82,7 +84,9 @@ angular.module('highScoreApp')
      ***/
     $scope.newScore = function () {
       try {
+        console.log($scope.score)
         highScoreFactory.newScore($scope.score);
+        $location.path('/app/highscores?message=newscore');
       } catch (e) {
         //todo expose error
         console.log(e);

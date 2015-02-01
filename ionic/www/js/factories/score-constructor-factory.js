@@ -14,11 +14,11 @@ angular.module('highScoreApp')
         score: properties.currentScore
       };
       //if a new score is being added
-      if (properties.currentScore) {
+      if (!isNaN(properties.currentScore)) {
         if (this.history) {
           //if a new history record is being inserted and the previous record was less than 4 seconds old, override the oldest data point
           if ((currentTime - this.history[this.history.length - 1].date < 4000))
-            this.history.pop();
+            properties.history = this.history.pop();
           //create the object with the new fields to be sent to saveObj()
           properties.history = this.history.concat([historyDataPoint]);
         } else {

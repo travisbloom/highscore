@@ -12,7 +12,7 @@
             <div class="col"><button ng-click="increment('up')" class="button icon button-full ion-plus-round"></button></div>
         </div>
         <!--new value input-->
-        <div class="row update-score">
+        <div class="row update-score" ng-if="!score.apiInfo">
             <div class="col" ng-class="{'col-60' : newScore !== score.currentScore}">
                 <div class="list">
                     <label class="item item-input">

@@ -21,14 +21,13 @@
                 <div class="card list">
                     <div class="item" data-ng-repeat="category in provider.categories">
                         <strong>{{category.name}}</strong>
-                        <div><button class="button button-block button-positive"
+                        <div>
+                            <button class="button button-block button-positive"
                                 data-ng-repeat="option in category.options"
-                                ng-click="addThirdPartyScore(option.scoreData)"ng-disabled="option.used">
-                            <i class="icon {{provider.config.icon}}"></i>  {{option.description}}
-                        </button></div>
-                        <!--<div class="item item-icon-left keep-border" data-ng-repeat="option in category.options">-->
-                            <!--<i class="icon {{option.scoreData.config.icon}}"></i>-->
-                        <!--</div>-->
+                                ng-click="addThirdPartyScore(option.scoreData)"ng-disabled="usedCustomScores.indexOf(option.scoreData.apiInfo.path) !== -1">
+                                <i class="icon {{provider.config.icon}}"></i>  {{option.description}}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

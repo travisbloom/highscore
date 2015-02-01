@@ -48,7 +48,6 @@ angular.module('highScoreApp')
       }
     ];
     (function () {
-      var usedCustomScores = userDataFactory.data.usedCustomScores;
       providerOptions.forEach(function(provider) {
         provider.categories.forEach(function(category) {
           category.options.forEach(function(option) {
@@ -60,9 +59,6 @@ angular.module('highScoreApp')
               option: option.id,
               provider: provider.id
             };
-            //if the option exists as a usedOption already
-            if (usedCustomScores.indexOf(option.scoreData.apiInfo.path) !== -1)
-              option.used = true;
           });
         })
       });

@@ -68,7 +68,7 @@ angular.module('highScoreApp')
       $scope.show.config = !$scope.show.config;
       //if saving an open config
       if (!$scope.show.config) {
-        $scope.score.saveObj($scope.score.config);
+        $scope.score.saveObj({config: $scope.score.config});
       }
     };
   });
