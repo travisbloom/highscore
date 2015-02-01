@@ -6,7 +6,7 @@ angular.module('highScoreApp')
         id: 'facebook',
         config: {
           icon: 'ion-social-facebook',
-          color: '#26975b'
+          color: '#000'
         },
         timeSpan: true,
         categories: [
