@@ -20,7 +20,7 @@
     </label>
     <label class="item item-input">
         <span class="input-label">Starting Score:</span>
-        <input type="number" ng-model="score.currentScore" placeholder="score does not increment">
+        <input type="number" ng-model="score.currentScore">
     </label>
     <label class="item item-input">
         <span class="input-label">Increment #:</span>
@@ -29,5 +29,5 @@
 </div>
 <div class="padding">
     <button class="button button-block button-positive" ng-click="newScore()"
-            ng-disabled="!score.config.name || !score.config.icon" >Create</button>
+            ng-disabled="!score.config.name || !score.config.icon || !score.currentScore" >Create</button>
 </div>

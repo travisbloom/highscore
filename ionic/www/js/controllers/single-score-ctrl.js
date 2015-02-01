@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal) {
+  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal, $ionicScrollDelegate) {
     //default config for collapsible elements
     $scope.show = {
       config: false
@@ -68,7 +68,10 @@ angular.module('highScoreApp')
       $scope.show.config = !$scope.show.config;
       //if saving an open config
       if (!$scope.show.config) {
+        $ionicScrollDelegate.scrollTop(true);
         $scope.score.saveObj({config: $scope.score.config});
+      } else {
+        $ionicScrollDelegate.scrollBottom(true);
       }
     };
   });

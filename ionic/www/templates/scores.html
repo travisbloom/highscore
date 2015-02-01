@@ -31,7 +31,7 @@
                         <input type="number" placeholder="new score..." ng-model="item.newCurrent" ng-click="preventClick($event)">
                     </label>
                 </ion-option-button>
-                <ion-option-button ng-if="!item.apiInfo && !item.incrementValue" class="button-info" ng-click="newScore($event, item)">
+                <ion-option-button ng-if="!item.apiInfo && !item.incrementValue" class="button-info" ng-disabled="!item.newCurrent" ng-click="newScore($event, item)">
                     <i class="icon ion-checkmark-round"></i>
                 </ion-option-button>
                 <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
