@@ -2,6 +2,7 @@
 # http://git-scm.com/docs/gitignore
 *.log
 *.zip
+*.pem
 
 node_modules/
 www/lib/

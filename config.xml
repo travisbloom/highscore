@@ -2,10 +2,10 @@
 <widget id="com.ionicframework.highscor927370" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>highscor</name>
   <description>
-        An Ionic Framework and Cordova project.
+        Track all of your personal bests
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="travisbloom@gmail.com" href="http://travisbloom.me">
+      Travis Bloom
     </author>
   <content src="index.html"/>
   <access origin="*"/>
