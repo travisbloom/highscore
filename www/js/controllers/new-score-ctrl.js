@@ -60,7 +60,8 @@ angular.module('highScoreApp')
     $scope.score = {
       currentScore: 0,
       config: {
-        type: 'number'
+        type: 'number',
+        color: '#000'
       }
     };
     /***
@@ -76,6 +77,7 @@ angular.module('highScoreApp')
      * pass new icon to item config, hide modal
      ***/
     $scope.newIcon = function (icon) {
+      console.log($scope.score)
       $scope.score.config.icon = icon;
       $scope.modal.hide();
     };

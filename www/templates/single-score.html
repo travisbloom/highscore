@@ -49,6 +49,12 @@
                     <span class="input-label">Icon: <i class="icon {{score.config.icon}} score-icon"></i></span>
                     <button class="button" ng-click="modal.show()">Select New Icon</button>
                 </label>
+                <label class="item item-input">
+                    <span class="input-label">Icon:
+                        <span class="picked-color" style="background-color: {{score.config.color}}"></span>
+                    </span>
+                    <input type="text" ng-model="score.config.color" id="colorpicker">
+                </label>
             </div>
         </div>
     </ion-content>

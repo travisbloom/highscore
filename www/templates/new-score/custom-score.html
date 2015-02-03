@@ -9,7 +9,13 @@
             <i class="icon {{score.config.icon}} score-icon"></i>
             <span class="placeholder" ng-show="!score.config.icon">n/a</span>
         </span>
-        <button class="button" ng-click="modal.show()">Select New Icon</button>
+        <button class="button" ng-click="modal.show()">Select Icon</button>
+    </label>
+    <label class="item item-input">
+        <span class="input-label">Icon:
+            <span class="picked-color" style="background-color: {{score.config.color}}"></span>
+        </span>
+        <button colorpicker colorpicker-position="bottom" class="button" ng-model="score.config.color">Select Color</button>
     </label>
 </div>
 <h3>Scoring Info</h3>
@@ -29,5 +35,5 @@
 </div>
 <div class="padding">
     <button class="button button-block button-positive" ng-click="newScore()"
-            ng-disabled="!score.config.name || !score.config.icon || !score.currentScore" >Create</button>
+            ng-disabled="!score.config.name || !score.config.icon || (!score.currentScore && score.currentScore !== 0)" >Create</button>
 </div>

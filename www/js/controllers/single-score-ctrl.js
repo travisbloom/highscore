@@ -27,16 +27,19 @@ angular.module('highScoreApp')
             return moment(date).fromNow();
           },
           //number of x axis ticks
-          ticks: 2
+          ticks: 3
         }
       },
       series: [{
-        y: 'score'
+        y: 'score',
+        thickness: '3px',
+        type: "area"
       }],
       tooltip: {mode: 'scrubber', formatter: function(x, y, series) {
         return y;
       }},
-      drawLegend: false
+      drawLegend: false,
+      drawDots: false
     };
     /***
      * configure icon modal for page, track modal on scope
@@ -58,6 +61,13 @@ angular.module('highScoreApp')
      * increment the score, refresh newScore to reflect update
      ***/
     $scope.increment = function (direction) {
+      $scope.score.increment(direction);
+      $scope.newScore = $scope.score.currentScore;
+    };
+    /***
+     * increment the score, refresh newScore to reflect update
+     ***/
+    $scope.newColor = function () {
       $scope.score.increment(direction);
       $scope.newScore = $scope.score.currentScore;
     };
