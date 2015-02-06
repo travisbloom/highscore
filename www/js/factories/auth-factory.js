@@ -10,13 +10,13 @@ angular.module('highScoreApp')
       getAuth: function (provider) {
         var deferred = $q.defer(), providers = userDataFactory.data.providers;
         //if the provider doesn't exist, authenticate the user
-        if (!providers[provider] || !providers[provider].access_token) {
+        if (!providers[provider] || !providers[provider].jwt) {
           return $auth.authenticate(provider).then(function (response) {
             //save returned auth data to local storage
             var userData = userDataFactory.data;
-            userData.providers[provider] = response.data;
+            userData.providers[provider] = response.data.jwt;
             userDataFactory.data = userData;
-            return response.data;
+            return response.data.jwt;
           });
         }
         deferred.resolve(providers[provider]);

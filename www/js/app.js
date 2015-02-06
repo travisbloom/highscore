@@ -60,7 +60,7 @@ angular.module('highScoreApp', [
   })
 
   .config(function($authProvider, $httpProvider) {
-    $authProvider.tokenName = 'access_token';
+    $authProvider.tokenName = 'jwt';
     //prevent default redirects to occur, allow individual controllers to determine flow
     $authProvider.loginRedirect = null;
     //configure facebook credentials
@@ -79,7 +79,7 @@ angular.module('highScoreApp', [
         'request': function (config) {
           //http request have 10 seconds before timeout
           //todo wrap all errors in a factory to determine response
-          config.timeout = 10000;
+          config.timeout = 100000;
           return config;
         }
       }

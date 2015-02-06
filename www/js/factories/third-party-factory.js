@@ -103,10 +103,8 @@ angular.module('highScoreApp')
           })
         }
         return authFactory.getAuth(provider)
-          .then(function(authInfo) {
-            var url = config.envs[config.env].apiUri + path + '?access_token=' + authInfo.access_token + urlParams;
-            if (authInfo.access_token_secret) url += '&access_token_secret=' + authInfo.access_token_secret;
-            return $http.get(url);
+          .then(function(jwt) {
+            return $http.get(config.envs[config.env].apiUri + path + '?jwt=' + jwt + urlParams);
           }).then(function(res) {
             return res;
           });
