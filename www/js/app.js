@@ -70,6 +70,9 @@ angular.module('highScoreApp', [
       redirectUri: window.location.origin + '/' || window.location.protocol + '//' + window.location.host + '/',
       scope: ['user_photos', 'user_friends', 'read_stream ']
     });
+    $authProvider.twitter({
+      url: config.envs[config.env].apiUri + '/oauth1/request?provider=twitter'
+    });
     //set timeout to 1000 on all http requests coming from the application
     $httpProvider.interceptors.push(function() {
       return {

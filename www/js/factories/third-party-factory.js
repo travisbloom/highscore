@@ -6,9 +6,8 @@ angular.module('highScoreApp')
         id: 'facebook',
         config: {
           icon: 'ion-social-facebook',
-          color: '#000'
+          color: '#3B5998'
         },
-        timeSpan: true,
         categories: [
           {
             name: 'Pictures',
@@ -38,6 +37,33 @@ angular.module('highScoreApp')
                 scoreData: {
                   config: {
                     name: 'Facebook Status Likes',
+                    type: 'number'
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Twitter',
+        id: 'twitter',
+        config: {
+          icon: 'ion-social-twitter',
+          color: '#00aced'
+        },
+        categories: [
+          {
+            name: 'Followers',
+            id: 'followers',
+            options: [
+              {
+                name: '',
+                id: 'count',
+                description: 'Total number of twitter followers',
+                scoreData: {
+                  config: {
+                    name: 'Twitter Followers',
                     type: 'number'
                   }
                 }
@@ -77,8 +103,10 @@ angular.module('highScoreApp')
           })
         }
         return authFactory.getAuth(provider)
-          .then(function(token) {
-            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + token + urlParams);
+          .then(function(authInfo) {
+            var url = config.envs[config.env].apiUri + path + '?access_token=' + authInfo.access_token + urlParams;
+            if (authInfo.access_token_secret) url += '&access_token_secret=' + authInfo.access_token_secret;
+            return $http.get(url);
           }).then(function(res) {
             return res;
           });

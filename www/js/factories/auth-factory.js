@@ -16,10 +16,10 @@ angular.module('highScoreApp')
             var userData = userDataFactory.data;
             userData.providers[provider] = response.data;
             userDataFactory.data = userData;
-            return response.data.access_token;
+            return response.data;
           });
         }
-        deferred.resolve(providers[provider].access_token);
+        deferred.resolve(providers[provider]);
         return deferred.promise;
       }
     };
