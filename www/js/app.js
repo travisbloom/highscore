@@ -71,7 +71,7 @@ angular.module('highScoreApp', [
       scope: ['user_photos', 'user_friends', 'read_stream ']
     });
     $authProvider.twitter({
-      url: config.envs[config.env].apiUri + '/oauth1/request?provider=twitter'
+      url: config.envs[config.env].apiUri + '/oauth1/twitter'
     });
     //set timeout to 1000 on all http requests coming from the application
     $httpProvider.interceptors.push(function() {

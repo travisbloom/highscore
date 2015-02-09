@@ -8,19 +8,21 @@ angular.module('highScoreApp')
        * returns the token either way
        ***/
       getAuth: function (provider) {
-        var deferred = $q.defer(), providers = userDataFactory.data.providers;
-        //if the provider doesn't exist, authenticate the user
-        if (!providers[provider] || !providers[provider].jwt) {
-          return $auth.authenticate(provider).then(function (response) {
-            //save returned auth data to local storage
-            var userData = userDataFactory.data;
-            userData.providers[provider] = response.data.jwt;
-            userDataFactory.data = userData;
-            return response.data.jwt;
-          });
+        var deferred, providers = userDataFactory.data.providers;
+        //if the provider exists, authenticate the user
+        //todo shorten this
+        if (providers[provider] && providers[provider].jwt) {
+          deferred = $q.defer();
+          deferred.resolve(providers[provider]);
+          return deferred.promise;
         }
-        deferred.resolve(providers[provider]);
-        return deferred.promise;
+        return $auth.authenticate(provider).then(function (response) {
+          //save returned auth data to local storage
+          var userData = userDataFactory.data;
+          userData.providers[provider] = response.data.jwt;
+          userDataFactory.data = userData;
+          return response.data.jwt;
+        });
       }
     };
   });
