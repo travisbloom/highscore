@@ -66,7 +66,7 @@ angular.module('highScoreApp', [
     //configure facebook credentials
     $authProvider.facebook({
       clientId: config.facebook.clientId,
-      url: config.envs[config.env].apiUri + '/facebook/auth',
+      url: config.envs[config.env].apiUri + '/oauth2/facebook',
       redirectUri: window.location.origin + '/' || window.location.protocol + '//' + window.location.host + '/',
       scope: ['user_photos', 'user_friends', 'read_stream ']
     });
