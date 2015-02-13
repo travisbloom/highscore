@@ -1,21 +1,27 @@
 .individual-score {
   .graph {
     height: 300px;
-    .hide-graph {
-      position: relative;
-      height: 100%;
+    position: relative;
+    height: 300px;
+    width: 100%;
+    .hide-graph, .chart {
       width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+    }
+    .hide-graph {
       z-index: 99999;
       opacity: .8;
       background: #fff;
       font-size: 20px;
       text-align: center;
-      padding: 25% 30px;
+      padding: 120px 30px;
     }
     .chart {
-      margin: 0px 10px;
-      top: 0;
-      position: absolute;
+//      margin: 0px 10px;
       g {
         font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
       }
