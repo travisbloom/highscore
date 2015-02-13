@@ -35,6 +35,7 @@ angular.module('highScoreApp')
       //make an initial request to get starting score/needed metadata
       thirdPartyFactory.scoreRequest(newScore.apiInfo.provider, newScore.apiInfo.path).then(function(res) {
         $ionicLoading.hide();
+        console.log(res);
         //append returned data to newScore then create it
         newScore.currentScore = res.data.score;
         newScore.metaData = res.data.metaData;

@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .factory('thirdPartyFactory', function($auth, $q, $http, authFactory, userDataFactory) {
+  .factory('thirdPartyFactory', function($q, $http, authFactory, userDataFactory) {
     var providerOptions =  [
       {
         name: 'facebook',
@@ -89,6 +89,7 @@ angular.module('highScoreApp')
         })
       });
     })();
+    var tokenRefreshAttempted;
     //build apiConfig
     return {
       time: ['recent'],
@@ -103,10 +104,23 @@ angular.module('highScoreApp')
           })
         }
         return authFactory.getAuth(provider)
-          .then(function(jwt) {
-            return $http.get(config.envs[config.env].apiUri + path + '?jwt=' + jwt + urlParams);
-          }).then(function(res) {
-            return res;
+          .then(function(accessObj) {
+            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + accessObj.access_token + 'testest' + urlParams);
+          })
+          .catch(function(err) {
+            console.log(err);
+            //if the error was the result of an invalid token being submitted
+            if (err.data && err.data.expiredToken  && !tokenRefreshAttempted) {
+              //clear the provider token info from the cache
+              var data = userDataFactory.data;
+              delete data.providers[provider];
+              userDataFactory.data = data;
+              //set the tokenRefreshAttempt to true to prevent infinite attempts
+              tokenRefreshAttempted = true;
+              //reattempt the request
+              return this.scoreRequest(provider, path, queryObj)
+            }
+            return err;
           });
       }
     };

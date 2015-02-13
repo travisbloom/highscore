@@ -1,6 +1,6 @@
 {
   "name": "highscor",
-  "app_id": "",
+  "app_id": "a41efc36",
   "gulpStartupTasks": [
     "sass",
     "watch"

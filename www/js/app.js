@@ -3,7 +3,7 @@ angular.module('highScoreApp', [
   //cordova angular wrapper
   'ionic',
   //oAuth2 flow plugin
-  'satellizer',
+  'ngCordovaOauth',
   //d3 charts
   'n3-line-chart'])
   .run(function($ionicPlatform) {
@@ -59,20 +59,7 @@ angular.module('highScoreApp', [
     $urlRouterProvider.otherwise('/app/highscores');
   })
 
-  .config(function($authProvider, $httpProvider) {
-    $authProvider.tokenName = 'jwt';
-    //prevent default redirects to occur, allow individual controllers to determine flow
-    $authProvider.loginRedirect = null;
-    //configure facebook credentials
-    $authProvider.facebook({
-      clientId: config.facebook.clientId,
-      url: config.envs[config.env].apiUri + '/oauth2/facebook',
-      redirectUri: window.location.origin + '/' || window.location.protocol + '//' + window.location.host + '/',
-      scope: ['user_photos', 'user_friends', 'read_stream ']
-    });
-    $authProvider.twitter({
-      url: config.envs[config.env].apiUri + '/oauth1/twitter'
-    });
+  .config(function( $httpProvider) {
     //set timeout to 1000 on all http requests coming from the application
     $httpProvider.interceptors.push(function() {
       return {
