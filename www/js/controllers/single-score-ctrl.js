@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal, $ionicScrollDelegate) {
+  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal, $ionicScrollDelegate, $location) {
     //default config for collapsible elements
     $scope.show = {
       config: false
@@ -84,4 +84,8 @@ angular.module('highScoreApp')
         $ionicScrollDelegate.scrollBottom(true);
       }
     };
+    $scope.deleteScore = function() {
+      $scope.score.removeScore();
+      $location.path('/app/highscores');
+    }
   });

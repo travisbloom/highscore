@@ -42,7 +42,7 @@ angular.module('highScoreApp')
     HighScoreObj.prototype.saveObj = function (obj) {
       var userData = userDataFactory.data,
       //index of object
-      index = userData.scores.map(function(score) { return score.id; }).indexOf(this.id);
+        index = userData.scores.map(function(score) { return score.id; }).indexOf(this.id);
       //append/cleanse properties being added
       obj = prepareScoreProperties.bind(this, obj)();
       //extend the highScore object with the new properties
@@ -50,6 +50,17 @@ angular.module('highScoreApp')
       //extend the userData object with the new properties
       angular.extend(userData.scores[index], obj);
       //save new story data
+      userDataFactory.data = userData;
+    };
+    /**
+     * delete score
+     ***/
+    HighScoreObj.prototype.removeScore = function () {
+      var userData = userDataFactory.data,
+      //index of object
+      index = userData.scores.map(function(score) { return score.id; }).indexOf(this.id);
+      userData.scores.splice(index, 1);
+      highScoreArray.splice(index, 1);
       userDataFactory.data = userData;
     };
     /***
