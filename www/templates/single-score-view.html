@@ -17,15 +17,15 @@
                 <div class="list">
                     <label class="item item-input">
                         <span class="input-label">Current Value</span>
-                        <input type="number" ng-model="newScore">
+                        <input type="number" ng-model="changes.newScore">
                     </label>
                 </div>
             </div>
-            <div class="col col-20" ng-show="newScore !== score.currentScore">
-                <button class="button button-block icon ion-checkmark-round" ng-click="score.saveObj({currentScore: newScore})"></button>
+            <div class="col col-20" ng-show="changes.newScore !== score.currentScore">
+                <button class="button button-block icon ion-checkmark-round" ng-click="saveNewScore()"></button>
             </div>
-            <div class="col col-20" ng-show="newScore !== score.currentScore">
-                <button class="button button-block icon ion-close-round" ng-click="newScore = score.currentScore"></button>
+            <div class="col col-20" ng-show="changes.newScore !== score.currentScore">
+                <button class="button button-block icon ion-close-round" ng-click="changes.newScore = score.currentScore"></button>
             </div>
         </div>
         <div class="padding">

@@ -6,8 +6,9 @@ angular.module('highScoreApp')
     };
     //pull the score from the url params
     $scope.score = highScoreFactory.getScores()[$stateParams.highscoreindex];
+    console.log($scope.score);
     //set initial newScore params to the current score, ensures changes will be tracked
-    $scope.newScore = $scope.score.currentScore;
+    $scope.changes = { newScore: $scope.score.currentScore };
     //graph config options
     $scope.options = {
       axes: {
@@ -39,6 +40,15 @@ angular.module('highScoreApp')
      ***/
     $scope.increment = function (direction) {
       $scope.score.increment(direction);
+      $scope.changes.newScore = $scope.score.currentScore;
+    };
+
+    $scope.saveNewScore = function() {
+      console.log($scope.score.currentScore);
+      console.log($scope.changes.newScore);
+      $scope.score.saveObj({
+        currentScore: $scope.changes.newScore
+      });
       $scope.newScore = $scope.score.currentScore;
     };
     /***
