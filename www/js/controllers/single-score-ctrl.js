@@ -4,10 +4,6 @@ angular.module('highScoreApp')
     $scope.show = {
       config: false
     };
-    /***
-     * options to choose from for newScore
-     ***/
-    $scope.scoreOptions = optionsFactory;
     //pull the score from the url params
     $scope.score = highScoreFactory.getScores()[$stateParams.highscoreindex];
     //set initial newScore params to the current score, ensures changes will be tracked

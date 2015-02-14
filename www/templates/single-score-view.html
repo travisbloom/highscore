@@ -36,26 +36,8 @@
         </div>
         <!--Configuration for items that have config options-->
         <div class="collapse" ng-show="show.config">
-            <div class="list card score-inputs">
-                <label class="item item-input">
-                    <span class="input-label">Name:</span>
-                    <input type="text" ng-model="score.config.name">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">Type:</span>
-                    <select ng-options="type for type in scoreOptions.numTypes" ng-model="score.config.type"></select>
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">Icon: <i class="icon {{score.config.icon}} score-icon"></i></span>
-                    <button class="button" ng-click="modal.show()">Select New Icon</button>
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">Icon:
-                        <span class="picked-color" style="background-color: {{score.config.color}}"></span>
-                    </span>
-                    <input type="text" ng-model="score.config.color" id="colorpicker">
-                </label>
-            </div>
+            <!--config options directive-->
+            <score-config-options score="score"></score-config-options>
             <div class="padding">
                 <button class="button button-block button-assertive" ng-click="deleteScore()">
                     Delete This Score
