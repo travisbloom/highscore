@@ -105,7 +105,7 @@ angular.module('highScoreApp')
         }
         return authFactory.getAuth(provider)
           .then(function(accessObj) {
-            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + accessObj.access_token + 'testest' + urlParams);
+            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + accessObj.access_token + urlParams);
           })
           .catch(function(err) {
             console.log(err);

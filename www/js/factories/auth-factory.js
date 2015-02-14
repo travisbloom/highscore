@@ -1,8 +1,8 @@
 angular.module('highScoreApp')
   .factory('authFactory', function($cordovaOauth, $q, userDataFactory) {
     var providerDetails = {
-      facebook: ['1413405385546851', ['user_photos', 'user_friends', 'read_stream ']]
-
+      facebook: [config.facebook.clientId, ['user_photos', 'user_friends', 'read_stream ']],
+      twitter: [config.twitter.clientId, config.twitter.clientSecret]
     };
     return {
       /***

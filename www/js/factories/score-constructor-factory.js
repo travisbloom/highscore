@@ -56,9 +56,12 @@ angular.module('highScoreApp')
      * delete score
      ***/
     HighScoreObj.prototype.removeScore = function () {
+      console.log(this);
       var userData = userDataFactory.data,
       //index of object
       index = userData.scores.map(function(score) { return score.id; }).indexOf(this.id);
+      //remove it from existing custom scores
+      if (this.apiInfo) userData.usedCustomScores.splice(userData.usedCustomScores.indexOf(this.apiInfo.path), 1);
       userData.scores.splice(index, 1);
       highScoreArray.splice(index, 1);
       userDataFactory.data = userData;
