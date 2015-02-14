@@ -1,39 +1,32 @@
-<h3>Basics</h3>
 <div class="list card score-inputs">
     <label class="item item-input">
+        <!--name-->
         <span class="input-label">Name:</span>
         <input type="text" ng-model="score.config.name" placeholder="new amazing goal......">
     </label>
+    <!--icon-->
     <label class="item item-input">
         <span class="input-label">Icon:
             <i class="icon {{score.config.icon}} score-icon"></i>
             <span class="placeholder" ng-show="!score.config.icon">n/a</span>
         </span>
-        <button class="button" ng-click="modal.show()">Select Icon</button>
+        <button class="button" ng-click="iconModal.show()">Select Icon</button>
     </label>
+    <!--color-->
     <label class="item item-input">
-        <span class="input-label">Icon:
+        <span class="input-label">Color:
             <span class="picked-color" style="background-color: {{score.config.color}}"></span>
         </span>
-        <button colorpicker colorpicker-position="bottom" class="button" ng-model="score.config.color">Select Color</button>
+        <button class="button" ng-click="colorModal.show()">Select Color</button>
     </label>
-</div>
-<h3>Scoring Info</h3>
-<div class="list card score-inputs">
+    <!--type-->
     <label class="item item-input">
         <span class="input-label">Type:</span>
-        <select ng-options="type for type in scoreOptions.type" ng-model="score.config.type"></select>
+        <select ng-options="type for type in scoreOptions.numTypes" ng-model="score.config.type"></select>
     </label>
-    <label class="item item-input">
-        <span class="input-label">Starting Score:</span>
-        <input type="number" ng-model="score.currentScore">
-    </label>
+    <!--increment-->
     <label class="item item-input">
         <span class="input-label">Increment #:</span>
         <input type="number" ng-model="score.incrementValue" placeholder="doesn't increment">
     </label>
-</div>
-<div class="padding">
-    <button class="button button-block button-positive" ng-click="newScore()"
-            ng-disabled="!score.config.name || !score.config.icon || (!score.currentScore && score.currentScore !== 0)" >Create</button>
 </div>

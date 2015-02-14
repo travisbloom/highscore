@@ -1,0 +1,22 @@
+.modal-options {
+  margin: 0 10px;
+  ul {
+    padding: 30px 30px;
+    text-align: center;
+    li {
+      display: inline;
+      float: left;
+      width: 100px;
+      height: 70px;
+      padding: 0 30px;
+      line-height: 30px;
+      //icon modal spacing/sizing
+      .icon {
+        font-size: 24px;
+      }
+      //color modal spacing/sizing
+      .picked-color {
+      }
+    }
+  }
+}

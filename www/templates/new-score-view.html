@@ -33,6 +33,23 @@
             </div>
         </div>
         <!--Custom View-->
-        <new-custom-score class="custom-score" ng-show="show.customScoreTab"></new-custom-score>
+        <div class="custom-score" ng-show="show.customScoreTab">
+            <h3>Score Configuration</h3>
+            <!--config options directive-->
+            <score-config-options score="score"></score-config-options>
+            <div class="list card score-inputs">
+                <label class="item item-input">
+                    <span class="input-label">Starting Score:</span>
+                    <input type="number" ng-model="score.currentScore">
+                </label>
+            </div>
+            <div class="padding">
+                <button class="button button-block button-positive"
+                        ng-click="newScore()"
+                        ng-disabled="!score.config.name || !score.config.icon || (!score.currentScore && score.currentScore !== 0)" >
+                    Create
+                </button>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

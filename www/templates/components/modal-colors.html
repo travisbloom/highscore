@@ -1,0 +1,15 @@
+<ion-modal-view class="modal-options">
+    <ion-header-bar>
+        <h1 class="title">Highscor Colors </h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="colorModal.hide()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <ul>
+            <li ng-repeat="color in scoreOptions.colorOptions track by $index" ng-click="newColor(color)">
+                <span class="picked-color single-option" style="background-color: {{color}}"></span>
+            </li>
+        </ul>
+    </ion-content>
+</ion-modal-view>

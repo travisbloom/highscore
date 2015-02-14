@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('newScoreCtrl', function($scope, highScoreFactory, dataModelFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, errorFactory, userDataFactory) {
+  .controller('newScoreCtrl', function($scope, highScoreFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, errorFactory, userDataFactory) {
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     $scope.show = {
@@ -8,13 +8,6 @@ angular.module('highScoreApp')
     };
     //track previously used custom scores
     $scope.usedCustomScores = userDataFactory.data.usedCustomScores;
-    /***
-     * options to choose from for newScore
-     ***/
-    $scope.scoreOptions = {
-      type: dataModelFactory.config.type,
-      icons: dataModelFactory.config.icon
-    };
     /***********************************************
      ***********************************************
      * Data Specific to 3rd Party Scores
@@ -66,28 +59,10 @@ angular.module('highScoreApp')
       }
     };
     /***
-     * configure icon modal for page, track modal on scope
-     ***/
-    $ionicModal.fromTemplateUrl('templates/modal-icons.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-    /***
-     * pass new icon to item config, hide modal
-     ***/
-    $scope.newIcon = function (icon) {
-      console.log($scope.score)
-      $scope.score.config.icon = icon;
-      $scope.modal.hide();
-    };
-    /***
      * try to generate the new custom score, retuns an error when invalid data is submitted
      ***/
     $scope.newScore = function () {
       try {
-        console.log($scope.score)
         highScoreFactory.newScore($scope.score);
         $location.path('/app/highscores?message=newscore');
       } catch (e) {

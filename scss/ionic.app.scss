@@ -1,21 +1,3 @@
-/*
-To customize the look and feel of Ionic, you can override the variables
-in ionic's _variables.scss file.
-
-For example, you might change some of the default colors:
-
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            #11c1f3 !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
-*/
-
-// The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
@@ -23,11 +5,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 $highscore-primary: $positive;
 $highscore-accent: #145fd7;
 $highscore-text: white;
+
 //override color styles
-@import "new-score";
-@import "score-list";
-@import "input-forms";
-@import "single-score";
+@import "components/input-forms";
+@import "components/modal-options";
+@import "new-score-view";
+@import "scores-view";
+@import "single-score-view";
 
 .score-icon {
   font-size: 18px;
@@ -57,26 +41,11 @@ $highscore-text: white;
     }
   }
 }
-
 //header
 .options-header {
   text-align: center;
 }
-
-
-.modal-icon {
-  ion-content {
-    margin: 0 10px;
-    ul {
-      text-align: center;
-      li {
-        display: inline;
-        font-size: 24px;
-        .icon:before {
-          width: 20px;
-          padding: 30px 30px;
-        }
-      }
-    }
-  }
+//color boxes
+.picked-color {
+  padding: 6px 15px;
 }

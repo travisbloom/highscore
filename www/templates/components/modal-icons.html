@@ -1,14 +1,15 @@
-<ion-modal-view class="modal-icon">
+<ion-modal-view class="modal-options">
     <ion-header-bar>
         <h1 class="title">Highscor Icons </h1>
         <div class="buttons">
-            <button class="button button-clear" ng-click="modal.hide()">Close</button>
+            <button class="button button-clear" ng-click="iconModal.hide()">Close</button>
         </div>
     </ion-header-bar>
+    <div>{{scoreOptions.icons[0]}}</div>
     <ion-content>
         <ul>
             <li ng-repeat="icon in scoreOptions.icons track by $index" ng-click="newIcon(icon)">
-                <i class="icon {{icon}}"></i>
+                <i class="icon {{icon}} single-option"></i>
             </li>
         </ul>
     </ion-content>

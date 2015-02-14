@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, dataModelFactory, $ionicModal, $ionicScrollDelegate, $location) {
+  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, $ionicModal, $ionicScrollDelegate, $location) {
     //default config for collapsible elements
     $scope.show = {
       config: false
@@ -7,10 +7,7 @@ angular.module('highScoreApp')
     /***
      * options to choose from for newScore
      ***/
-    $scope.scoreOptions = {
-        type: dataModelFactory.config.type,
-        icons: dataModelFactory.config.icon
-    };
+    $scope.scoreOptions = optionsFactory;
     //pull the score from the url params
     $scope.score = highScoreFactory.getScores()[$stateParams.highscoreindex];
     //set initial newScore params to the current score, ensures changes will be tracked
@@ -42,32 +39,9 @@ angular.module('highScoreApp')
       drawDots: false
     };
     /***
-     * configure icon modal for page, track modal on scope
-     ***/
-    $ionicModal.fromTemplateUrl('templates/modal-icons.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-    /***
-     * pass new icon to score config, hide modal
-     ***/
-    $scope.newIcon = function (icon) {
-      $scope.score.config.icon = icon;
-      $scope.modal.hide();
-    };
-    /***
      * increment the score, refresh newScore to reflect update
      ***/
     $scope.increment = function (direction) {
-      $scope.score.increment(direction);
-      $scope.newScore = $scope.score.currentScore;
-    };
-    /***
-     * increment the score, refresh newScore to reflect update
-     ***/
-    $scope.newColor = function () {
       $scope.score.increment(direction);
       $scope.newScore = $scope.score.currentScore;
     };
