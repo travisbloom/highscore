@@ -1,6 +1,7 @@
 angular.module('highScoreApp')
   .factory('optionsFactory', function() {
     return {
+      numTypes: ['number', 'currency'],
       icons: [
         'ion-social-usd',
         'ion-home',
@@ -40,7 +41,6 @@ angular.module('highScoreApp')
         'ion-bonfire',
         'ion-plane'
       ],
-      numTypes: ['number', 'currency'],
       colorOptions: [
         '#F0F8FF',
         '#FAEBD7',

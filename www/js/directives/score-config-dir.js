@@ -41,7 +41,6 @@ angular.module('highScoreApp')
          * pass new color to item config, hide modal
          ***/
         $scope.newColor = function (color) {
-          console.log(color)
           $scope.score.config.color = color;
           $scope.colorModal.hide();
         };

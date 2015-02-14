@@ -19,19 +19,19 @@
                     <i class="icon ion-refresh" ng-class="{loading: item.loading}"></i>
                 </ion-option-button>
                 <!--plus/minus sign for custom scores that increment by a set amount-->
-                <ion-option-button ng-if="item.incrementValue" class="button-info" ng-click="increment($event, item, 'down')">
+                <ion-option-button ng-if="item.config.incrementValue" class="button-info" ng-click="increment($event, item, 'down')">
                     <i class="icon ion-minus-round"></i>
                 </ion-option-button>
-                <ion-option-button ng-if="item.incrementValue" class="button-info" ng-click="increment($event, item, 'up')">
+                <ion-option-button ng-if="item.config.incrementValue" class="button-info" ng-click="increment($event, item, 'up')">
                     <i class="icon ion-plus-round"></i>
                 </ion-option-button>
                 <!--input for custom number-->
-                <ion-option-button ng-if="!item.apiInfo && !item.incrementValue" class="button-info">
+                <ion-option-button ng-if="!item.apiInfo && !item.config.incrementValue" class="button-info">
                     <label class="item item-input">
                         <input type="number" placeholder="new score..." ng-model="item.newCurrent" ng-click="preventClick($event)">
                     </label>
                 </ion-option-button>
-                <ion-option-button ng-if="!item.apiInfo && !item.incrementValue" class="button-info" ng-disabled="!item.newCurrent" ng-click="newScore($event, item)">
+                <ion-option-button ng-if="!item.apiInfo && !item.config.incrementValue" class="button-info" ng-disabled="!item.newCurrent" ng-click="newScore($event, item)">
                     <i class="icon ion-checkmark-round"></i>
                 </ion-option-button>
                 <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)"></ion-reorder-button>

@@ -17,8 +17,8 @@ angular.module('highScoreApp')
       if (!isNaN(properties.currentScore)) {
         if (this.history) {
           //if a new history record is being inserted and the previous record was less than 4 seconds old, override the oldest data point
-          if ((currentTime - this.history[this.history.length - 1].date < 4000))
-            properties.history = this.history.pop();
+          //if ((currentTime - this.history[this.history.length - 1].date < 4000))
+          //  properties.history = this.history.pop();
           //create the object with the new fields to be sent to saveObj()
           properties.history = this.history.concat([historyDataPoint]);
         } else {
@@ -82,7 +82,7 @@ angular.module('highScoreApp')
      * increment an object based on it's incrementValue, return an error if the object should not be incremented
      ***/
     HighScoreObj.prototype.increment = function (amount) {
-      var increment = amount === 'down' ? -this.incrementValue : this.incrementValue;
+      var increment = amount === 'down' ? -this.config.incrementValue : this.config.incrementValue;
       this.saveObj({
         currentScore: increment + this.currentScore
       });

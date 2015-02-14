@@ -7,7 +7,7 @@
             <linechart data="score.history" options="options"></linechart>
         </div>
         <!--exposed increment options when relevant-->
-        <div class="row" ng-if="score.incrementValue">
+        <div class="row" ng-if="score.config.incrementValue">
             <div class="col"><button ng-click="increment('down')" class="button icon button-full ion-minus-round"></button></div>
             <div class="col"><button ng-click="increment('up')" class="button icon button-full ion-plus-round"></button></div>
         </div>
