@@ -12,4 +12,9 @@
     margin-bottom: 0;
     text-align: center;
   }
+  .button {
+    .icon, .picked-color {
+      margin-right: 10px;
+    }
+  }
 }

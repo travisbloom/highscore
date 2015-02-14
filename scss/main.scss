@@ -5,32 +5,21 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 $highscore-primary: $positive;
 $highscore-accent: #145fd7;
 $highscore-text: white;
-
+//variables
 //override color styles
 @import "components/input-forms";
 @import "components/modal-options";
 @import "new-score-view";
 @import "scores-view";
 @import "single-score-view";
-
-.score-icon {
-  font-size: 18px;
+//score icons
+.icon {
+  font-size: 22px;
 }
-//input areas
-.list-inset {
-  select {
-    height: 36px;
-    border-color: #b2b2b2;
-    background-color: #f8f8f8;
-    min-width: 80px;
-  }
-  input, select {
-    font-size: 16px;
-  }
-  i {
-    font-size: 18px;
-    margin-left: 10px;
-  }
+//color boxes
+.picked-color {
+  padding: 3px 12px;
+  border-radius: 4px;
 }
 
 //nav header buttons
@@ -44,8 +33,4 @@ $highscore-text: white;
 //header
 .options-header {
   text-align: center;
-}
-//color boxes
-.picked-color {
-  padding: 6px 15px;
 }
