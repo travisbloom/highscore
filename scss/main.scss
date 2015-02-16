@@ -34,3 +34,29 @@ $highscore-text: white;
 .options-header {
   text-align: center;
 }
+
+.message {
+  text-align: center;
+  padding-top: 20px;
+  height: 50px;
+  line-height: 14px;
+  transition: 0.2s linear all;
+  &.warning {
+    background-color: $energized;
+  }
+  &.ng-hide-add, &.ng-hide-remove {
+    display: block !important;
+  }
+  &.ng-hide-remove,
+  &.ng-hide-add.ng-hide-add-active {
+    height: 0px;
+    line-height: 0px;
+    padding-top: 0px;
+  }
+  &.ng-hide-add,
+  &.ng-hide-remove.ng-hide-remove-active{
+    height: 50px;
+    line-height: 14px;
+    padding-top: 20px;
+  }
+}

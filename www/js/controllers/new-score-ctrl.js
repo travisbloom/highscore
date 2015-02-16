@@ -1,5 +1,6 @@
 angular.module('highScoreApp')
-  .controller('newScoreCtrl', function($scope, highScoreFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, errorFactory, userDataFactory) {
+  .controller('newScoreCtrl', function($scope, highScoreFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, messageFactory, userDataFactory) {
+    $scope.message = {};
     //pull in third party options
     $scope.thirdPartyOptions = thirdPartyFactory.options;
     $scope.show = {
@@ -35,12 +36,13 @@ angular.module('highScoreApp')
         //generate and save the new score
         highScoreFactory.newScore(newScore);
         //send user to highScores page after successful completion. Pass query param to signal successful signup
-        $location.path('/app/highscores?message=newscore');
+        $location.path('/app/highscores');
       }).catch(function(error) {
         $ionicLoading.hide();
-        errorFactory(error);
-        //todo expose error
-        console.log('There was an error authenticating and your new provider could not be added')
+        $scope.message = messageFactory.format(error);
+        messageFactory.show('error').then(function(){
+          $scope.message = null;
+        });
       });
     };
     /***********************************************
@@ -64,10 +66,12 @@ angular.module('highScoreApp')
     $scope.newScore = function () {
       try {
         highScoreFactory.newScore($scope.score);
-        $location.path('/app/highscores?message=newscore');
-      } catch (e) {
-        //todo expose error
-        console.log(e);
+        $location.path('/app/highscores');
+      } catch (error) {
+        $scope.message = messageFactory.format(error);
+        messageFactory.show('error').then(function(){
+          $scope.message = null;
+        });
       }
     }
   });

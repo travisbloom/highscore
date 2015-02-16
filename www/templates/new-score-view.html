@@ -14,6 +14,7 @@
         </div>
     </div>
     <ion-content class="has-tabs-top">
+        <div class="message {{message.type}} ng-hide" data-ng-show="message.text">{{message.text}}</div>
         <!--3rd Part View-->
         <div ng-show="!show.customScoreTab" class="third-party-options">
             <div data-ng-repeat="provider in thirdPartyOptions">

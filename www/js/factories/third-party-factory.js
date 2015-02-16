@@ -108,7 +108,6 @@ angular.module('highScoreApp')
             return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + accessObj.access_token + urlParams);
           })
           .catch(function(err) {
-            console.log(err);
             //if the error was the result of an invalid token being submitted
             if (err.data && err.data.expiredToken  && !tokenRefreshAttempted) {
               //clear the provider token info from the cache
@@ -120,7 +119,7 @@ angular.module('highScoreApp')
               //reattempt the request
               return this.scoreRequest(provider, path, queryObj)
             }
-            return err;
+            throw err;
           });
       }
     };

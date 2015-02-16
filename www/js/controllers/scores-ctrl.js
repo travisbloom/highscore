@@ -1,21 +1,19 @@
 angular.module('highScoreApp')
-  .controller('scoresCtrl', function($scope, highScoreFactory, $location, $ionicLoading) {
+  .controller('scoresCtrl', function($scope, highScoreFactory, $location, messageFactory) {
     $scope.show = {
       reorder: false,
       loading: false
     };
-    //add success message if something is passed in the route
-    //todo build alerts design
-    if ($location.search().message)
-      console.log($location.search().message);
     /***
      * load high scores from local storage, catch invalid app data
      ***/
     try {
       $scope.highScores = highScoreFactory.getScores();
-    } catch(e) {
-      //todo create error solution
-      console.log(e);
+    } catch(error) {
+      $scope.message = messageFactory.format(error);
+      messageFactory.show('error').then(function(){
+        $scope.message = null;
+      });
     }
     /***
     * open high score page for specific score
@@ -43,10 +41,12 @@ angular.module('highScoreApp')
         .then(function(){
           scoreObj.loading = false;
         })
-        //todo propegate error to ui
-        .catch(function(err){
+        .catch(function(error){
           scoreObj.loading = false;
-          console.log(err)
+          $scope.message = messageFactory.format(error);
+          messageFactory.show('error').then(function(){
+            $scope.message = null;
+          });
         });
     };
     /***********************************************

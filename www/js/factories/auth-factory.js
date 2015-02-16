@@ -12,11 +12,10 @@ angular.module('highScoreApp')
        * returns the token either way
        ***/
       getAuth: function (provider) {
-        var deferred, providers = userDataFactory.data.providers;
+        var deferred = $q.defer(), providers = userDataFactory.data.providers;
         //if the provider exists, authenticate the user
         //todo shorten this
         if (providers[provider]) {
-          deferred = $q.defer();
           deferred.resolve(providers[provider]);
           return deferred.promise;
         }

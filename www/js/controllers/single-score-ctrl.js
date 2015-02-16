@@ -1,12 +1,11 @@
 angular.module('highScoreApp')
-  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, $ionicModal, $ionicScrollDelegate, $location) {
+  .controller('singleScoreCtrl', function($scope, $stateParams, highScoreFactory, $ionicModal, $ionicScrollDelegate, $location, messageFactory) {
     //default config for collapsible elements
     $scope.show = {
       config: false
     };
     //pull the score from the url params
     $scope.score = highScoreFactory.getScores()[$stateParams.highscoreindex];
-    console.log($scope.score);
     //set initial newScore params to the current score, ensures changes will be tracked
     $scope.changes = { newScore: $scope.score.currentScore };
     //graph config options

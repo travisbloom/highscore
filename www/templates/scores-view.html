@@ -6,6 +6,7 @@
         <button class="button button-icon icon ion-arrow-swap" ng-click="show.showReorder = !show.showReorder"></button>
     </ion-nav-buttons>
     <ion-content class="has-header">
+        <div class="message {{message.type}} ng-hide" data-ng-show="message.text">{{message.text}}</div>
         <ion-list show-reorder="show.showReorder">
             <ion-item  ng-repeat="item in highScores" ng-click="goToScore($index)" class="item-icon-left">
                     <i class="icon {{item.config.icon}}" style="color: {{item.config.color}}"></i>

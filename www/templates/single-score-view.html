@@ -1,5 +1,6 @@
 <ion-view title="{{score.config.name}}" class="individual-score">
     <ion-content class="has-header">
+        <div class="message {{message.type}} ng-hide" data-ng-show="message.text">{{message.text}}</div>
         <div class="graph">
             <div class="hide-graph" ng-show="score.history.length < 4">
                 We need to collect a few more datapoints before this graph is useful. Keep scoring!
