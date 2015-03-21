@@ -19,15 +19,15 @@ angular.module('highScoreApp')
           deferred.resolve(providers[provider]);
           return deferred.promise;
         }
-        return $cordovaOauth[provider](providerDetails[provider][0], providerDetails[provider][1], providerDetails[provider][2])
+        return $cordovaOauth[provider].apply(this, providerDetails[provider])
           .then(function (response) {
             console.log(response);
-          //save returned auth data to local storage
-          var userData = userDataFactory.data;
-          userData.providers[provider] = response;
-          userDataFactory.data = userData;
-          return response;
-        });
+            //save returned auth data to local storage
+            var userData = userDataFactory.data;
+            userData.providers[provider] = response;
+            userDataFactory.data = userData;
+            return response;
+          });
       }
     };
   });

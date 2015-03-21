@@ -95,17 +95,19 @@ angular.module('highScoreApp')
       time: ['recent'],
       options: providerOptions,
       scoreRequest: function (provider, path, queryObj) {
-        var urlParams = '';
-        //if additional URL params are passed to the api server, add them here
-        if (queryObj) {
-          Object.keys(queryObj).forEach(function(key) {
-            //if the property was not falsey
-            if (queryObj[key]) urlParams += '&' + key + '=' + queryObj[key]
-          })
-        }
         return authFactory.getAuth(provider)
           .then(function(accessObj) {
-            return $http.get(config.envs[config.env].apiUri + path + '?access_token=' + accessObj.access_token + urlParams);
+            var url = config.envs[config.env].apiUri + path, paramPrefix = '?';
+            //if additional URL params are passed to the api server, add them here
+            if (queryObj) {
+              Object.keys(queryObj).forEach(function(key) {
+                //if the property was not falsely
+                if (queryObj[key])
+                  url += paramPrefix + key + '=' + queryObj[key];
+                paramPrefix = '&'
+              })
+            }
+            return $http.post(url, {auth: accessObj});
           })
           .catch(function(err) {
             //if the error was the result of an invalid token being submitted

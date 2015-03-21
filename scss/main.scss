@@ -37,10 +37,14 @@ $highscore-text: white;
 
 .message {
   text-align: center;
-  padding-top: 20px;
+  padding: 20px 0;
   height: 50px;
   line-height: 14px;
   transition: 0.2s linear all;
+  //add ... to the end of message if overflowing
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   &.warning {
     background-color: $energized;
   }
