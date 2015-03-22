@@ -2,7 +2,7 @@
   "name": "highscor",
   "app_id": "a41efc36",
   "gulpStartupTasks": [
-    "sass",
+    "default",
     "watch"
   ],
   "watchPatterns": [
