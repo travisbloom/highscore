@@ -2,31 +2,31 @@
     <label class="item item-input">
         <!--name-->
         <span class="input-label">Name:</span>
-        <input type="text" ng-model="score.config.name" placeholder="new amazing goal......">
+        <input type="text" ng-model="sco.score.config.name" placeholder="new amazing goal......">
     </label>
     <!--icon-->
     <label class="item item-input">
         <span class="input-label">Icon:
-            <i class="icon {{score.config.icon}}"></i>
-            <span class="placeholder" ng-show="!score.config.icon">n/a</span>
+            <i class="icon {{sco.score.config.icon}}"></i>
+            <span class="placeholder" ng-show="!sco.score.config.icon">n/a</span>
         </span>
-        <button class="button" ng-click="iconModal.show()">Select Icon</button>
+        <button class="button" ng-click="sco.iconModal.show()">Select Icon</button>
     </label>
     <!--color-->
     <label class="item item-input">
         <span class="input-label">Color:
-            <span class="picked-color" style="background-color: {{score.config.color}}"></span>
+            <span class="picked-color" style="background-color: {{sco.score.config.color}}"></span>
         </span>
-        <button class="button" ng-click="colorModal.show()">Select Color</button>
+        <button class="button" ng-click="sco.colorModal.show()">Select Color</button>
     </label>
     <!--type-->
     <label class="item item-input">
         <span class="input-label">Type:</span>
-        <select ng-options="type for type in scoreOptions.numTypes" ng-model="score.config.type"></select>
+        <select ng-options="type for type in sco.scoreOptions.numTypes" ng-model="sco.score.config.type"></select>
     </label>
     <!--increment-->
     <label class="item item-input">
         <span class="input-label">Increment #:</span>
-        <input type="number" ng-model="score.config.incrementValue" placeholder="doesn't increment">
+        <input type="number" ng-model="sco.score.config.incrementValue" placeholder="doesn't increment">
     </label>
 </div>

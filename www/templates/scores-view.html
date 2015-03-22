@@ -3,12 +3,12 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-arrow-swap" ng-click="show.showReorder = !show.showReorder"></button>
+        <button class="button button-icon icon ion-arrow-swap" ng-click="msv.show.showReorder = !msv.show.showReorder"></button>
     </ion-nav-buttons>
     <ion-content class="has-header">
-        <div class="message {{message.type}} ng-hide" data-ng-show="message.text">{{message.text}}</div>
-        <ion-list show-reorder="show.showReorder">
-            <ion-item  ng-repeat="item in highScores" ng-click="goToScore($index)" class="item-icon-left">
+        <div class="message {{msv.message.type}} ng-hide" data-ng-show="msv.message.text">{{msv.message.text}}</div>
+        <ion-list show-reorder="msv.show.showReorder">
+            <ion-item  ng-repeat="item in msv.highScores" ng-click="msv.goToScore($index)" class="item-icon-left">
                     <i class="icon {{item.config.icon}}" style="color: {{item.config.color}}"></i>
                     <span style="color: {{item.config.color}}">{{item.config.name}}</span>
                     <span class="item-note">
@@ -16,23 +16,23 @@
                       {{item.currentScore}}
                     </span>
                 <!--reset score-->
-                <ion-option-button ng-if="item.apiInfo" class="button-info" ng-click="refreshScore($event, item)">
+                <ion-option-button ng-if="item.apiInfo" class="button-info" ng-click="msv.refreshScore($event, item)">
                     <i class="icon ion-refresh" ng-class="{loading: item.loading}"></i>
                 </ion-option-button>
                 <!--plus/minus sign for custom scores that increment by a set amount-->
-                <ion-option-button ng-if="item.config.incrementValue" class="button-info" ng-click="increment($event, item, 'down')">
+                <ion-option-button ng-if="item.config.incrementValue" class="button-info" ng-click="msv.increment($event, item, 'down')">
                     <i class="icon ion-minus-round"></i>
                 </ion-option-button>
-                <ion-option-button ng-if="item.config.incrementValue" class="button-info" ng-click="increment($event, item, 'up')">
+                <ion-option-button ng-if="item.config.incrementValue" class="button-info" ng-click="msv.increment($event, item, 'up')">
                     <i class="icon ion-plus-round"></i>
                 </ion-option-button>
                 <!--input for custom number-->
                 <ion-option-button ng-if="!item.apiInfo && !item.config.incrementValue" class="button-info">
                     <label class="item item-input">
-                        <input type="number" placeholder="new score..." ng-model="item.newCurrent" ng-click="preventClick($event)">
+                        <input type="number" placeholder="new score..." ng-model="item.newCurrent" ng-click="msv.preventClick($event)">
                     </label>
                 </ion-option-button>
-                <ion-option-button ng-if="!item.apiInfo && !item.config.incrementValue" class="button-info" ng-disabled="!item.newCurrent" ng-click="newScore($event, item)">
+                <ion-option-button ng-if="!item.apiInfo && !item.config.incrementValue" class="button-info" ng-disabled="!item.newCurrent" ng-click="msv.newScore($event, item)">
                     <i class="icon ion-checkmark-round"></i>
                 </ion-option-button>
                 <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)"></ion-reorder-button>

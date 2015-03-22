@@ -33,7 +33,7 @@ angular.module('highScoreApp', [
         views: {
           'menuContent' :{
             templateUrl: "templates/new-score-view.html",
-            controller: 'newScoreCtrl'
+            controller: 'newScoreCtrl as nsv'
           }
         }
       })
@@ -42,7 +42,7 @@ angular.module('highScoreApp', [
         views: {
           'menuContent' :{
             templateUrl: "templates/scores-view.html",
-            controller: 'scoresCtrl'
+            controller: 'scoresCtrl as msv'
           }
         }
       })
@@ -51,7 +51,7 @@ angular.module('highScoreApp', [
         views: {
           'menuContent' :{
             templateUrl: "templates/single-score-view.html",
-            controller: 'singleScoreCtrl'
+            controller: 'singleScoreCtrl as ssv'
           }
         }
       });

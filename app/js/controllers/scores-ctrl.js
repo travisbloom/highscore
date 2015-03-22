@@ -1,6 +1,6 @@
 angular.module('highScoreApp')
-  .controller('scoresCtrl', function($scope, highScoreFactory, $location, messageFactory) {
-    $scope.show = {
+  .controller('scoresCtrl', function(highScoreFactory, $location, messageFactory) {
+    this.show = {
       reorder: false,
       loading: false
     };
@@ -8,22 +8,23 @@ angular.module('highScoreApp')
      * load high scores from local storage, catch invalid app data
      ***/
     try {
-      $scope.highScores = highScoreFactory.getScores();
+      this.highScores = highScoreFactory.getScores();
     } catch(error) {
-      $scope.message = messageFactory.format(error);
-      messageFactory.show('error').then(()=> $scope.message = null );
+      this.message = messageFactory.format(error);
+      messageFactory.show('error').then(()=> this.message = null );
     }
+    console.log(this.highScores)
     /***
     * open high score page for specific score
     ***/
-    $scope.goToScore = function (index) {
+    this.goToScore = function (index) {
       $location.path('/app/highscores/' + index);
     };
     /***
      * reorder scores
      ***/
-    $scope.reorderItem = function(item, $fromIndex, $toIndex) {
-      $scope.highScores = highScoreFactory.reorderScores($fromIndex, $toIndex);
+    this.reorderItem = function(item, $fromIndex, $toIndex) {
+      this.highScores = highScoreFactory.reorderScores($fromIndex, $toIndex);
     };
     /***********************************************
      ***********************************************
@@ -31,7 +32,7 @@ angular.module('highScoreApp')
      ***********************************************
      **********************************************/
     //trigger page loading view while score is updated
-    $scope.refreshScore = function(e, scoreObj) {
+    this.refreshScore = function(e, scoreObj) {
       //prevent click through to next page
       e.stopPropagation();
       scoreObj.loading = true;
@@ -39,8 +40,8 @@ angular.module('highScoreApp')
         .then(() => scoreObj.loading = false )
         .catch((error) => {
           scoreObj.loading = false;
-          $scope.message = messageFactory.format(error);
-          messageFactory.show('error').then(()=> $scope.message = null );
+          this.message = messageFactory.format(error);
+          messageFactory.show('error').then(()=> this.message = null );
         });
     };
     /***********************************************
@@ -49,10 +50,10 @@ angular.module('highScoreApp')
      ***********************************************
      **********************************************/
      //used by non-incrementing input box
-    $scope.preventClick = function(e) {
+    this.preventClick = function(e) {
       e.stopPropagation();
     };
-    $scope.newScore = function(e, scoreObj) {
+    this.newScore = function(e, scoreObj) {
       e.stopPropagation();
       scoreObj.saveObj({currentScore: scoreObj.newCurrent});
       scoreObj.newCurrent = undefined;
@@ -62,8 +63,9 @@ angular.module('highScoreApp')
      * Functions Specific to incrementing custom scores
      ***********************************************
      **********************************************/
-    $scope.increment = function(e, scoreObj, direction) {
+    this.increment = function(e, scoreObj, direction) {
       e.stopPropagation();
       scoreObj.increment(direction);
     };
   });
+

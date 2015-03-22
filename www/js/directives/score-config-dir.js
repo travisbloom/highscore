@@ -8,11 +8,15 @@ angular.module("highScoreApp").directive("scoreConfigOptions", function ($ionicM
       //score object being referenced
       score: "="
     },
+    controllerAs: "sco",
+    bindToController: true,
     controller: function controller($scope) {
+      var _this = this;
+
       /***
        * options to choose from for newScore
        ***/
-      $scope.scoreOptions = optionsFactory;
+      this.scoreOptions = optionsFactory;
       /***
        * configure icon modal for page, track modal on $scope
        ***/
@@ -20,14 +24,14 @@ angular.module("highScoreApp").directive("scoreConfigOptions", function ($ionicM
         scope: $scope,
         animation: "slide-in-up"
       }).then(function (modal) {
-        return $scope.iconModal = modal;
+        return _this.iconModal = modal;
       });
       /***
        * pass new icon to item config, hide modal
        ***/
-      $scope.newIcon = function (icon) {
-        $scope.score.config.icon = icon;
-        $scope.iconModal.hide();
+      this.newIcon = function (icon) {
+        this.score.config.icon = icon;
+        this.iconModal.hide();
       };
       /***
        * configure color modal for page, track modal on $scope
@@ -36,14 +40,14 @@ angular.module("highScoreApp").directive("scoreConfigOptions", function ($ionicM
         scope: $scope,
         animation: "slide-in-up"
       }).then(function (modal) {
-        return $scope.iconModal = modal;
+        return _this.colorModal = modal;
       });
       /***
        * pass new color to item config, hide modal
        ***/
-      $scope.newColor = function (color) {
-        $scope.score.config.color = color;
-        $scope.colorModal.hide();
+      this.newColor = function (color) {
+        this.score.config.color = color;
+        this.colorModal.hide();
       };
     }
   };

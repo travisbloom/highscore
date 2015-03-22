@@ -1,15 +1,15 @@
 "use strict";
 
-angular.module("highScoreApp").controller("newScoreCtrl", function ($scope, highScoreFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, messageFactory, userDataFactory) {
-  $scope.message = {};
+angular.module("highScoreApp").controller("newScoreCtrl", function (highScoreFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, messageFactory, userDataFactory) {
+  this.message = {};
   //pull in third party options
-  $scope.thirdPartyOptions = thirdPartyFactory.options;
-  $scope.show = {
+  this.thirdPartyOptions = thirdPartyFactory.options;
+  this.show = {
     //governs what tab is being shown
     customScoreTab: false
   };
   //track previously used custom scores
-  $scope.usedCustomScores = userDataFactory.data.usedCustomScores;
+  this.usedCustomScores = userDataFactory.data.usedCustomScores;
   /***********************************************
    ***********************************************
    * Data Specific to 3rd Party Scores
@@ -22,7 +22,9 @@ angular.module("highScoreApp").controller("newScoreCtrl", function ($scope, high
    * set the returned score and metaData, if any, to the newScore obj
    * generate the new score
    ***/
-  $scope.addThirdPartyScore = function (newScore) {
+  this.addThirdPartyScore = function (newScore) {
+    var _this = this;
+
     //show loading page, initial loads can take some time
     $ionicLoading.show({
       template: "<div>Processing your " + newScore.apiInfo.provider + " data. This could take a few seconds the first time we get it.</div>"
@@ -39,9 +41,9 @@ angular.module("highScoreApp").controller("newScoreCtrl", function ($scope, high
       $location.path("/app/highscores");
     })["catch"](function (error) {
       $ionicLoading.hide();
-      $scope.message = messageFactory.format(error);
+      _this.message = messageFactory.format(error);
       messageFactory.show("error").then(function () {
-        return $scope.message = null;
+        return _this.message = null;
       });
     });
   };
@@ -53,7 +55,7 @@ angular.module("highScoreApp").controller("newScoreCtrl", function ($scope, high
   /***
    * sets the object structure and defaults for the new Custom Score
    ***/
-  $scope.score = {
+  this.score = {
     currentScore: 0,
     config: {
       type: "number",
@@ -63,14 +65,16 @@ angular.module("highScoreApp").controller("newScoreCtrl", function ($scope, high
   /***
    * try to generate the new custom score, retuns an error when invalid data is submitted
    ***/
-  $scope.newScore = function () {
+  this.newScore = function () {
+    var _this = this;
+
     try {
-      highScoreFactory.newScore($scope.score);
+      highScoreFactory.newScore(this.score);
       $location.path("/app/highscores");
     } catch (error) {
-      $scope.message = messageFactory.format(error);
+      this.message = messageFactory.format(error);
       messageFactory.show("error").then(function () {
-        return $scope.message = null;
+        return _this.message = null;
       });
     }
   };

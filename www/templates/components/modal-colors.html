@@ -2,12 +2,12 @@
     <ion-header-bar>
         <h1 class="title">Highscor Colors </h1>
         <div class="buttons">
-            <button class="button button-clear" ng-click="colorModal.hide()">Close</button>
+            <button class="button button-clear" ng-click="sco.colorModal.hide()">Close</button>
         </div>
     </ion-header-bar>
     <ion-content>
         <ul>
-            <li ng-repeat="color in scoreOptions.colorOptions track by $index" ng-click="newColor(color)">
+            <li ng-repeat="color in sco.scoreOptions.colorOptions track by $index" ng-click="sco.newColor(color)">
                 <span class="picked-color single-option" style="background-color: {{color}}"></span>
             </li>
         </ul>

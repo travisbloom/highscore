@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .directive('scoreConfigOptions', ($ionicModal, optionsFactory) => {
+  .directive('scoreConfigOptions', function($ionicModal, optionsFactory) {
     return {
       restrict: 'E',
       templateUrl: 'templates/components/score-config-options.html',
@@ -7,24 +7,26 @@ angular.module('highScoreApp')
         //score object being referenced
         score: '='
       },
+      controllerAs: 'sco',
+      bindToController: true,
       controller($scope) {
         /***
          * options to choose from for newScore
          ***/
-        $scope.scoreOptions = optionsFactory;
+        this.scoreOptions = optionsFactory;
         /***
          * configure icon modal for page, track modal on $scope
          ***/
         $ionicModal.fromTemplateUrl('templates/components/modal-icons.html', {
           scope: $scope,
           animation: 'slide-in-up'
-        }).then((modal) => $scope.iconModal = modal);
+        }).then((modal) => this.iconModal = modal);
         /***
          * pass new icon to item config, hide modal
          ***/
-        $scope.newIcon = function (icon) {
-          $scope.score.config.icon = icon;
-          $scope.iconModal.hide();
+        this.newIcon = function (icon) {
+          this.score.config.icon = icon;
+          this.iconModal.hide();
         };
         /***
          * configure color modal for page, track modal on $scope
@@ -32,13 +34,13 @@ angular.module('highScoreApp')
         $ionicModal.fromTemplateUrl('templates/components/modal-colors.html', {
           scope: $scope,
           animation: 'slide-in-up'
-        }).then((modal) => $scope.iconModal = modal);
+        }).then((modal) => this.colorModal = modal);
         /***
          * pass new color to item config, hide modal
          ***/
-        $scope.newColor = function (color) {
-          $scope.score.config.color = color;
-          $scope.colorModal.hide();
+        this.newColor = function (color) {
+          this.score.config.color = color;
+          this.colorModal.hide();
         };
       }
     };
