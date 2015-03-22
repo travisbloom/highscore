@@ -39,7 +39,7 @@ angular.module('highScoreApp')
       }).catch((error) => {
         $ionicLoading.hide();
         this.message = messageFactory.format(error);
-        messageFactory.show('error').then(()=> this.message = null );
+        messageFactory.show('error').then(() => this.message = null );
       });
     };
     /***********************************************

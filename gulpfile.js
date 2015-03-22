@@ -55,3 +55,12 @@ gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['js']);
 });
+
+gulp.task('phonegap', function(done) {
+  gulp.src([
+    './www/**/*.*',
+    './config.xml'
+  ])
+    .pipe(gulp.dest('../phonegap/'))
+    .on('end', done);
+});
