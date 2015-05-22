@@ -1,6 +1,6 @@
 const CONFIG = {
   facebook: {
-      clientId: '1413405385546851'
+    clientId: '1413405385546851'
   },
   twitter: {
     clientId: 'YQCytIZQ57o5HmlN83WVjFjHP',

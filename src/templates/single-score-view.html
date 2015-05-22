@@ -1,49 +1,54 @@
 <ion-view title="{{ssv.score.config.name}}" class="individual-score">
-    <ion-content class="has-header">
-        <div class="message {{ssv.message.type}} ng-hide" data-ng-show="ssv.message.text">{{ssv.message.text}}</div>
-        <div class="graph">
-            <div class="hide-graph" ng-show="ssv.score.history.length < 4">
-                We need to collect a few more datapoints before this graph is useful. Keep scoring!
-            </div>
-            <linechart data="ssv.score.history" options="ssv.options"></linechart>
+  <ion-content class="has-header">
+    <div class="message {{ssv.message.type}} ng-hide" data-ng-show="ssv.message.text">{{ssv.message.text}}</div>
+    <div class="graph">
+      <div class="hide-graph" ng-show="ssv.score.history.length < 4">
+        We need to collect a few more datapoints before this graph is useful. Keep scoring!
+      </div>
+      <linechart data="ssv.score.history" options="ssv.options"></linechart>
+    </div>
+    <!--exposed increment options when relevant-->
+    <div class="row" ng-if="ssv.score.config.incrementValue">
+      <div class="col">
+        <button ng-click="ssv.increment('down')" class="button icon button-full ion-minus-round"></button>
+      </div>
+      <div class="col">
+        <button ng-click="ssv.increment('up')" class="button icon button-full ion-plus-round"></button>
+      </div>
+    </div>
+    <!--new value input-->
+    <div class="row update-score" ng-if="!ssv.score.apiInfo">
+      <div class="col" ng-class="{'col-60' : newScore !== ssv.score.currentScore}">
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Current Value</span>
+            <input type="number" ng-model="ssv.changes.newScore">
+          </label>
         </div>
-        <!--exposed increment options when relevant-->
-        <div class="row" ng-if="ssv.score.config.incrementValue">
-            <div class="col"><button ng-click="ssv.increment('down')" class="button icon button-full ion-minus-round"></button></div>
-            <div class="col"><button ng-click="ssv.increment('up')" class="button icon button-full ion-plus-round"></button></div>
-        </div>
-        <!--new value input-->
-        <div class="row update-score" ng-if="!ssv.score.apiInfo">
-            <div class="col" ng-class="{'col-60' : newScore !== ssv.score.currentScore}">
-                <div class="list">
-                    <label class="item item-input">
-                        <span class="input-label">Current Value</span>
-                        <input type="number" ng-model="ssv.changes.newScore">
-                    </label>
-                </div>
-            </div>
-            <div class="col col-20" ng-show="ssv.changes.newScore !== ssv.score.currentScore">
-                <button class="button button-block icon ion-checkmark-round" ng-click="ssv.saveNewScore()"></button>
-            </div>
-            <div class="col col-20" ng-show="ssv.changes.newScore !== ssv.score.currentScore">
-                <button class="button button-block icon ion-close-round" ng-click="ssv.changes.newScore = ssv.score.currentScore"></button>
-            </div>
-        </div>
-        <div class="padding">
-            <button class="button button-block button-positive" ng-click="ssv.configureSettings()">
-                <span ng-show="!ssv.show.config">Configure {{ssv.score.config.name}}</span>
-                <span ng-show="ssv.show.config">Save Configuration</span>
-            </button>
-        </div>
-        <!--Configuration for items that have config options-->
-        <div class="collapse" ng-show="ssv.show.config">
-            <!--config options directive-->
-            <score-config-options score="ssv.score"></score-config-options>
-            <div class="padding">
-                <button class="button button-block button-assertive" ng-click="ssv.deleteScore()">
-                    Delete This Score
-                </button>
-            </div>
-        </div>
-    </ion-content>
+      </div>
+      <div class="col col-20" ng-show="ssv.changes.newScore !== ssv.score.currentScore">
+        <button class="button button-block icon ion-checkmark-round" ng-click="ssv.saveNewScore()"></button>
+      </div>
+      <div class="col col-20" ng-show="ssv.changes.newScore !== ssv.score.currentScore">
+        <button class="button button-block icon ion-close-round"
+                ng-click="ssv.changes.newScore = ssv.score.currentScore"></button>
+      </div>
+    </div>
+    <div class="padding">
+      <button class="button button-block button-positive" ng-click="ssv.configureSettings()">
+        <span ng-show="!ssv.show.config">Configure {{ssv.score.config.name}}</span>
+        <span ng-show="ssv.show.config">Save Configuration</span>
+      </button>
+    </div>
+    <!--Configuration for items that have config options-->
+    <div class="collapse" ng-show="ssv.show.config">
+      <!--config options directive-->
+      <score-config-options score="ssv.score"></score-config-options>
+      <div class="padding">
+        <button class="button button-block button-assertive" ng-click="ssv.deleteScore()">
+          Delete This Score
+        </button>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

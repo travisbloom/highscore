@@ -18,26 +18,26 @@ var paths = {
 
 gulp.task('default', ['sass', 'js', 'js-lib', 'fonts', 'move-all']);
 
-gulp.task('sass', function(done) {
+gulp.task('sass', function (done) {
   gulp.src(paths.src + '/scss/main.scss')
     .pipe(sass())
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
-    .pipe(rename({ extname: '.min.css' }))
+    .pipe(rename({extname: '.min.css'}))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
 
-gulp.task('js', function(done) {
+gulp.task('js', function (done) {
   gulp.src(paths.src + '/js/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./www/js/'))
     .on('end', done);
 });
 
-gulp.task('js-lib', function(done) {
+gulp.task('js-lib', function (done) {
   gulp.src([
     paths.node + '/gulp-babel/node_modules/babel-core/browser-polyfill.js',
     paths.bower + '/ionic/js/ionic.bundle.js',
@@ -52,7 +52,7 @@ gulp.task('js-lib', function(done) {
     .on('end', done);
 });
 
-gulp.task('move-all', function(done) {
+gulp.task('move-all', function (done) {
   gulp
     .src([
       paths.src + '/**/*',
@@ -63,7 +63,7 @@ gulp.task('move-all', function(done) {
     .on('end', done);
 });
 
-gulp.task('fonts', function(done) {
+gulp.task('fonts', function (done) {
   gulp
     .src([
       paths.libs + '/ionic/fonts/**'
@@ -72,12 +72,12 @@ gulp.task('fonts', function(done) {
     .on('end', done);
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['js']);
 });
 
-gulp.task('phonegap', function(done) {
+gulp.task('phonegap', function (done) {
   gulp.src([
     './www/**/*.*',
     './config.xml'

@@ -1,56 +1,59 @@
 <ion-view title="New Score" class="new-score">
-    <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-    </ion-nav-buttons>
-    <!--Score Tabs-->
-    <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
-        <div class="tabs">
-            <a class="tab-item" ng-click="nsv.show.customScoreTab = false" ng-class="{active: !nsv.show.customScoreTab}">
-                3rd Party Scores
-            </a>
-            <a class="tab-item" ng-click="nsv.show.customScoreTab = true" ng-class="{active: nsv.show.customScoreTab}">
-                Custom Score
-            </a>
-        </div>
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <!--Score Tabs-->
+  <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+    <div class="tabs">
+      <a class="tab-item" ng-click="nsv.show.customScoreTab = false" ng-class="{active: !nsv.show.customScoreTab}">
+        3rd Party Scores
+      </a>
+      <a class="tab-item" ng-click="nsv.show.customScoreTab = true" ng-class="{active: nsv.show.customScoreTab}">
+        Custom Score
+      </a>
     </div>
-    <ion-content class="has-tabs-top">
-        <div class="message {{nsv.message.type}} ng-hide" data-ng-show="nsv.message.text">{{nsv.message.text}}</div>
-        <!--3rd Part View-->
-        <div ng-show="!nsv.show.customScoreTab" class="third-party-options">
-            <div data-ng-repeat="provider in nsv.thirdPartyOptions">
-                <h3>{{provider.name}}</h3>
-                <div class="card list">
-                    <div class="item" data-ng-repeat="category in provider.categories">
-                        <strong>{{category.name}}</strong>
-                        <div>
-                            <button class="button button-block button-positive"
-                                data-ng-repeat="option in category.options"
-                                ng-click="nsv.addThirdPartyScore(option.scoreData)"ng-disabled="nsv.usedCustomScores.indexOf(option.scoreData.apiInfo.path) !== -1">
-                                <i class="icon {{provider.config.icon}}"></i>  {{option.description}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
+  </div>
+  <ion-content class="has-tabs-top">
+    <div class="message {{nsv.message.type}} ng-hide" data-ng-show="nsv.message.text">{{nsv.message.text}}</div>
+    <!--3rd Part View-->
+    <div ng-show="!nsv.show.customScoreTab" class="third-party-options">
+      <div data-ng-repeat="provider in nsv.thirdPartyOptions">
+        <h3>{{provider.name}}</h3>
+
+        <div class="card list">
+          <div class="item" data-ng-repeat="category in provider.categories">
+            <strong>{{category.name}}</strong>
+
+            <div>
+              <button class="button button-block button-positive"
+                      data-ng-repeat="option in category.options"
+                      ng-click="nsv.addThirdPartyScore(option.scoreData)"
+                      ng-disabled="nsv.usedCustomScores.indexOf(option.scoreData.apiInfo.path) !== -1">
+                <i class="icon {{provider.config.icon}}"></i> {{option.description}}
+              </button>
             </div>
+          </div>
         </div>
-        <!--Custom View-->
-        <div class="custom-score" ng-show="nsv.show.customScoreTab">
-            <h3>Score Configuration</h3>
-            <!--config options directive-->
-            <score-config-options score="nsv.score"></score-config-options>
-            <div class="list card score-inputs">
-                <label class="item item-input">
-                    <span class="input-label">Starting Score:</span>
-                    <input type="number" ng-model="nsv.score.currentScore">
-                </label>
-            </div>
-            <div class="padding">
-                <button class="button button-block button-positive"
-                        ng-click="nsv.newScore()"
-                        ng-disabled="!nsv.score.config.name || !nsv.score.config.icon || (!nsv.score.currentScore && nsv.score.currentScore !== 0)" >
-                    Create
-                </button>
-            </div>
-        </div>
-    </ion-content>
+      </div>
+    </div>
+    <!--Custom View-->
+    <div class="custom-score" ng-show="nsv.show.customScoreTab">
+      <h3>Score Configuration</h3>
+      <!--config options directive-->
+      <score-config-options score="nsv.score"></score-config-options>
+      <div class="list card score-inputs">
+        <label class="item item-input">
+          <span class="input-label">Starting Score:</span>
+          <input type="number" ng-model="nsv.score.currentScore">
+        </label>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-positive"
+                ng-click="nsv.newScore()"
+                ng-disabled="!nsv.score.config.name || !nsv.score.config.icon || (!nsv.score.currentScore && nsv.score.currentScore !== 0)">
+          Create
+        </button>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>

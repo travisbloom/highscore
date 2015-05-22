@@ -12,7 +12,7 @@ var packageJSON = null;
 
 try {
   packageJSON = require('../../package.json');
-} catch(ex) {
+} catch (ex) {
   console.log('\nThere was an error fetching your package.json file.')
   console.log('\nPlease ensure a valid package.json is in the root of this project\n')
   return;

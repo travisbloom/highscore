@@ -3,23 +3,23 @@
         version="0.0.1"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:cdv="http://cordova.apache.org/ns/1.0"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
-        >
-    <name>highscor</name>
-    <description>
-        Track all of your personal bests
-    </description>
-    <author email="travisbloom@gmail.com" href="http://travisbloom.me">
-        Travis Bloom
-    </author>
-    <content src="index.html"/>
-    <access origin="*"/>
-    <preference name="webviewbounce" value="false"/>
-    <preference name="UIWebViewBounce" value="false"/>
-    <preference name="DisallowOverscroll" value="true"/>
-    <preference name="BackupWebStorage" value="none"/>
-        <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
-    <feature name="StatusBar">
-        <param name="ios-package" value="CDVStatusBar" onload="true"/>
-    </feature>
+        xmlns:gap="http://phonegap.com/ns/1.0"
+  >
+  <name>highscor</name>
+  <description>
+    Track all of your personal bests
+  </description>
+  <author email="travisbloom@gmail.com" href="http://travisbloom.me">
+    Travis Bloom
+  </author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2"/>
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
 </widget>

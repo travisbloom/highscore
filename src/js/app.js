@@ -10,10 +10,10 @@ angular.module('highScoreApp', [
     $ionicPlatform.ready(() => {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
-      if(window.cordova && window.cordova.plugins.Keyboard) {
+      if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       }
-      if(window.StatusBar) {
+      if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
@@ -31,7 +31,7 @@ angular.module('highScoreApp', [
       .state('app.new', {
         url: "/new",
         views: {
-          'menuContent' :{
+          'menuContent': {
             templateUrl: "templates/new-score-view.html",
             controller: 'newScoreCtrl as nsv'
           }
@@ -40,7 +40,7 @@ angular.module('highScoreApp', [
       .state('app.highscores', {
         url: "/highscores?message",
         views: {
-          'menuContent' :{
+          'menuContent': {
             templateUrl: "templates/scores-view.html",
             controller: 'scoresCtrl as msv'
           }
@@ -49,7 +49,7 @@ angular.module('highScoreApp', [
       .state('app.single', {
         url: "/highscores/:highscoreindex",
         views: {
-          'menuContent' :{
+          'menuContent': {
             templateUrl: "templates/single-score-view.html",
             controller: 'singleScoreCtrl as ssv'
           }

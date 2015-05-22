@@ -14,10 +14,10 @@ try {
   fs.mkdirSync(platformsDir, function (err) {
     if (err) { console.error(err); }
   });
-} catch(ex) {}
+} catch (ex) {}
 
 try {
   fs.mkdirSync(pluginsDir, function (err) {
     if (err) { console.error(err); }
   });
-} catch(ex) {}
+} catch (ex) {}
