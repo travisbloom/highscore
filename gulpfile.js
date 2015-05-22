@@ -1,24 +1,25 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
-var sh = require('shelljs');
 
 var paths = {
-  sass: ['./app/scss/**/*.scss'],
-  js: ['./app/js/**/*.js'],
-  bower: './www/lib',
-  node: './node_modules'
+  src: 'src',
+  dist: 'www',
+  libs: 'bower_components',
+  sass: ['app/scss/**/*.scss'],
+  js: ['app/js/**/*.js'],
+  bower: 'bower_components',
+  node: 'node_modules'
 };
 
-gulp.task('default', ['sass', 'js', 'js-lib']);
+gulp.task('default', ['sass', 'js', 'js-lib', 'fonts', 'move-all']);
 
 gulp.task('sass', function(done) {
-  gulp.src('./app/scss/main.scss')
+  gulp.src(paths.src + '/scss/main.scss')
     .pipe(sass())
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
@@ -30,7 +31,7 @@ gulp.task('sass', function(done) {
 });
 
 gulp.task('js', function(done) {
-  gulp.src('./app/js/**/*.js')
+  gulp.src(paths.src + '/js/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('./www/js/'))
     .on('end', done);
@@ -48,6 +49,26 @@ gulp.task('js-lib', function(done) {
   ])
     .pipe(concat('lib.js'))
     .pipe(gulp.dest('./www/js/'))
+    .on('end', done);
+});
+
+gulp.task('move-all', function(done) {
+  gulp
+    .src([
+      paths.src + '/**/*',
+      '!' + paths.src + '/js/**/*',
+      '!' + paths.src + '/scss/**/*'
+    ])
+    .pipe(gulp.dest(paths.dist))
+    .on('end', done);
+});
+
+gulp.task('fonts', function(done) {
+  gulp
+    .src([
+      paths.libs + '/ionic/fonts/**'
+    ])
+    .pipe(gulp.dest(paths.dist + '/assets/fonts'))
     .on('end', done);
 });
 

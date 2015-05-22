@@ -69,6 +69,6 @@ angular.module('highScoreApp', [
           config.timeout = 100000;
           return config;
         }
-      }
+      };
     });
   });

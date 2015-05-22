@@ -3,10 +3,11 @@
 *.log
 *.zip
 *.pem
+*.idea
 
+bower_components/
 node_modules/
-www/lib/
-www/css/
+www/*
+src/config.js
 platforms/
 plugins/
-www/js/config.js
