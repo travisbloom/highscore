@@ -5,13 +5,13 @@ var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var templateCache = require('gulp-angular-templatecache');
 
 var paths = {
   src: 'src',
   dist: 'www',
   libs: 'bower_components',
-  sass: ['app/scss/**/*.scss'],
-  js: ['app/js/**/*.js'],
+  tmp: '.tmp',
   bower: 'bower_components',
   node: 'node_modules'
 };
@@ -19,22 +19,31 @@ var paths = {
 gulp.task('default', ['sass', 'js', 'js-lib', 'fonts', 'move-all']);
 
 gulp.task('sass', function (done) {
-  gulp.src(paths.src + '/scss/main.scss')
+  gulp.src(paths.src + '/shared/styles/app.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./www/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({extname: '.min.css'}))
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest(paths.dist))
     .on('end', done);
 });
 
-gulp.task('js', function (done) {
-  gulp.src(paths.src + '/js/**/*.js')
+gulp.task('js', ['templateCache'], function(done) {
+  var src = [
+    paths.src + '/**/*.js',
+    paths.tmp + '/**/*.js'
+  ];
+  gulp.src(src)
     .pipe(babel())
-    .pipe(gulp.dest('./www/js/'))
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('./www/'))
     .on('end', done);
+});
+
+gulp.task('templateCache', function () {
+  gulp.src([paths.src + '/**/*.html',  '!' + paths.src + '/index.html'])
+    .pipe(templateCache(
+      'templates.js', {
+      module: 'highScoreApp'
+    }))
+    .pipe(gulp.dest(paths.tmp));
 });
 
 gulp.task('js-lib', function (done) {
@@ -47,8 +56,8 @@ gulp.task('js-lib', function (done) {
     paths.bower + '/ng-cordova-oauth/ng-cordova-oauth.js',
     paths.bower + '/moment/moment.js'
   ])
-    .pipe(concat('lib.js'))
-    .pipe(gulp.dest('./www/js/'))
+    .pipe(concat('libraries.js'))
+    .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
 
@@ -56,8 +65,9 @@ gulp.task('move-all', function (done) {
   gulp
     .src([
       paths.src + '/**/*',
-      '!' + paths.src + '/js/**/*',
-      '!' + paths.src + '/scss/**/*'
+      '!' + paths.src + '/{components,components/**}',
+      '!' + paths.src + '/{shared,shared/**}',
+      '!' + paths.src + '/**/*.js'
     ])
     .pipe(gulp.dest(paths.dist))
     .on('end', done);
@@ -73,8 +83,9 @@ gulp.task('fonts', function (done) {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.js, ['js']);
+  gulp.watch(paths.src + '/**/*.scss', ['sass']);
+  gulp.watch(paths.src + '/**/*.js', ['js']);
+  gulp.watch(paths.src + '/**/*.html', ['js']);
 });
 
 gulp.task('phonegap', function (done) {

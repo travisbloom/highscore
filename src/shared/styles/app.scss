@@ -1,17 +1,16 @@
-$ionicons-font-path: "../assets/fonts" !default;
+$ionicons-font-path: "assets/fonts" !default;
 // Include all of Ionic
-@import "../../bower_components/ionic/scss/ionic";
+@import "../../../bower_components/ionic/scss/ionic";
 // colors
 $highscore-primary: $positive;
 $highscore-accent: #145fd7;
 $highscore-text: white;
-//variables
-//override color styles
-@import "components/input-forms";
-@import "components/modal-options";
-@import "new-score-view";
-@import "scores-view";
-@import "single-score-view";
+
+@import "forms";
+@import "../../components/newScore/newScore";
+@import "../../components/score/score";
+@import "../../components/scoresList/scoresList";
+@import "../directives/scoreConfigOptions/scoreConfigOptions";
 //score icons
 .icon {
   font-size: 22px;

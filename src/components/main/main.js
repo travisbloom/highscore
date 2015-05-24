@@ -1,4 +1,4 @@
 angular.module('highScoreApp')
-    .controller('mainCtrl', function($scope) {
+    .controller('MainController', function($scope) {
       //todo determine if a top level scope is needed
     });

@@ -2,7 +2,7 @@ angular.module('highScoreApp')
   .directive('scoreConfigOptions', function($ionicModal, optionsFactory) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/components/score-config-options.html',
+      templateUrl: 'shared/directives/scoreConfigOptions/scoreConfigOptions.html',
       scope: {
         //score object being referenced
         score: '='
@@ -17,7 +17,7 @@ angular.module('highScoreApp')
         /***
          * configure icon modal for page, track modal on $scope
          ***/
-        $ionicModal.fromTemplateUrl('templates/components/modal-icons.html', {
+        $ionicModal.fromTemplateUrl('shared/directives/scoreConfigOptions/iconModal.html', {
           scope: $scope,
           animation: 'slide-in-up'
         }).then((modal) => this.iconModal = modal);
@@ -31,7 +31,7 @@ angular.module('highScoreApp')
         /***
          * configure color modal for page, track modal on $scope
          ***/
-        $ionicModal.fromTemplateUrl('templates/components/modal-colors.html', {
+        $ionicModal.fromTemplateUrl('shared/directives/scoreConfigOptions/colorModal.html', {
           scope: $scope,
           animation: 'slide-in-up'
         }).then((modal) => this.colorModal = modal);

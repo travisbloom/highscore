@@ -1,10 +1,6 @@
-// load 3rd party angular libraries
 angular.module('highScoreApp', [
-  //cordova angular wrapper
   'ionic',
-  //oAuth2 flow plugin
   'ngCordovaOauth',
-  //d3 charts
   'n3-line-chart'])
   .run(($ionicPlatform) => {
     $ionicPlatform.ready(() => {
@@ -22,41 +18,41 @@ angular.module('highScoreApp', [
 
   .config(($stateProvider, $urlRouterProvider) => {
     $stateProvider
-      .state('app', {
-        url: "/app",
+      .state('main', {
+        url: "",
         abstract: true,
-        templateUrl: "templates/menu.html",
-        controller: 'mainCtrl'
+        templateUrl: "components/main/main.html",
+        controller: 'MainController'
       })
-      .state('app.new', {
-        url: "/new",
+      .state('main.newScore', {
+        url: "/newScore",
         views: {
           'menuContent': {
-            templateUrl: "templates/new-score-view.html",
-            controller: 'newScoreCtrl as nsv'
+            templateUrl: "components/newScore/newScore.html",
+            controller: 'newScoreController as newScore'
           }
         }
       })
-      .state('app.highscores', {
-        url: "/highscores?message",
+      .state('main.scoresList', {
+        url: "/scoresList?message",
         views: {
           'menuContent': {
-            templateUrl: "templates/scores-view.html",
-            controller: 'scoresCtrl as msv'
+            templateUrl: "components/scoresList/scoresList.html",
+            controller: 'scoresListController as scoresList'
           }
         }
       })
-      .state('app.single', {
-        url: "/highscores/:highscoreindex",
+      .state('main.score', {
+        url: "/score/:index",
         views: {
           'menuContent': {
-            templateUrl: "templates/single-score-view.html",
-            controller: 'singleScoreCtrl as ssv'
+            templateUrl: "components/score/score.html",
+            controller: 'scoreController as score'
           }
         }
       });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/highscores');
+    $urlRouterProvider.otherwise('/scoresList');
   })
 
   .config(($httpProvider) => {

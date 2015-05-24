@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('scoresCtrl', function(highScoreFactory, $location, messageFactory) {
+  .controller('scoresListController', function(scoreFactory, $location, messageFactory) {
     this.show = {
       reorder: false,
       loading: false
@@ -8,23 +8,17 @@ angular.module('highScoreApp')
      * load high scores from local storage, catch invalid app data
      ***/
     try {
-      this.highScores = highScoreFactory.getScores();
+      this.highScores = scoreFactory.getScores();
     } catch(error) {
       this.message = messageFactory.format(error);
       messageFactory.show('error').then(()=> this.message = null );
     }
     console.log(this.highScores)
     /***
-    * open high score page for specific score
-    ***/
-    this.goToScore = function (index) {
-      $location.path('/app/highscores/' + index);
-    };
-    /***
      * reorder scores
      ***/
     this.reorderItem = function(item, $fromIndex, $toIndex) {
-      this.highScores = highScoreFactory.reorderScores($fromIndex, $toIndex);
+      this.highScores = scoreFactory.reorderScores($fromIndex, $toIndex);
     };
     /***********************************************
      ***********************************************

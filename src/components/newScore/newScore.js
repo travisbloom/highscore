@@ -1,8 +1,8 @@
 angular.module('highScoreApp')
-  .controller('newScoreCtrl', function(highScoreFactory, $ionicModal, thirdPartyFactory, $ionicLoading, $location, messageFactory, userDataFactory) {
+  .controller('newScoreController', function(scoreFactory, $ionicModal, apiFactory, $ionicLoading, $location, messageFactory, userDataFactory) {
     this.message = {};
     //pull in third party options
-    this.thirdPartyOptions = thirdPartyFactory.options;
+    this.thirdPartyOptions = apiFactory.options;
     this.show = {
       //governs what tab is being shown
       customScoreTab: false
@@ -27,13 +27,13 @@ angular.module('highScoreApp')
         template: '<div>Processing your ' + newScore.apiInfo.provider + ' data. This could take a few seconds the first time we get it.</div>'
       });
       //make an initial request to get starting score/needed metadata
-      thirdPartyFactory.scoreRequest(newScore.apiInfo.provider, newScore.apiInfo.path).then((res) => {
+      apiFactory.scoreRequest(newScore.apiInfo.provider, newScore.apiInfo.path).then((res) => {
         $ionicLoading.hide();
         //append returned data to newScore then create it
         newScore.currentScore = res.data.score;
         newScore.metaData = res.data.metaData;
         //generate and save the new score
-        highScoreFactory.newScore(newScore);
+        scoreFactory.newScore(newScore);
         //send user to highScores page after successful completion. Pass query param to signal successful signup
         $location.path('/app/highscores');
       }).catch((error) => {
@@ -62,7 +62,7 @@ angular.module('highScoreApp')
      ***/
     this.newScore = function () {
       try {
-        highScoreFactory.newScore(this.score);
+        scoreFactory.newScore(this.score);
         $location.path('/app/highscores');
       } catch (error) {
         this.message = messageFactory.format(error);

@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .factory('thirdPartyFactory', ($q, $http, authFactory, userDataFactory) => {
+  .factory('apiFactory', ($q, $http, authFactory, userDataFactory) => {
     let providerOptions =  [
       {
         name: 'facebook',

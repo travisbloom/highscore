@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .factory('highScoreFactory', (userDataFactory, thirdPartyFactory) => {
+  .factory('scoreFactory', (userDataFactory, apiFactory) => {
     //captures all the constructed HighScoreObj's
     let highScoreArray;
     /**
@@ -71,7 +71,7 @@ angular.module('highScoreApp')
        ***/
       pullScore() {
         let metaData = this.metaData && this.metaData.queryParams ? this.metaData.queryParams : undefined;
-        return thirdPartyFactory.scoreRequest(this.apiInfo.provider, this.apiInfo.path, metaData).then((res) =>
+        return apiFactory.scoreRequest(this.apiInfo.provider, this.apiInfo.path, metaData).then((res) =>
           this.saveObj({
             currentScore: +res.data.score,
             metaData: res.data.metaData
