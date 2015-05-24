@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
 var templateCache = require('gulp-angular-templatecache');
 
 var paths = {
@@ -20,7 +21,9 @@ gulp.task('default', ['sass', 'js', 'js-lib', 'fonts', 'move-all']);
 
 gulp.task('sass', function (done) {
   gulp.src(paths.src + '/shared/styles/app.scss')
+    .pipe(sourcemaps.init())
     .pipe(sass())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.dist))
     .on('end', done);
 });
