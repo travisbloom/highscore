@@ -1,5 +1,11 @@
 angular.module('highScoreApp')
   .factory('messageFactory', ($timeout) => {
+    let currentPromise;
+
+    return {
+      show,
+      format
+    };
     /***
      * checks all returned messages to validate and get data from them
      * Initially needed for timeout messages, expanded to ensure messages are properly returned across the application
@@ -18,17 +24,17 @@ angular.module('highScoreApp')
         return 'Your request couldn\'t be submitted because you don\'t have interwebz';
       }
     }
-    let currentPromise;
-    return {
-      show(type) {
-        if (currentPromise) $timeout.cancel(currentPromise);
-        return currentPromise = $timeout(()=>{}, type === 'error' ? 3000 : 1000);
-      },
-      format(msg) {
-        return {
-          text: messageText(msg) || 'No error was passed',
-          type: msg.type || 'warning'
-        }
-      }
+
+    function show(type) {
+      if (currentPromise) $timeout.cancel(currentPromise);
+      return currentPromise = $timeout(()=>{}, type === 'error' ? 3000 : 1000);
     }
+
+    function format(msg) {
+      return {
+        text: messageText(msg) || 'No error was passed',
+        type: msg.type || 'warning'
+      };
+    }
+
   });
