@@ -1,11 +1,15 @@
 angular.module('highScoreApp')
-  .controller('scoreController', function($stateParams, scoreFactory, $ionicModal, $ionicScrollDelegate, $location) {
+  .controller('scoreController', function($stateParams, scoresFactory, $ionicModal, $ionicScrollDelegate, $state) {
+
+    this.increment = increment.bind(this);
+    this.saveNewScore = saveNewScore.bind(this);
+    this.configureSettings = configureSettings.bind(this);
+    this.deleteScore = deleteScore.bind(this);
+
     //default config for collapsible elements
-    this.show = {
-      config: false
-    };
+    this.show = { config: false };
     //pull the score from the url params
-    this.score = scoreFactory.getScores()[$stateParams.index];
+    this.score = scoresFactory.getScores()[$stateParams.index];
     //set initial newScore params to the current score, ensures changes will be tracked
     this.changes = { newScore: this.score.currentScore };
     //graph config options
@@ -16,7 +20,7 @@ angular.module('highScoreApp')
           //treat x axis as date
           type: 'date',
           //apply relative timing function to labels
-          labelFunction(date) { return moment(date).fromNow() },
+          labelFunction(date){ return moment(date).fromNow(); },
           //number of x axis ticks
           ticks: 3
         }
@@ -28,7 +32,7 @@ angular.module('highScoreApp')
       }],
       tooltip: {
         mode: 'scrubber',
-        formatter(x, y, series) { return y }
+        formatter(_, y) { return y; }
       },
       drawLegend: false,
       drawDots: false
@@ -36,21 +40,21 @@ angular.module('highScoreApp')
     /***
      * increment the score, refresh newScore to reflect update
      ***/
-    this.increment = function (direction) {
+    function increment(direction) {
       this.score.increment(direction);
       this.changes.newScore = this.score.currentScore;
-    };
+    }
 
-    this.saveNewScore = function() {
+    function saveNewScore() {
       this.score.saveObj({
         currentScore: this.changes.newScore
       });
       this.newScore = this.score.currentScore;
-    };
+    }
     /***
      * open the config options if they are closed, close and save the update config options if they changed
      ***/
-    this.configureSettings = function () {
+    function configureSettings() {
       this.show.config = !this.show.config;
       //if saving an open config
       if (!this.show.config) {
@@ -59,9 +63,10 @@ angular.module('highScoreApp')
       } else {
         $ionicScrollDelegate.scrollBottom(true);
       }
-    };
-    this.deleteScore = function() {
-      this.score.removeScore();
-      $location.path('/app/highscores');
+    }
+
+    function deleteScore() {
+      scoresFactory.deleteScore();
+      $state.go('^.scoresList');
     }
   });

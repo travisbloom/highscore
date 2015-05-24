@@ -17,7 +17,7 @@
     <div class="message {{newScore.message.type}} ng-hide" data-ng-show="newScore.message.text">{{newScore.message.text}}</div>
     <!--3rd Part View-->
     <div ng-show="!newScore.show.customScoreTab" class="third-party-options">
-      <div data-ng-repeat="provider in newScore.thirdPartyOptions">
+      <div data-ng-repeat="provider in newScore.providerOptions">
         <h3>{{provider.name}}</h3>
 
         <div class="card list">

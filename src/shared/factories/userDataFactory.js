@@ -3,14 +3,59 @@
  ***/
 angular.module('highScoreApp')
   .factory('userDataFactory', ($window) => {
-    let userData;
     const LOCAL_STORAGE_KEY = 'highScoreData';
+    /***
+     * returns userData if the reference is truthy
+     * otherwise, pull userData from localStorage
+     * return default userData if none exists in local storage
+     * parse the localStorage and validate top level attributes of local storage
+     * return the parsed obj or an error if validation/parsing fails
+     ***/
+    let userData = (() => {
+      let localValue = $window.localStorage[LOCAL_STORAGE_KEY];
+      if (!localValue) return defaultUserData();
+      try {
+        localValue = JSON.parse(localValue);
+      } catch (e) {
+        $window.localStorage.removeItem(LOCAL_STORAGE_KEY);
+        return defaultUserData();
+      }
+      if (!localValue.usedCustomScores || !localValue.providers || !localValue.scores) {
+        $window.localStorage.removeItem(LOCAL_STORAGE_KEY);
+        return defaultUserData();
+      }
+      return localValue;
+    })();
+
+    return {
+      get scores() {
+        return userData.scores;
+      },
+      set scores(scores) {
+        userData.scores = scores;
+        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
+      },
+      get usedCustomScores() {
+        return userData.usedCustomScores;
+      },
+      set usedCustomScores(usedCustomScores) {
+        userData.usedCustomScores = usedCustomScores;
+        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
+      },
+      get providers() {
+        return userData.providers;
+      },
+      set providers(providers) {
+        userData.providers = providers;
+        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
+      }
+    };
+
     /***
      * returns default userData
      ***/
     function defaultUserData() {
-      //todo remove mockData override
-      return userData = {
+      userData = {
           //array of strings that describe the paths of customScores already existing in scores
           //used to grey out options when selecting new custom scores
           usedCustomScores: [],
@@ -18,55 +63,7 @@ angular.module('highScoreApp')
           providers: {},
           //the scores that exist for a given user, an array of score objects
           scores: []
-      }
-    }
-    /***
-     * remove corrupted userData, return an object with a userMessage and the newUserData
-     ***/
-    function corruptUserData() {
-      //delete any corrupted data
-      $window.localStorage.removeItem(LOCAL_STORAGE_KEY);
-      return {
-        userMessage: 'There was an issue with your saved scores, the app data has been reset',
-        newUserData: defaultUserData()
-      }
-    }
-    return {
-      /***
-       * accepts a JSON obj with new userData, saves a reference to it in the userData var and saves it to local storage
-       ***/
-      set data(newData) {
-        userData = newData;
-        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
-      },
-      /***
-       * returns userData if the reference is truthy
-       * otherwise, pull userData from localStorage
-       * return default userData if none exists in local storage
-       * parse the localStorage and validate top level attributes of local storage
-       * return the parsed obj or an error if validation/parsing fails
-       ***/
-      get data() {
-        let localUserData;
-        //if userData has already been populated
-        if (userData) return userData;
-        //otherwise, query localStorage for saved application data
-        localUserData = $window.localStorage[LOCAL_STORAGE_KEY];
-        //if no local object exists, return the new json obj
-        if (!localUserData) return defaultUserData();
-        //if something was returned from localStorage
-        try {
-          localUserData = JSON.parse(localUserData);
-        } catch (e) {
-          console.log(e);
-          throw corruptUserData();
-        }
-        //if the object doesn't have correct top level properties, throw it
-        if (!localUserData.usedCustomScores || !localUserData.providers || !localUserData.scores)
-          throw corruptUserData();
-        //convert json dates to date objects
-        localUserData.scores.forEach((score) => score.history.forEach((prevScore) =>  prevScore.date = new Date(prevScore.date)));
-        return userData = localUserData;
-      }
+      };
+      return userData;
     }
   });

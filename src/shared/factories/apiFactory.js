@@ -1,79 +1,8 @@
 angular.module('highScoreApp')
-  .factory('apiFactory', ($q, $http, authFactory, userDataFactory) => {
-    let providerOptions =  [
-      {
-        name: 'facebook',
-        id: 'facebook',
-        config: {
-          icon: 'ion-social-facebook',
-          color: '#3B5998'
-        },
-        categories: [
-          {
-            name: 'Pictures',
-            id: 'pictures',
-            options: [
-              {
-                name: 'Likes',
-                id: 'likes',
-                description: 'Your most liked photo',
-                scoreData: {
-                  config: {
-                    name: 'Facebook Picture Likes',
-                    type: 'number'
-                  }
-                }
-              }
-            ]
-          },
-          {
-            name: 'Status Updates',
-            id: 'status',
-            options: [
-              {
-                name: 'Likes',
-                id: 'likes',
-                description: 'Your most liked status updates',
-                scoreData: {
-                  config: {
-                    name: 'Facebook Status Likes',
-                    type: 'number'
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        name: 'Twitter',
-        id: 'twitter',
-        config: {
-          icon: 'ion-social-twitter',
-          color: '#00aced'
-        },
-        categories: [
-          {
-            name: 'Followers',
-            id: 'followers',
-            options: [
-              {
-                name: '',
-                id: 'count',
-                description: 'Total number of twitter followers',
-                scoreData: {
-                  config: {
-                    name: 'Twitter Followers',
-                    type: 'number'
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ];
-    (() => providerOptions.forEach((provider) =>
+  .factory('apiFactory', ($q, $http, authFactory, userDataFactory, providerOptions, appConfig) => {
+    let tokenRefreshAttempted;
+
+    providerOptions.forEach((provider) =>
       provider.categories.forEach((category) =>
         category.options.forEach((option) => {
             //add provider configs to option
@@ -86,8 +15,8 @@ angular.module('highScoreApp')
             };
         })
       )
-    ))();
-    let tokenRefreshAttempted;
+    );
+
     //build apiConfig
     return {
       time: ['recent'],
@@ -95,15 +24,15 @@ angular.module('highScoreApp')
       scoreRequest(provider, path, queryObj) {
         return authFactory.getAuth(provider)
           .then((accessObj) => {
-            let url = CONFIG.envs[CONFIG.env].apiUri + path, paramPrefix = '?';
+            let url = appConfig.envs[appConfig.env].apiUri + path, paramPrefix = '?';
             //if additional URL params are passed to the api server, add them here
             if (queryObj) {
               //if the property was not falsely
               Object.keys(queryObj).forEach((key) => {
-                if (queryObj[key])
-                  url += paramPrefix + key + '=' + queryObj[key];
-                paramPrefix = '&'
-              })
+                if (!queryObj[key]) return;
+                url += paramPrefix + key + '=' + queryObj[key];
+                paramPrefix = '&';
+              });
             }
             return $http.post(url, {auth: accessObj});
           })
@@ -111,13 +40,11 @@ angular.module('highScoreApp')
             //if the error was the result of an invalid token being submitted
             if (err.data && err.data.expiredToken  && !tokenRefreshAttempted) {
               //clear the provider token info from the cache
-              let data = userDataFactory.data;
-              delete data.providers[provider];
-              userDataFactory.data = data;
+              data.providers[provider] = null;
               //set the tokenRefreshAttempt to true to prevent infinite attempts
               tokenRefreshAttempted = true;
               //reattempt the request
-              return this.scoreRequest(provider, path, queryObj)
+              return this.scoreRequest(provider, path, queryObj);
             }
             throw err;
           });

@@ -1,8 +1,8 @@
 angular.module('highScoreApp')
-  .factory('authFactory', ($cordovaOauth, $q, userDataFactory) => {
+  .factory('authFactory', ($cordovaOauth, $q, userDataFactory, appConfig) => {
     const PROVIDER_DETAILS = {
-      facebook: [CONFIG.facebook.clientId, ['user_photos', 'user_friends', 'read_stream ']],
-      twitter: [CONFIG.twitter.clientId, CONFIG.twitter.clientSecret]
+      facebook: [appConfig.facebook.clientId, ['user_photos', 'user_friends', 'read_stream ']],
+      twitter: [appConfig.twitter.clientId, appConfig.twitter.clientSecret]
     };
     return {
       /***
@@ -12,20 +12,13 @@ angular.module('highScoreApp')
        * returns the token either way
        ***/
       getAuth(provider) {
-        let deferred = $q.defer(), providers = userDataFactory.data.providers;
+        let providers = userDataFactory.providers;
         //if the provider exists, authenticate the user
-        //todo shorten this
-        if (providers[provider]) {
-          deferred.resolve(providers[provider]);
-          return deferred.promise;
-        }
+        if (providers[provider]) return $q.when(providers[provider]);
+
         return $cordovaOauth[provider].apply(this, PROVIDER_DETAILS[provider])
           .then((response) => {
-            console.log(response);
-            //save returned auth data to local storage
-            var userData = userDataFactory.data;
-            userData.providers[provider] = response;
-            userDataFactory.data = userData;
+            userDataFactory.providers[provider] = response;
             return response;
           });
       }

@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .directive('scoreConfigOptions', function($ionicModal, optionsFactory) {
+  .directive('scoreConfigOptions', function($ionicModal, scoreOptions) {
     return {
       restrict: 'E',
       templateUrl: 'shared/directives/scoreConfigOptions/scoreConfigOptions.html',
@@ -13,7 +13,7 @@ angular.module('highScoreApp')
         /***
          * options to choose from for newScore
          ***/
-        this.scoreOptions = optionsFactory;
+        this.scoreOptions = scoreOptions;
         /***
          * configure icon modal for page, track modal on $scope
          ***/

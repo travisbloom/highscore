@@ -1,55 +1,13 @@
 angular.module('highScoreApp')
-  .controller('newScoreController', function(scoreFactory, $ionicModal, apiFactory, $ionicLoading, $location, messageFactory, userDataFactory) {
+  .controller('newScoreController', function(scoresFactory, $ionicModal, providerOptions, $ionicLoading, $state, messageFactory, userDataFactory) {
     this.message = {};
     //pull in third party options
-    this.thirdPartyOptions = apiFactory.options;
+    this.providerOptions = providerOptions;
     this.show = {
       //governs what tab is being shown
       customScoreTab: false
     };
-    //track previously used custom scores
-    this.usedCustomScores = userDataFactory.data.usedCustomScores;
-    /***********************************************
-     ***********************************************
-     * Data Specific to 3rd Party Scores
-     ***********************************************
-     **********************************************/
-    /***
-     * @newScore: submit the newScore object data
-     * add a new third party score the users data
-     * makes an initial api request, gathering any missing auth data for the given provider
-     * set the returned score and metaData, if any, to the newScore obj
-     * generate the new score
-     ***/
-    this.addThirdPartyScore = function(newScore) {
-      //show loading page, initial loads can take some time
-      $ionicLoading.show({
-        template: '<div>Processing your ' + newScore.apiInfo.provider + ' data. This could take a few seconds the first time we get it.</div>'
-      });
-      //make an initial request to get starting score/needed metadata
-      apiFactory.scoreRequest(newScore.apiInfo.provider, newScore.apiInfo.path).then((res) => {
-        $ionicLoading.hide();
-        //append returned data to newScore then create it
-        newScore.currentScore = res.data.score;
-        newScore.metaData = res.data.metaData;
-        //generate and save the new score
-        scoreFactory.newScore(newScore);
-        //send user to highScores page after successful completion. Pass query param to signal successful signup
-        $location.path('/app/highscores');
-      }).catch((error) => {
-        $ionicLoading.hide();
-        this.message = messageFactory.format(error);
-        messageFactory.show('error').then(() => this.message = null );
-      });
-    };
-    /***********************************************
-     ***********************************************
-     * Functions Specific to Custom Scores
-     ***********************************************
-     **********************************************/
-    /***
-     * sets the object structure and defaults for the new Custom Score
-     ***/
+    //default custom score params
     this.score = {
       currentScore: 0,
       config: {
@@ -57,16 +15,51 @@ angular.module('highScoreApp')
         color: '#000'
       }
     };
+    //track previously used custom scores
+    this.usedCustomScores = userDataFactory.usedCustomScores;
+    /***
+     * Functions Specific to 3rd Party Scores
+     ***/
+    this.addThirdPartyScore = addThirdPartyScore;
+    /***
+     * Functions Specific to Custom Scores
+     ***/
+    this.addCustomScore = addCustomScore.bind(this);
+
+    /***
+     * @newScore: submit the newScore object data
+     * add a new third party score the users data
+     * makes an initial api request, gathering any missing auth data for the given provider
+     * set the returned score and metaData, if any, to the newScore obj
+     * generate the new score
+     ***/
+    function addThirdPartyScore(properties) {
+      //show loading page, initial loads can take some time
+      $ionicLoading.show({
+        template: '<div>Processing your ' + properties.apiInfo.provider + ' data. This could take a few seconds the first time we get it.</div>'
+      });
+      //make an initial request to get starting score/needed metadata
+      apiFactory.scoreRequest(properties.apiInfo.provider, properties.apiInfo.path).then((res) => {
+        $ionicLoading.hide();
+        //append returned data to newScore then create it
+        properties.currentScore = res.data.score;
+        properties.metaData = res.data.metaData;
+        //generate and save the new score
+        scoresFactory.newScore(properties);
+        //send user to highScores page after successful completion. Pass query param to signal successful signup
+        $state.go('^.scoresList');
+      }).catch((error) => {
+        $ionicLoading.hide();
+        this.message = messageFactory.format(error);
+        messageFactory.show('error').then(() => this.message = null );
+      });
+    }
+
     /***
      * try to generate the new custom score, retuns an error when invalid data is submitted
      ***/
-    this.newScore = function () {
-      try {
-        scoreFactory.newScore(this.score);
-        $location.path('/app/highscores');
-      } catch (error) {
-        this.message = messageFactory.format(error);
-        messageFactory.show('error').then(()=> this.message = null );
-      }
+    function addCustomScore() {
+      scoresFactory.newScore(this.score);
+      $state.go('^.scoresList');
     }
   });
