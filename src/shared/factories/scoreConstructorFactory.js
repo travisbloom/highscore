@@ -37,7 +37,7 @@ export default function scoreConstructorFactory(apiFactory, userDataFactory) {
     increment(amount) {
       let increment = amount === 'down' ? -this.data.config.incrementValue : this.data.config.incrementValue;
       this.saveObj({
-        currentScore: increment + this.currentScore
+        currentScore: increment + this.data.currentScore
       });
     }
   };
