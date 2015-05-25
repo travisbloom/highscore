@@ -1,17 +1,17 @@
 angular.module('highScoreApp')
   .controller('scoreController', function($stateParams, scoresFactory, $ionicModal, $ionicScrollDelegate, $state) {
 
-    this.increment = increment.bind(this);
-    this.saveNewScore = saveNewScore.bind(this);
-    this.configureSettings = configureSettings.bind(this);
-    this.deleteScore = deleteScore.bind(this);
+    this.increment = increment;
+    this.saveNewScore = saveNewScore;
+    this.configureSettings = configureSettings;
+    this.deleteScore = deleteScore;
 
     //default config for collapsible elements
     this.show = { config: false };
     //pull the score from the url params
     this.score = scoresFactory.getScores()[$stateParams.index];
     //set initial newScore params to the current score, ensures changes will be tracked
-    this.changes = { newScore: this.score.currentScore };
+    this.changes = { newScore: null};
     //graph config options
     this.options = {
       axes: {
@@ -42,14 +42,14 @@ angular.module('highScoreApp')
      ***/
     function increment(direction) {
       this.score.increment(direction);
-      this.changes.newScore = this.score.currentScore;
+      this.changes.newScore = null;
     }
 
     function saveNewScore() {
       this.score.saveObj({
         currentScore: this.changes.newScore
       });
-      this.newScore = this.score.currentScore;
+      this.changes.newScore = null;
     }
     /***
      * open the config options if they are closed, close and save the update config options if they changed
@@ -57,9 +57,10 @@ angular.module('highScoreApp')
     function configureSettings() {
       this.show.config = !this.show.config;
       //if saving an open config
+      console.log(this.score)
       if (!this.show.config) {
         $ionicScrollDelegate.scrollTop(true);
-        this.score.saveObj({config: this.score.config});
+        this.score.saveObj({config: this.score.data.config});
       } else {
         $ionicScrollDelegate.scrollBottom(true);
       }

@@ -1,0 +1,18 @@
+.notification-passive {
+  &.ng-hide-remove, &.ng-hide-add {
+    transition: 0s linear all;
+  }
+  &.ng-hide-remove-active, &.ng-hide-add-active {
+    transition: 0.3s linear all;
+  }
+  bottom: 0;
+  &.ng-hide {
+    bottom: -$standard-height;
+  }
+  div {
+    text-align: center;
+    width: calc(100% - 25px);
+    margin-right: 10px;
+  }
+
+}

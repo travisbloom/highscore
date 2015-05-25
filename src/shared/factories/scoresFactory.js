@@ -1,41 +1,44 @@
 angular.module('highScoreApp')
   .factory('scoresFactory', (userDataFactory, scoreConstructorFactory) => {
-    let highScores;
+    //convert the json scores to highScore objects
+    userDataFactory.scores = userDataFactory.scores.map((savedScore) => {
+      savedScore.history = savedScore.history.map((historyPoint) => {
+        historyPoint.date = new Date(historyPoint.date);
+        return historyPoint;
+      });
+      return new scoreConstructorFactory(savedScore);
+    });
+    let scores = userDataFactory.scores;
+
     /***
      * Factory Returned Functions
      ***/
     return {
+      getScores,
       newScore,
       deleteScore,
-      reorderScores,
-      getScores
+      reorderScores
     };
 
     /***
      * returns the constructed HighScore Objects if they already exist or query for saved data and then construct the array
      ***/
     function deleteScore(index) {
-      highScores.splice(index, 1);
-      userDataFactory.scores = highScores;
-    }
-
-    function getScores() {
-      if (highScores) return highScores;
-      //get saved stories
-      highScores = userDataFactory.data.scores ?
-        userDataFactory.data.scores.map((savedScore) =>  scoreConstructorFactory.newScore(savedScore)) : [];
-      userDataFactory.scores = highScores;
-      return highScores;
+      scores.splice(index, 1);
+      userDataFactory.scores = scores;
     }
 
     function reorderScores(fromIndex, toIndex) {
-      highScores.splice(toIndex, 0, highScores.splice(fromIndex, 1)[0]);
-      userDataFactory.scores = highScores;
-      return highScores;
+      scores.splice(toIndex, 0, scores.splice(fromIndex, 1)[0]);
+      userDataFactory.scores = scores;
+    }
+
+    function getScores() {
+      return scores;
     }
 
     function newScore(properties) {
-      highScores.push(scoreConstructorFactory.newScore(properties));
-      userDataFactory.scores = highScores;
+      scores.push(new scoreConstructorFactory(properties));
+      userDataFactory.scores = scores;
     }
   });

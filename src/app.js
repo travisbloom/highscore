@@ -22,10 +22,10 @@ angular.module('highScoreApp', [
         url: "",
         abstract: true,
         templateUrl: "components/main/main.html",
-        controller: 'MainController'
+        controller: 'MainController as main'
       })
       .state('main.newScore', {
-        url: "/newScore",
+        url: "/new",
         views: {
           'menuContent': {
             templateUrl: "components/newScore/newScore.html",
@@ -34,7 +34,7 @@ angular.module('highScoreApp', [
         }
       })
       .state('main.scoresList', {
-        url: "/scoresList?message",
+        url: "/scores?message",
         views: {
           'menuContent': {
             templateUrl: "components/scoresList/scoresList.html",
@@ -43,7 +43,7 @@ angular.module('highScoreApp', [
         }
       })
       .state('main.score', {
-        url: "/score/:index",
+        url: "/scores/:index",
         views: {
           'menuContent': {
             templateUrl: "components/score/score.html",
@@ -52,7 +52,7 @@ angular.module('highScoreApp', [
         }
       });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/scoresList');
+    $urlRouterProvider.otherwise('/scores');
   })
 
   .config(($httpProvider) => {

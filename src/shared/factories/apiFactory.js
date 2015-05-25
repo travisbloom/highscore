@@ -2,20 +2,20 @@ angular.module('highScoreApp')
   .factory('apiFactory', ($q, $http, authFactory, userDataFactory, providerOptions, appConfig) => {
     let tokenRefreshAttempted;
 
-    providerOptions.forEach((provider) =>
-      provider.categories.forEach((category) =>
+    providerOptions.forEach((provider) => {
+      provider.categories.forEach((category) => {
         category.options.forEach((option) => {
-            //add provider configs to option
-            angular.extend(option.scoreData.config, provider.config);
-            option.scoreData.apiInfo = {
-              path: '/' + provider.id + '/' + category.id + '/' + option.id,
-              category: category.id,
-              option: option.id,
-              provider: provider.id
-            };
-        })
-      )
-    );
+          //add provider configs to option
+          angular.extend(option.scoreData.config, provider.config);
+          option.scoreData.apiInfo = {
+            path: '/' + provider.id + '/' + category.id + '/' + option.id,
+            category: category.id,
+            option: option.id,
+            provider: provider.id
+          };
+        });
+      });
+    });
 
     return {
       scoreRequest
@@ -40,7 +40,9 @@ angular.module('highScoreApp')
           //if the error was the result of an invalid token being submitted
           if (err.data && err.data.expiredToken && !tokenRefreshAttempted) {
             //clear the provider token info from the cache
-            data.providers[provider] = null;
+            let providers = userDataFactory.providers;
+            providers[provider] = null;
+            userDataFactory.providers = providers;
             //set the tokenRefreshAttempt to true to prevent infinite attempts
             tokenRefreshAttempted = true;
             //reattempt the request

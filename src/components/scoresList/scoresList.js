@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('scoresListController', function(scoresFactory, $location, messageFactory) {
+  .controller('scoresListController', function(scoresFactory, $location, notificationFactory) {
     this.show = {
       reorder: false,
       loading: false
@@ -16,7 +16,7 @@ angular.module('highScoreApp')
     /***
      * non-incrementing custom score functions
      ***/
-    this.preventClick = (event) => event.stopPropagation;
+    this.preventClick = (event) => event.stopPropagation();
     //used by input box
     this.newScore = newScore;
     /***
@@ -31,8 +31,8 @@ angular.module('highScoreApp')
 
     function newScore(event, highScore) {
       event.stopPropagation();
-      highScore.saveObj({currentScore: highScore.potentialScore});
-      highScore.potentialScore = null;
+      highScore.saveObj({currentScore: highScore.newCurrent});
+      highScore.newCurrent = null;
     }
 
     function refreshScore(event, highScore) {
@@ -42,8 +42,7 @@ angular.module('highScoreApp')
         .then(() => highScore.loading = false )
         .catch((error) => {
           highScore.loading = false;
-          this.message = messageFactory.format(error);
-          messageFactory.show('error').then(()=> this.message = null );
+          notificationFactory.show(error);
         });
     }
   });

@@ -26,31 +26,37 @@ angular.module('highScoreApp')
       }
       return localValue;
     })();
-
+    console.log(userData)
     return {
       get scores() {
         return userData.scores;
       },
       set scores(scores) {
         userData.scores = scores;
-        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
+        saveUserData();
       },
       get usedCustomScores() {
         return userData.usedCustomScores;
       },
       set usedCustomScores(usedCustomScores) {
         userData.usedCustomScores = usedCustomScores;
-        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
+        saveUserData();
       },
       get providers() {
         return userData.providers;
       },
       set providers(providers) {
         userData.providers = providers;
-        $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(userData);
+        saveUserData();
       }
     };
 
+    function saveUserData() {
+      var savedUserData = Object.assign({}, userData);
+      savedUserData.scores = savedUserData.scores.map((score) => score.data);
+      console.log(savedUserData);
+      $window.localStorage[LOCAL_STORAGE_KEY] = JSON.stringify(savedUserData);
+    }
     /***
      * returns default userData
      ***/

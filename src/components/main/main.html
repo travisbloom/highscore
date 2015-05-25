@@ -11,7 +11,7 @@
     <ion-content>
       <ion-list>
         <ion-item nav-clear menu-close ui-sref="main.newScore">
-          New test
+          New Score
         </ion-item>
         <ion-item nav-clear menu-close ui-sref="main.scoresList">
           Highscors
@@ -20,3 +20,10 @@
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
+<!--passive notifications-->
+<div class="bar bar-footer notification-passive" ng-show="main.notificationPassive.show" ng-class="main.notificationPassive.type">
+  <div>
+    {{main.notificationPassive.text}}
+  </div>
+  <i ng-click="main.hideNotification()" class="icon ion-close"></i>
+</div>

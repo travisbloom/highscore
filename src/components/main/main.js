@@ -1,4 +1,5 @@
 angular.module('highScoreApp')
-    .controller('MainController', function($scope) {
-      //todo determine if a top level scope is needed
-    });
+    .controller('MainController', function(notificationFactory) {
+      this.notificationPassive = notificationFactory.getModel();
+      this.hideNotification = notificationFactory.hide;
+  });

@@ -5,7 +5,7 @@ angular.module('highScoreApp')
       templateUrl: 'shared/directives/scoreConfigOptions/scoreConfigOptions.html',
       scope: {
         //score object being referenced
-        score: '='
+        scoreConfig: '='
       },
       controllerAs: 'sco',
       bindToController: true,
@@ -25,7 +25,7 @@ angular.module('highScoreApp')
          * pass new icon to item config, hide modal
          ***/
         this.newIcon = function (icon) {
-          this.score.config.icon = icon;
+          this.scoreConfig.icon = icon;
           this.iconModal.hide();
         };
         /***
@@ -39,7 +39,7 @@ angular.module('highScoreApp')
          * pass new color to item config, hide modal
          ***/
         this.newColor = function (color) {
-          this.score.config.color = color;
+          this.scoreConfig.color = color;
           this.colorModal.hide();
         };
       }

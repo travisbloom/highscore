@@ -1,5 +1,5 @@
 angular.module('highScoreApp')
-  .controller('newScoreController', function(scoresFactory, $ionicModal, providerOptions, $ionicLoading, $state, messageFactory, userDataFactory) {
+  .controller('newScoreController', function(scoresFactory, $ionicModal, providerOptions, $ionicLoading, $state, apiFactory, notificationFactory, userDataFactory) {
     this.message = {};
     //pull in third party options
     this.providerOptions = providerOptions;
@@ -39,20 +39,21 @@ angular.module('highScoreApp')
         template: '<div>Processing your ' + properties.apiInfo.provider + ' data. This could take a few seconds the first time we get it.</div>'
       });
       //make an initial request to get starting score/needed metadata
-      apiFactory.scoreRequest(properties.apiInfo.provider, properties.apiInfo.path).then((res) => {
-        $ionicLoading.hide();
-        //append returned data to newScore then create it
-        properties.currentScore = res.data.score;
-        properties.metaData = res.data.metaData;
-        //generate and save the new score
-        scoresFactory.newScore(properties);
-        //send user to highScores page after successful completion. Pass query param to signal successful signup
-        $state.go('^.scoresList');
-      }).catch((error) => {
-        $ionicLoading.hide();
-        this.message = messageFactory.format(error);
-        messageFactory.show('error').then(() => this.message = null );
-      });
+      apiFactory.scoreRequest(properties.apiInfo.provider, properties.apiInfo.path)
+        .then((res) => {
+          $ionicLoading.hide();
+          //append returned data to newScore then create it
+          properties.currentScore = res.data.score;
+          properties.metaData = res.data.metaData;
+          //generate and save the new score
+          scoresFactory.newScore(properties);
+          //send user to highScores page after successful completion. Pass query param to signal successful signup
+          $state.go('^.scoresList');
+        })
+        .catch((error) => {
+          $ionicLoading.hide();
+          notificationFactory.show(error);
+        });
     }
 
     /***

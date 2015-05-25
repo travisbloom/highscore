@@ -1,20 +1,33 @@
 $ionicons-font-path: "assets/fonts" !default;
 // Include all of Ionic
 @import "../../../bower_components/ionic/scss/ionic";
-// colors
-$highscore-primary: $positive;
-$highscore-accent: #145fd7;
-$highscore-text: white;
+//copy over ionic variables for reference
+$font-size-base: $font-size-base;
+$font-size-large: $font-size-large;
+$font-size-small: $font-size-small;
+$positive: $positive;
+$energized: $energized;
+$assertive: $assertive;
+$light: $light;
 
+//colors
+$color-warning: $energized;
+$color-error: $assertive;
+$color-theme-primary: $positive;
+$color-theme-primary-text: $light;
+
+//heights
+$standard-height: 44px;
+
+//z-index tracker
+$z-index-notification: 1;
+@import "animations";
 @import "forms";
+@import "../../components/main/main";
 @import "../../components/newScore/newScore";
 @import "../../components/score/score";
 @import "../../components/scoresList/scoresList";
 @import "../directives/scoreConfigOptions/scoreConfigOptions";
-//score icons
-.icon {
-  font-size: 22px;
-}
 
 //color boxes
 .picked-color {
@@ -22,46 +35,4 @@ $highscore-text: white;
   border-radius: 4px;
 }
 
-//nav header buttons
-.bar.bar-positive {
-  .button {
-    &:before {
-      font-size: 16px;
-    }
-  }
-}
 
-//header
-.options-header {
-  text-align: center;
-}
-
-.message {
-  text-align: center;
-  padding: 20px 0;
-  height: 50px;
-  line-height: 14px;
-  transition: 0.2s linear all;
-  //add ... to the end of message if overflowing
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  &.warning {
-    background-color: $energized;
-  }
-  &.ng-hide-add, &.ng-hide-remove {
-    display: block !important;
-  }
-  &.ng-hide-remove,
-  &.ng-hide-add.ng-hide-add-active {
-    height: 0px;
-    line-height: 0px;
-    padding-top: 0px;
-  }
-  &.ng-hide-add,
-  &.ng-hide-remove.ng-hide-remove-active {
-    height: 50px;
-    line-height: 14px;
-    padding-top: 20px;
-  }
-}

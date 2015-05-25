@@ -20,15 +20,15 @@
   }
   //individual reorder icons
   .item-reorder .button.icon {
-    color: $highscore-text;
+    color: $color-theme-primary-text;
   }
   .item-options .button {
-    color: $highscore-text;
-    border-color: $highscore-accent;
-    background-color: $highscore-primary;
+    color: $color-theme-primary-text;
+    border-color: $color-theme-primary;
+    background-color: $color-theme-primary;
   }
   .item-icon-left {
-    background-color: $highscore-primary;
+    background-color: $color-theme-primary;
     border-style: none;
   }
   //loading icon
@@ -37,22 +37,6 @@
       -webkit-animation: spin 1s linear infinite;
       -moz-animation: spin 1s linear infinite;
       animation: spin 1s linear infinite;
-    }
-    @-moz-keyframes spin {
-      100% {
-        -moz-transform: rotate(360deg);
-      }
-    }
-    @-webkit-keyframes spin {
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-    @keyframes spin {
-      100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-      }
     }
   }
 }
