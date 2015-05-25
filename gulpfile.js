@@ -7,6 +7,10 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var templateCache = require('gulp-angular-templatecache');
+var browserify = require("browserify");
+var babelify = require("babelify");
+var source = require('vinyl-source-stream');
+
 
 var paths = {
   src: 'src',
@@ -29,13 +33,13 @@ gulp.task('sass', function (done) {
 });
 
 gulp.task('js', ['templateCache'], function(done) {
-  var src = [
-    paths.src + '/**/*.js',
-    paths.tmp + '/**/*.js'
-  ];
-  gulp.src(src)
-    .pipe(babel())
-    .pipe(concat('app.js'))
+  browserify({
+    debug: true,
+    entries: paths.src + '/app.js'
+  })
+    .transform(babelify)
+    .bundle()
+    .pipe(source('app.js'))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });
@@ -43,8 +47,10 @@ gulp.task('js', ['templateCache'], function(done) {
 gulp.task('templateCache', function () {
   gulp.src([paths.src + '/**/*.html',  '!' + paths.src + '/index.html'])
     .pipe(templateCache(
-      'templates.js', {
-      module: 'highScoreApp'
+      'templateCache.js', {
+        moduleSystem: 'Browserify',
+        templateHeader: 'function templateCache($templateCache) {',
+        templateFooter: '}'
     }))
     .pipe(gulp.dest(paths.tmp));
 });
@@ -59,7 +65,9 @@ gulp.task('js-lib', function (done) {
     paths.bower + '/ng-cordova-oauth/ng-cordova-oauth.js',
     paths.bower + '/moment/moment.js'
   ])
+    .pipe(sourcemaps.init())
     .pipe(concat('libraries.js'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./www/'))
     .on('end', done);
 });

@@ -1,5 +1,4 @@
-angular.module('highScoreApp')
-  .value('providerOptions', [
+const providerOptions = [
     {
       name: 'facebook',
       id: 'facebook',
@@ -71,4 +70,21 @@ angular.module('highScoreApp')
         }
       ]
     }
-  ]);
+  ];
+
+providerOptions.forEach((provider) => {
+  provider.categories.forEach((category) => {
+    category.options.forEach((option) => {
+      //add provider configs to option
+      angular.extend(option.scoreData.config, provider.config);
+      option.scoreData.apiInfo = {
+        path: '/' + provider.id + '/' + category.id + '/' + option.id,
+        category: category.id,
+        option: option.id,
+        provider: provider.id
+      };
+    });
+  });
+});
+
+export default providerOptions;

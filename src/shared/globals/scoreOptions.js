@@ -1,5 +1,4 @@
-angular.module('highScoreApp')
-  .value('scoreOptions', {
+const scoreOptions = {
     numTypes: ['number', 'currency'],
     icons: [
       'ion-social-usd',
@@ -189,4 +188,6 @@ angular.module('highScoreApp')
       '#FFFF00',
       '#9ACD32'
     ]
-  });
+  };
+
+export default scoreOptions;

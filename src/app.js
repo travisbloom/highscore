@@ -1,70 +1,59 @@
-angular.module('highScoreApp', [
-  'ionic',
-  'ngCordovaOauth',
-  'n3-line-chart'])
-  .run(($ionicPlatform) => {
-    $ionicPlatform.ready(() => {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      if (window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      }
-      if (window.StatusBar) {
-        // org.apache.cordova.statusbar required
-        StatusBar.styleDefault();
-      }
-    });
-  })
+/***
+ * src
+ ***/
+import {stateConfig, cordovaConfig, httpIntercept} from './config.js';
+/***
+ * .tmp
+ ***/
+import templateCache from '../.tmp/templateCache.js';
+/***
+* shared
+***/
+//globals
+import appConfig from './shared/globals/appConfig.js';
+import providerOptions from './shared/globals/providerOptions.js';
+import scoreOptions from './shared/globals/scoreOptions.js';
+//factories
+import apiFactory from './shared/factories/apiFactory.js';
+import authFactory from './shared/factories/authFactory.js';
+import notificationFactory from './shared/factories/notificationFactory.js';
+import scoreConstructorFactory from './shared/factories/scoreConstructorFactory.js';
+import scoresFactory from './shared/factories/scoresFactory.js';
+import userDataFactory from './shared/factories/userDataFactory.js';
+//directives
+import scoreConfigOptions from './shared/directives/scoreConfigOptions/scoreConfigOptions.js';
+/***
+ * components
+ ***/
+import mainController from './components/main/main.js';
+import newScoreController from './components/newScore/newScore.js';
+import scoreController from './components/score/score.js';
+import scoresListController from './components/scoresList/scoresList.js';
 
-  .config(($stateProvider, $urlRouterProvider) => {
-    $stateProvider
-      .state('main', {
-        url: "",
-        abstract: true,
-        templateUrl: "components/main/main.html",
-        controller: 'MainController as main'
-      })
-      .state('main.newScore', {
-        url: "/new",
-        views: {
-          'menuContent': {
-            templateUrl: "components/newScore/newScore.html",
-            controller: 'newScoreController as newScore'
-          }
-        }
-      })
-      .state('main.scoresList', {
-        url: "/scores?message",
-        views: {
-          'menuContent': {
-            templateUrl: "components/scoresList/scoresList.html",
-            controller: 'scoresListController as scoresList'
-          }
-        }
-      })
-      .state('main.score', {
-        url: "/scores/:index",
-        views: {
-          'menuContent': {
-            templateUrl: "components/score/score.html",
-            controller: 'scoreController as score'
-          }
-        }
-      });
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/scores');
-  })
+angular
+  .module('highScoreApp', ['ionic', 'ngCordovaOauth', 'n3-line-chart'])
 
-  .config(($httpProvider) => {
-    //set timeout to 1000 on all http requests coming from the application
-    $httpProvider.interceptors.push(() => {
-      return {
-        request(config) {
-          //http request have 10 seconds before timeout
-          //todo wrap all errors in a factory to determine response
-          config.timeout = 100000;
-          return config;
-        }
-      };
-    });
-  });
+    .run(cordovaConfig)
+    .run(templateCache)
+
+    .config(stateConfig)
+    .config(httpIntercept)
+
+    .value('appConfig', appConfig)
+    .value('providerOptions', providerOptions)
+    .value('scoreOptions', scoreOptions)
+
+    .factory('apiFactory', apiFactory)
+    .factory('authFactory', authFactory)
+    .factory('notificationFactory', notificationFactory)
+    .factory('scoreConstructorFactory', scoreConstructorFactory)
+    .factory('scoresFactory', scoresFactory)
+    .factory('userDataFactory', userDataFactory)
+
+    .directive('scoreConfigOptions', scoreConfigOptions)
+
+    .controller('mainController', mainController)
+    .controller('newScoreController', newScoreController)
+    .controller('scoreController', scoreController)
+    .controller('scoresListController', scoresListController);
+
