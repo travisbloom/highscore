@@ -1,7 +1,7 @@
 /***
  * src
  ***/
-import {stateConfig, cordovaConfig, httpIntercept} from './config.js';
+import {stateConfig, cordovaRun, httpIntercept} from './config.js';
 /***
  * .tmp
  ***/
@@ -33,7 +33,7 @@ import scoresListController from './components/scoresList/scoresList.js';
 angular
   .module('highScoreApp', ['ionic', 'ngCordovaOauth', 'n3-line-chart'])
 
-    .run(cordovaConfig)
+    .run(cordovaRun)
     .run(templateCache)
 
     .config(stateConfig)
