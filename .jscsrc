@@ -1,5 +1,7 @@
 {
   "preset": "airbnb",
   "requirePaddingNewLinesBeforeLineComments": null,
-  "disallowTrailingWhitespace": null
+  "requirePaddingNewLinesAfterBlocks": null,
+  "disallowTrailingWhitespace": null,
+  "esnext": true
 }

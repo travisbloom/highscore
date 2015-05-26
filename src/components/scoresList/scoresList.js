@@ -10,7 +10,7 @@ export default function scoresListController(scoresFactory, $location, notificat
   /***
    * 3rd party score functions
    ***/
-    //trigger page loading view while score is updated
+  //trigger page loading view while score is updated
   this.refreshScore = refreshScore;
   /***
    * non-incrementing custom score functions
@@ -38,7 +38,7 @@ export default function scoresListController(scoresFactory, $location, notificat
     event.stopPropagation();
     highScore.loading = true;
     highScore.pullScore()
-      .then(() => highScore.loading = false )
+      .then(() => highScore.loading = false)
       .catch((error) => {
         highScore.loading = false;
         notificationFactory.show(error);

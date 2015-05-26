@@ -1,4 +1,4 @@
-export default function scoreConstructorFactory(apiFactory, userDataFactory) {
+export default function ScoreConstructorFactory(apiFactory, userDataFactory) {
   /**
    * Constructor that accepts JSON data about a highscore, appends any config details, changes date strings to js Date() and returns the HighScoreObj
    ***/
@@ -7,7 +7,7 @@ export default function scoreConstructorFactory(apiFactory, userDataFactory) {
       properties.currentScore = +properties.currentScore || 0;
       properties.id = +properties.id || _uniqueId();
       _newScore(properties);
-      this.data = properties;
+      this.data = Object.assign({}, properties);
     }
     /**
      * save the updated object attributes
@@ -45,12 +45,14 @@ export default function scoreConstructorFactory(apiFactory, userDataFactory) {
    * generate unique Ids for new custom scores
    * not sure why i might need ids but its prob a good idea to assign them early on in case....
    ***/
+  //jscs:disable
   function _uniqueId() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+      var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8); //jshint ignore:line
       return v.toString(16);
     });
   }
+  //jscs:enable
   /**
    * cleanse data being added/created
    * adds score specific data (highScore, history)

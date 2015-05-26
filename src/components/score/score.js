@@ -1,5 +1,5 @@
 export default scoreController;
-function scoreController($stateParams, scoresFactory, $ionicScrollDelegate, $state) {
+function scoreController($stateParams, scoresFactory, $ionicScrollDelegate, $state, moment) {
   this.increment = increment;
   this.saveNewScore = saveNewScore;
   this.configureSettings = configureSettings;
@@ -19,7 +19,9 @@ function scoreController($stateParams, scoresFactory, $ionicScrollDelegate, $sta
         //treat x axis as date
         type: 'date',
         //apply relative timing function to labels
-        labelFunction(date){ return moment(date).fromNow(); },
+        labelFunction(date) {
+          return moment(date).fromNow();
+        },
         //number of x axis ticks
         ticks: 3
       }
@@ -27,11 +29,11 @@ function scoreController($stateParams, scoresFactory, $ionicScrollDelegate, $sta
     series: [{
       y: 'score',
       thickness: '3px',
-      type: "area"
+      type: 'area'
     }],
     tooltip: {
       mode: 'scrubber',
-      formatter(_, y) { return y; }
+      formatter(_, y) {return y;}
     },
     drawLegend: false,
     drawDots: false
@@ -65,7 +67,7 @@ function scoreController($stateParams, scoresFactory, $ionicScrollDelegate, $sta
   }
 
   function deleteScore() {
-    scoresFactory.deleteScore();
+    scoresFactory.deleteScore($stateParams.index);
     $state.go('^.scoresList');
   }
 }

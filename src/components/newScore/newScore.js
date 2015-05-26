@@ -61,6 +61,13 @@ function newScoreController(scoresFactory, providerOptions, $ionicLoading, $stat
    ***/
   function addCustomScore() {
     scoresFactory.newScore(this.score);
+    this.score = {
+      currentScore: 0,
+      config: {
+        type: 'number',
+        color: '#000'
+      }
+    };
     $state.go('^.scoresList');
   }
 }

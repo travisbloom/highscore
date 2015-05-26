@@ -3,7 +3,6 @@
   "eqeqeq": true,
   "bitwise": true,
   "forin": true,
-  "maxparams": 4,
   "latedef": "nofunc",
   "undef": true,
   "unused": true,
@@ -14,9 +13,9 @@
   "browser": true,
   "node": true,
   "browserify": true,
-  "devel": true,
   "jasmine": true,
   "globals": {
+    "moment": true,
     "angular": true,
     "cordova": true,
     "StatusBar": true

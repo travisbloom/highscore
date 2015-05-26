@@ -9,7 +9,8 @@ export default function apiFactory($http, authFactory, userDataFactory, appConfi
   function scoreRequest(provider, path, queryObj) {
     return authFactory.getAuth(provider)
       .then((accessObj) => {
-        let url = appConfig.envs[appConfig.env].apiUri + path, paramPrefix = '?';
+        let url = appConfig.envs[appConfig.env].apiUri + path;
+        let paramPrefix = '?';
         //if additional URL params are passed to the api server, add them here
         if (queryObj) {
           //if the property was not falsely

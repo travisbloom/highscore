@@ -38,7 +38,8 @@ angular
 
     .config(stateConfig)
     .config(httpIntercept)
-
+    //inject 3rd party libraries (makes testing easier)
+    .value('moment', moment)
     .value('appConfig', appConfig)
     .value('providerOptions', providerOptions)
     .value('scoreOptions', scoreOptions)

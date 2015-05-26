@@ -26,7 +26,7 @@ export default function scoreConfigOptions($ionicModal, scoreOptions) {
     /***
      * pass new icon to item config, hide modal
      ***/
-    this.newIcon = function (icon) {
+    this.newIcon = function(icon) {
       this.scoreConfig.icon = icon;
       this.iconModal.hide();
     };
@@ -40,7 +40,7 @@ export default function scoreConfigOptions($ionicModal, scoreOptions) {
     /***
      * pass new color to item config, hide modal
      ***/
-    this.newColor = function (color) {
+    this.newColor = function(color) {
       this.scoreConfig.color = color;
       this.colorModal.hide();
     };

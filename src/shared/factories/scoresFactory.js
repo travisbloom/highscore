@@ -1,11 +1,11 @@
-export default function scoresFactory(userDataFactory, scoreConstructorFactory) {
+export default function scoresFactory(userDataFactory, ScoreConstructorFactory) {
   //convert the json scores to highScore objects
   userDataFactory.scores = userDataFactory.scores.map((savedScore) => {
     savedScore.history = savedScore.history.map((historyPoint) => {
       historyPoint.date = new Date(historyPoint.date);
       return historyPoint;
     });
-    return new scoreConstructorFactory(savedScore);
+    return new ScoreConstructorFactory(savedScore);
   });
   let scores = userDataFactory.scores;
 
@@ -37,7 +37,7 @@ export default function scoresFactory(userDataFactory, scoreConstructorFactory) 
   }
 
   function newScore(properties) {
-    scores.push(new scoreConstructorFactory(properties));
+    scores.push(new ScoreConstructorFactory(properties));
     userDataFactory.scores = scores;
   }
 }

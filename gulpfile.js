@@ -2,15 +2,13 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
-var babel = require('gulp-babel');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var templateCache = require('gulp-angular-templatecache');
 var browserify = require("browserify");
 var babelify = require("babelify");
 var source = require('vinyl-source-stream');
-
+var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
 
 var paths = {
   src: 'src',
@@ -42,6 +40,13 @@ gulp.task('js', ['templateCache'], function(done) {
     .pipe(source('app.js'))
     .pipe(gulp.dest('./www/'))
     .on('end', done);
+});
+
+gulp.task('jscheck', function() {
+  return gulp.src(paths.src + '/**/*.js')
+    .pipe(jshint('.jshintrc'))
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jscs());
 });
 
 gulp.task('templateCache', function () {
