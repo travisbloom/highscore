@@ -10,6 +10,6 @@ bower_components/
 node_modules/
 www/*
 .tmp/*
-src/config.js
+.settings/*
 platforms/
 plugins/

@@ -1,6 +1,5 @@
 export default newScoreController;
 function newScoreController(scoresFactory, providerOptions, $ionicLoading, $state, apiFactory, notificationFactory, userDataFactory) {
-  this.message = {};
   //pull in third party options
   this.providerOptions = providerOptions;
   this.show = {

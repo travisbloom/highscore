@@ -31,7 +31,7 @@ export function stateConfig($stateProvider, $urlRouterProvider) {
       }
     })
     .state('main.scoresList', {
-      url: "/scores?message",
+      url: "/scores",
       views: {
         'menuContent': {
           templateUrl: "components/scoresList/scoresList.html",
@@ -58,7 +58,6 @@ export function httpIntercept($httpProvider) {
     return {
       request(config) {
         //http request have 10 seconds before timeout
-        //todo wrap all errors in a factory to determine response
         config.timeout = 100000;
         return config;
       }
