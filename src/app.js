@@ -17,7 +17,7 @@ import scoreOptions from './shared/globals/scoreOptions.js';
 import apiFactory from './shared/factories/apiFactory.js';
 import authFactory from './shared/factories/authFactory.js';
 import notificationFactory from './shared/factories/notificationFactory.js';
-import scoreConstructorFactory from './shared/factories/scoreConstructorFactory.js';
+import ScoreConstructorFactory from './shared/factories/scoreConstructorFactory.js';
 import scoresFactory from './shared/factories/scoresFactory.js';
 import userDataFactory from './shared/factories/userDataFactory.js';
 //directives
@@ -47,7 +47,7 @@ angular
     .factory('apiFactory', apiFactory)
     .factory('authFactory', authFactory)
     .factory('notificationFactory', notificationFactory)
-    .factory('scoreConstructorFactory', scoreConstructorFactory)
+    .factory('ScoreConstructorFactory', ScoreConstructorFactory)
     .factory('scoresFactory', scoresFactory)
     .factory('userDataFactory', userDataFactory)
 
