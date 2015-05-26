@@ -76,7 +76,7 @@ providerOptions.forEach((provider) => {
   provider.categories.forEach((category) => {
     category.options.forEach((option) => {
       //add provider configs to option
-      angular.extend(option.scoreData.config, provider.config);
+      Object.assign(option.scoreData.config, provider.config);
       option.scoreData.apiInfo = {
         path: '/' + provider.id + '/' + category.id + '/' + option.id,
         category: category.id,
