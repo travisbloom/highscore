@@ -10,15 +10,9 @@ export default function apiFactory($http, authFactory, userDataFactory, appConfi
     return authFactory.getAuth(provider)
       .then((accessObj) => {
         let url = appConfig.envs[appConfig.env].apiUri + path;
-        let paramPrefix = '?';
         //if additional URL params are passed to the api server, add them here
         if (queryObj) {
-          //if the property was not falsely
-          Object.keys(queryObj).forEach((key) => {
-            if (!queryObj[key]) return;
-            url += paramPrefix + key + '=' + queryObj[key];
-            paramPrefix = '&';
-          });
+          url += Object.keys(queryObj).reduce((paramString, key) => paramString + key + '=' + queryObj[key], '?');
         }
         return $http.post(url, {auth: accessObj});
       })

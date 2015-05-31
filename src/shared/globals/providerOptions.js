@@ -1,4 +1,4 @@
-const providerOptions = [
+let providerOptions = [
     {
       name: 'facebook',
       id: 'facebook',

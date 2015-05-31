@@ -10,11 +10,11 @@
     <ion-list show-reorder="scoresList.show.reorder">
       <ion-item ng-repeat="item in scoresList.highScores" ui-sref="^.score({index: $index})" class="item-icon-left">
         <i class="icon {{item.data.config.icon}}" style="color: {{item.data.config.color}}"></i>
-        <span style="color: {{item.data.config.color}}">{{item.data.config.name}}</span>
-                    <span class="item-note">
-                      {{item.data.highScore}}
-                      {{item.data.currentScore}}
-                    </span>
+        {{item.data.config.name}}
+        <span class="item-note">
+          {{item.data.highScore}}
+          {{item.data.currentScore}}
+        </span>
         <!--reset score-->
         <ion-option-button ng-if="item.data.apiInfo" class="button-info" ng-click="scoresList.refreshScore($event, item)">
           <i class="icon ion-refresh" ng-class="{loading: item.data.loading}"></i>
