@@ -16,8 +16,7 @@ export default function authFactory($cordovaOauth, $q, userDataFactory, appConfi
     let providers = userDataFactory.providers;
     //if the provider exists, authenticate the user
     if (providers[provider]) return $q.when(providers[provider]);
-
-    return $cordovaOauth[provider].apply(this, PROVIDER_DETAILS[provider])
+    return $cordovaOauth[provider](...PROVIDER_DETAILS[provider])
       .then((response) => {
         userDataFactory.providers[provider] = response;
         return response;

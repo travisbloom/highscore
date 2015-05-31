@@ -15,6 +15,7 @@
   "browserify": true,
   "jasmine": true,
   "globals": {
+    "inject": true,
     "moment": true,
     "angular": true,
     "cordova": true,
