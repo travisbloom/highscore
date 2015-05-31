@@ -14,11 +14,11 @@ import appConfig from './shared/globals/appConfig.js';
 import providerOptions from './shared/globals/providerOptions.js';
 import scoreOptions from './shared/globals/scoreOptions.js';
 //factories
-import apiFactory from './shared/factories/apiFactory.js';
-import authFactory from './shared/factories/authFactory.js';
+import apiFactory from './shared/factories/http/apiFactory.js';
+import authFactory from './shared/factories/http/authFactory.js';
 import notificationFactory from './shared/factories/notificationFactory.js';
-import ScoreConstructorFactory from './shared/factories/scoreConstructorFactory.js';
-import scoresFactory from './shared/factories/scoresFactory.js';
+import ScoreConstructorFactory from './shared/factories/scores/scoreConstructorFactory.js';
+import scoresFactory from './shared/factories/scores/scoresFactory.js';
 import userDataFactory from './shared/factories/userDataFactory.js';
 //directives
 import scoreConfigOptions from './shared/directives/scoreConfigOptions/scoreConfigOptions.js';
@@ -38,6 +38,7 @@ angular
 
     .config(stateConfig)
     .config(httpIntercept)
+
     //inject 3rd party libraries (makes testing easier)
     .value('moment', moment)
     .value('appConfig', appConfig)
