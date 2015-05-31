@@ -6,15 +6,15 @@ export default function apiFactory($http, authFactory, userDataFactory, appConfi
     scoreRequest
   };
 
-  function scoreRequest(provider, path, queryObj) {
+  function scoreRequest(provider, path, params) {
     return authFactory.getAuth(provider)
       .then((accessObj) => {
-        let url = appConfig.envs[appConfig.env].apiUri + path;
-        //if additional URL params are passed to the api server, add them here
-        if (queryObj) {
-          url += Object.keys(queryObj).reduce((paramString, key) => paramString + key + '=' + queryObj[key], '?');
-        }
-        return $http.post(url, {auth: accessObj});
+        return $http({
+          method: 'POST',
+          url: appConfig.envs[appConfig.env].apiUri + path,
+          data: {auth: accessObj},
+          params
+        });
       })
       .catch((err) => {
         //if the error was the result of an invalid token being submitted
@@ -26,7 +26,7 @@ export default function apiFactory($http, authFactory, userDataFactory, appConfi
           //set the tokenRefreshAttempt to true to prevent infinite attempts
           tokenRefreshAttempted = true;
           //reattempt the request
-          return this.scoreRequest(provider, path, queryObj);
+          return this.scoreRequest(provider, path, params);
         }
         throw err;
       });
